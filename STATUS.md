@@ -9,3 +9,8 @@ The full Node.js/SQLite implementation remains available for backend migration. 
 Catalog contains 1,219 titled entries after six exact normalized title/artist merges and omission of two unresolved entries. All sharing records of included entries are retained. Participants list contains 72 identified link senders. Google Sheet is a source snapshot, and automatic Sheet-to-catalog synchronization remains pending.
 
 Next steps are verify the deployed preview in a browser, address observed UX issues, choose/connect the database, enforce vote constraints and results access on that backend, then enable real voting only after end-to-end persistence tests.
+
+
+2026-11-08: Added sticky top-three counter, selected-state vote controls, requested hero copy and isolated /test/ environment. GitHub Pages voting now persists locally on this device only, with separate live-local/sandbox namespaces. No shared production database is connected. Test results can be viewed without completion by any test visitor; this is a test bypass, not authenticated production admin access. Test name reviews (remove/rename/reason) persist locally and export JSON. Real admin roles and cross-device votes remain pending a shared backend.
+
+Latest steering: hide all statistics and prioritize shared storage. Added Apps Script backend in backend/Code.gs, stored in bound project the owner’s private bound Apps Script project. OAuth approval and Web App deployment are pending. Production voting stays disabled without FIVE_STARS_STORAGE_URL; test votes remain isolated on device. Revised sharing image 1200x630 at share-cover-v2.jpg avoids reuse of previous cached URL. Do not claim database connection before actual write/readback from another browser session.

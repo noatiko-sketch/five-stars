@@ -25,7 +25,7 @@ export function createApp({ directory = process.env.DATA_DIR || join(root, 'runt
     const send = (status, body) => { res.writeHead(status, {'Content-Type':'application/json; charset=utf-8', 'Cache-Control':'no-store'}); res.end(JSON.stringify(body)); };
     try {
       if (!url.pathname.startsWith('/api/')) {
-        const paths = { '/':'index.html', '/app.js':'app.js', '/style.css':'style.css' };
+        const paths = { '/':'index.html', '/app.js':'app.js', '/local-store.js':'local-store.js','/google-store.js':'google-store.js', '/style.css':'style.css' };
         const file = paths[url.pathname];
         if (!file) throw error('לא נמצא',404);
         res.writeHead(200, {'Content-Type':file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html; charset=utf-8','X-Content-Type-Options':'nosniff'});
