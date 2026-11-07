@@ -3,7 +3,7 @@ const root = new URL('../', import.meta.url);
 const output = new URL('dist/', root);
 await rm(output, {recursive:true,force:true});
 await mkdir(output, {recursive:true});
-for (const file of ['app.js','style.css']) await copyFile(new URL(`public/${file}`,root),new URL(file,output));
+for (const file of ['app.js','style.css','share-image.jpg']) await copyFile(new URL(`public/${file}`,root),new URL(file,output));
 const html = await readFile(new URL('public/index.html',root),'utf8');
 await writeFile(new URL('index.html',output),html.replace('<script type="module"','<script>globalThis.FIVE_STARS_PREVIEW = true;</script><script type="module"'));
 await copyFile(new URL('data/catalog.json',root),new URL('catalog.json',output));
