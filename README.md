@@ -9,3 +9,7 @@ The selected-name identity model is based on trust. Anyone can choose a listed p
 Data came from the provided WhatsApp export. Catalog contains only verified titled entries. Exact normalized title-and-artist matches are consolidated, with every sharing record retained. Distinct versions and ambiguous artist matches remain separate. Unresolved entries stay in the source Google Sheet for later review. Artwork URLs reference source services and may require refreshing. No audio files are hosted.
 
 The UI displays no per-song dates or other users' votes outside statistics. Monthly filtering matches individual sharing records. View progress is recorded when 60% of each card enters the viewport, including cards visible through filters. Scrolling through one's own songs also counts toward progress. The server verifies the submitted song IDs and unlock state, but viewport claims are based on client reporting.
+
+## Free GitHub Pages preview
+
+The `Publish GitHub Pages` workflow runs `npm test`, exports the static catalog UI, and deploys `dist`. This preview explicitly disables votes and statistics while the shared database integration is pending. Identity and viewed-card progress are held only in memory for that visit. No backend secrets or raw chat export are published. The source repository and song-sharing catalog are public by user request.
