@@ -2,28 +2,20 @@
 
 final result: blocked
 
-Source visual targets
-- ../upload/IMG_0590.jpeg
-- ../upload/IMG_0591.jpeg
-- ../upload/IMG_0592.jpeg
+## Published preview
 
-Requested interpretation is visual inspiration, rather than pixel reproduction. Implementation uses a dark background, large Rubik Hebrew typography, pink/lime/blue/orange accents, rounded cards and pills, and compact music rows. All song images reference actual catalog artwork.
+https://noatiko-sketch.github.io/five-stars/
 
-Implementation capture unavailable. Shared cloud browser at http://terminal.local:4173/ returned upstream connection termination after preview startup and reload. Local Chromium launch failed because the environment denies the socket used by process_singleton_posix.cc. A second launch with crash reporting disabled failed on the same denied socket. No rendered screenshot or visual comparison was completed, and no visual pass is claimed.
+Browser-rendered desktop verification succeeded at 1363 x 935 CSS pixels. The preview contains 1,219 songs. All 1,219 source links use HTTPS and open in a new tab. Search for מקהלה returns מקהלה עליזה. Filtering by Noa Tikochinsky yields 87 shared tracks and no self-vote controls. February 2025 yields 56 tracks under the correct month heading. Vote buttons are deliberately disabled in the preview. No horizontal overflow was measured. The first five visible image assets loaded successfully, including Spotify and YouTube artwork.
 
-Required fidelity surfaces pending rendered verification
-- Typography and wrapping at 390 x 844 and 1280 x 900.
-- Row density, persistent navigation clearance, and modal scrolling.
-- Contrast and semantic selected states.
-- Remote artwork availability and image sharpness.
-- Hebrew UI copy, navigation labels and minimal text.
+## Visual evidence
 
-Functional verification
-- Five backend integration tests pass, using HTTP requests against the real SQLite service.
-- Tests cover mandatory identity, self-voting rejection, concurrent enforcement of three top choices, deduplicated progress and result gating, exact scores and voter visibility, vote replacement/removal, and persistence across reopening the database.
-- JavaScript syntax check passes.
-- Browser interaction test is included but did not execute because Chromium could not launch. Browser console and responsive interactions remain unverified.
+Source references are IMG_0590.jpeg, IMG_0591.jpeg and IMG_0592.jpeg supplied in this conversation. Screenshot captured from the live site at /workspace/shared/five-stars-preview.png. A combined source/implementation board was inspected at /tmp/five-stars-design-review.jpg. The initial capture preceded remote image loading, so the visible images were checked separately and a post-load capture replaced it.
 
-Blocking follow-up
-- Restore browser access to the running app and execute test/browser.cjs, then capture actual mobile and desktop screens, compare to the provided references, repair observed issues and repeat.
-- Connect a GitHub repository and a persistent production hosting destination. No public deployment has been performed.
+The requested scope is inspiration, rather than pixel reproduction of the posters or device mockup. Typography uses Rubik with bold Hebrew display text and compact labels. Dark background, lime/pink/blue accents, rounded controls and floating navigation reflect the references. Music rows and restrained copy are intentional adaptations. Visible artwork is actual source artwork. Desktop typography, spacing, colors, images and content were reviewed. No actionable desktop preview layout issue was identified.
+
+## Remaining verification
+
+Mobile device emulation could not run because DevTools is disabled by the browser's organization policy. Local Chromium previously failed on a denied process-singleton socket. Mobile layout and touch interactions still require a rendered test. This is why the overall design QA remains blocked.
+
+Five backend HTTP/SQLite regression tests pass. Shared database voting and statistics are not enabled on the static GitHub Pages preview. Full voting end-to-end checks must follow the database connection.
