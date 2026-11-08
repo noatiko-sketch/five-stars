@@ -12,7 +12,7 @@ export function createApp({ directory = process.env.DATA_DIR || join(root, 'runt
     CREATE TABLE IF NOT EXISTS sessions(token TEXT PRIMARY KEY, person TEXT NOT NULL);
     CREATE TABLE IF NOT EXISTS votes(person TEXT NOT NULL, song TEXT NOT NULL, value INTEGER NOT NULL CHECK(value IN(1,3)), PRIMARY KEY(person,song));
     CREATE TABLE IF NOT EXISTS seen(person TEXT NOT NULL, song TEXT NOT NULL, PRIMARY KEY(person,song));`);
-  const people = new Map(catalog.people.map(p => [p.id, p]));
+  const people = new Map(catalog.people.filter(p=>p.active!==false).map(p => [p.id, p]));
   const songs = new Map(catalog.songs.map(s => [s.id, s]));
   const error = (message, status = 400) => Object.assign(new Error(message), { status });
   let revision = 0;
@@ -47,7 +47,7 @@ export function createApp({ directory = process.env.DATA_DIR || join(root, 'runt
       }
       const token = /(?:^|;\s*)session=([a-f0-9]+)/.exec(req.headers.cookie || '')?.[1];
       const person = db.prepare('SELECT person FROM sessions WHERE token=?').get(token || '')?.person;
-      if (!person) throw error('יש לבחור מי אני',401);
+      if (!person || !people.has(person)) throw error('יש לבחור מי אני',401);
       if (url.pathname === '/api/state' && req.method === 'GET') return send(200,state(person));
       if (url.pathname === '/api/seen' && req.method === 'POST') {
         if (!Array.isArray(body.songs) || body.songs.length > 100 || body.songs.some(id => !songs.has(id))) throw error('רשימת שירים לא תקינה');

@@ -6,11 +6,13 @@ await rm(output, {recursive:true,force:true});
 await mkdir(output, {recursive:true});
 for (const file of ['app.js','style.css','share-cover-v2.jpg','local-store.js','google-store.js']) await copyFile(new URL(`public/${file}`,root),new URL(file,output));
 const hash = content => createHash('sha256').update(content).digest('hex').slice(0,12);
+const catalogVersion=hash(await readFile(new URL('data/catalog.json',root)));
 let appCode = await readFile(new URL('public/app.js',root),'utf8');
 for(const file of ['local-store.js','google-store.js']) {
  const version=hash(await readFile(new URL(`public/${file}`,root)));
  appCode=appCode.replace(`'./${file}'`,`'./${file}?v=${version}'`);
 }
+appCode=appCode.replace("'./catalog.json'",`'./catalog.json?v=${catalogVersion}'`);
 await writeFile(new URL('app.js',output),appCode);
 const cssVersion=hash(await readFile(new URL('public/style.css',root)));
 const html = (await readFile(new URL('public/index.html',root),'utf8'))
@@ -25,6 +27,7 @@ await writeFile(new URL('test/index.html',output),html.replace('<script type="mo
 let statsCode=await readFile(new URL('public/stats.js',root),'utf8');
 const storeVersion=hash(await readFile(new URL('public/local-store.js',root)));
 statsCode=statsCode.replace("'../local-store.js'",`'../local-store.js?v=${storeVersion}'`);
+statsCode=statsCode.replace("'../catalog.json'",`'../catalog.json?v=${catalogVersion}'`);
 const statsHtml=(await readFile(new URL('public/stats.html',root),'utf8'))
  .replace('href="../style.css"',`href="../style.css?v=${cssVersion}"`)
  .replace('src="stats.js"',`src="stats.js?v=${hash(statsCode)}"`);

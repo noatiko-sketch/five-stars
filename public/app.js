@@ -12,7 +12,8 @@ const queuedSeen = new Set();
 const viewed = new Set();
 const escape = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number = n => n.toLocaleString('he-IL');
-const personName = id => catalog.people.find(p => p.id === id)?.name || '';
+const selectablePeople = () => catalog.people.filter(p=>p.active!==false);
+const personName = id => selectablePeople().find(p => p.id === id)?.name || '';
 async function api(path, body) {
   if (previewMode) {
     if (path === 'catalog') {
@@ -29,7 +30,7 @@ async function api(path, body) {
     }
     localStore ||= createLocalStore(catalog, localStorage, sandbox?'sandbox':'live-local');
     if (path === 'session') {localStorage.setItem(`five-stars:identity:${sandbox?'sandbox':'live-local'}`,body.person);return localStore.state(body.person);}
-    if (!state) {const person=localStorage.getItem(`five-stars:identity:${sandbox?'sandbox':'live-local'}`);if(path==='state'&&catalog.people.some(p=>p.id===person))return localStore.state(person);throw Object.assign(new Error('יש לבחור שם'), {status:401});}
+    if (!state) {const person=localStorage.getItem(`five-stars:identity:${sandbox?'sandbox':'live-local'}`);if(path==='state'&&selectablePeople().some(p=>p.id===person))return localStore.state(person);throw Object.assign(new Error('יש לבחור שם'), {status:401});}
     if (path === 'state') return localStore.state(state.person);
     if (path === 'stats') return Promise.reject(new Error('הסטטיסטיקות אינן זמינות כרגע'));
     return localStore.mutate(state.person,path,body);
@@ -51,13 +52,13 @@ function updateProgress() {
   const loves=document.querySelector('#love-count');if(loves)loves.textContent=`ממש אהבתי · ${Object.values(state.votes).filter(v=>v===3).length} מתוך 3`;
 }
 function image(song) { return song.image ? `<img class="art" src="${escape(song.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">` : ''; }
-function names(song){return [...new Set(song.shares.map(s=>personName(s.person)))].join(' · ');}
+function names(song){return [...new Set(song.shares.map(s=>personName(s.person)).filter(Boolean))].join(' · ') || 'מהקבוצה';}
 function monthName(key){return new Intl.DateTimeFormat('he-IL',{month:'long',year:'numeric'}).format(new Date(key+'-02T12:00:00'));}
 function renderLogin(){
   observer?.disconnect();
   app.innerHTML=`<section class="login"><div class="kicker">שירי מוצ״ש · חוגגים 2,000</div><h1>חמישה<br><span>כוכבים.</span></h1><h2>מי כאן?</h2><input id="name-search" aria-label="חיפוש השם שלי" placeholder="השם שלי"><div class="names"></div><p class="note">השם שבחרת יופיע לצד הבחירות שלך בסטטיסטיקות.</p></section>`;
   const namesNode=app.querySelector('.names');
-  function list(q=''){namesNode.innerHTML=catalog.people.filter(p=>p.name.includes(q)).map(p=>`<button class="person" data-person="${p.id}">${escape(p.name)}</button>`).join('') || '<p>לא נמצא שם</p>';namesNode.querySelectorAll('button').forEach(b=>b.onclick=async()=>{if(busy)return;busy=true;b.disabled=true;try{setState(await api('session',{person:b.dataset.person}));viewed.clear();state.seen.forEach(id=>viewed.add(id));query='';sender='';month='';tab='songs';render();}catch(e){notice(e.message);b.disabled=false;}finally{busy=false;}});}
+  function list(q=''){namesNode.innerHTML=selectablePeople().filter(p=>p.name.includes(q)).map(p=>`<button class="person" data-person="${p.id}">${escape(p.name)}</button>`).join('') || '<p>לא נמצא שם</p>';namesNode.querySelectorAll('button').forEach(b=>b.onclick=async()=>{if(busy)return;busy=true;b.disabled=true;try{setState(await api('session',{person:b.dataset.person}));viewed.clear();state.seen.forEach(id=>viewed.add(id));query='';sender='';month='';tab='songs';render();}catch(e){notice(e.message);b.disabled=false;}finally{busy=false;}});}
   app.querySelector('input').oninput=e=>list(e.target.value.trim());list();
 }
 function render(){
@@ -70,7 +71,7 @@ function render(){
 }
 function renderSongs(){
  const months=[...new Set(catalog.songs.flatMap(s=>s.shares.map(x=>x.date.slice(0,7))))].sort();
- app.querySelector('#content').innerHTML=`<div class="toolbar"><input id="search" type="search" placeholder="איזה שיר?" aria-label="חיפוש שיר או אמן" value="${escape(query)}"><select id="sender" aria-label="סינון לפי משתף"><option value="">כולם</option>${catalog.people.map(p=>`<option value="${p.id}" ${sender===p.id?'selected':''}>${escape(p.name)}</option>`).join('')}</select><select id="month" aria-label="סינון לפי חודש"><option value="">כל החודשים</option>${months.map(m=>`<option value="${m}" ${month===m?'selected':''}>${monthName(m)}</option>`).join('')}</select></div><div class="progress"><span id="progress-label"></span><div class="track"><i></i></div></div><div class="save-status" id="save-status"></div><div id="song-list"></div>`;
+ app.querySelector('#content').innerHTML=`<div class="toolbar"><input id="search" type="search" placeholder="איזה שיר?" aria-label="חיפוש שיר או אמן" value="${escape(query)}"><select id="sender" aria-label="סינון לפי משתף"><option value="">כולם</option>${selectablePeople().map(p=>`<option value="${p.id}" ${sender===p.id?'selected':''}>${escape(p.name)}</option>`).join('')}</select><select id="month" aria-label="סינון לפי חודש"><option value="">כל החודשים</option>${months.map(m=>`<option value="${m}" ${month===m?'selected':''}>${monthName(m)}</option>`).join('')}</select></div><div class="progress"><span id="progress-label"></span><div class="track"><i></i></div></div><div class="save-status" id="save-status"></div><div id="song-list"></div>`;
  app.querySelector('#search').oninput=e=>{query=e.target.value;listSongs();};app.querySelector('#sender').onchange=e=>{sender=e.target.value;listSongs();};app.querySelector('#month').onchange=e=>{month=e.target.value;listSongs();};listSongs();
 }
 function listSongs(){
@@ -112,7 +113,7 @@ function renderStats(){
  if(ranked.length>statsLimit){const more=document.createElement('button');more.className='more';more.textContent='עוד';more.onclick=()=>{statsLimit+=50;renderStats();};content.append(more);}
  content.querySelectorAll('[data-voters]').forEach(b=>b.onclick=()=>{const r=stats.songs.find(s=>s.id===b.dataset.voters);modal('מי אהבו?',r.voters.map(v=>`<div class="modal-row"><span>${escape(personName(v.person))}</span><span>${v.value===3?'ממש אהבתי':'אהבתי'}</span></div>`).join(''));});
 }
-async function start(){app.innerHTML='<div class="loading">טוענים את השירים…</div>';try{catalog=await api('catalog');try{setState(await api('state'));render();}catch(e){if(e.status===401)renderLogin();else throw e;}}catch(e){app.innerHTML='<div class="loading">לא הצלחנו לטעון את השירים<br><button class="retry">ננסה שוב</button></div>';app.querySelector('button').onclick=start;}}
+async function start(){app.innerHTML='<div class="loading">טוענים את השירים…</div>';try{catalog=await api('catalog');try{const restored=await api('state');if(!selectablePeople().some(p=>p.id===restored.person))throw Object.assign(new Error('יש לבחור שם'),{status:401});setState(restored);render();}catch(e){if(e.status===401)renderLogin();else throw e;}}catch(e){app.innerHTML='<div class="loading">לא הצלחנו לטעון את השירים<br><button class="retry">ננסה שוב</button></div>';app.querySelector('button').onclick=start;}}
 setInterval(async()=>{if(!state||busy||document.hidden||document.querySelector('.login'))return;try{setState(await api('state'));if(tab==='stats'){stats=await api('stats');renderStats();}}catch{}},30000);
 window.addEventListener('online',flushSeen);
 window.addEventListener('storage',async()=>{if(!state||!previewMode||googleRequest)return;setState(await api('state'));if(tab==='stats'){stats=await api('stats');renderStats();}else listSongs();});
@@ -121,7 +122,7 @@ start();
 function renderNameReview(){
  const reviews=localStore.reviews();
  modal('שמות לבדיקה',`<p class="note">נשמר במכשיר הזה. בסיום אפשר לייצא ולשלוח לי.</p><input id="review-search" placeholder="חיפוש שם" aria-label="חיפוש שם לעריכה"><div id="review-people"></div><button id="export-reviews" class="person">ייצוא הערות</button>`);
- function list(q=''){dialog.querySelector('#review-people').innerHTML=catalog.people.filter(p=>p.name.toLowerCase().includes(q.toLowerCase())).map(p=>`<button class="review-person" data-review="${escape(p.id)}">${escape(p.name)}${reviews[p.id]?' · '+(reviews[p.id].action==='remove'?'להסרה':'לשינוי'):''}</button>`).join('');dialog.querySelectorAll('[data-review]').forEach(b=>b.onclick=()=>editName(b.dataset.review));}
+ function list(q=''){dialog.querySelector('#review-people').innerHTML=selectablePeople().filter(p=>p.name.toLowerCase().includes(q.toLowerCase())).map(p=>`<button class="review-person" data-review="${escape(p.id)}">${escape(p.name)}${reviews[p.id]?' · '+(reviews[p.id].action==='remove'?'להסרה':'לשינוי'):''}</button>`).join('');dialog.querySelectorAll('[data-review]').forEach(b=>b.onclick=()=>editName(b.dataset.review));}
  dialog.querySelector('#review-search').oninput=e=>list(e.target.value);list();
  dialog.querySelector('#export-reviews').onclick=()=>{const rows=Object.entries(localStore.reviews()).map(([id,r])=>({id,name:personName(id),...r}));const blob=new Blob([JSON.stringify(rows,null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='five-stars-name-reviews.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);};
 }
