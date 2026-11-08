@@ -33,5 +33,7 @@ for(const prefix of ['', 'test/']) {
  await writeFile(new URL(`${prefix}stats/stats.js`,output),statsCode);
  await writeFile(new URL(`${prefix}stats/index.html`,output),prefix?statsHtml.replace('<script type="module"','<script>globalThis.FIVE_STARS_SANDBOX = true;</script><script type="module"'):statsHtml);
 }
+await mkdir(new URL('names/',output),{recursive:true});
+await copyFile(new URL('public/names.html',root),new URL('names/index.html',output));
 await writeFile(new URL('.nojekyll',output),'');
 console.log('Exported live catalog with shared-storage connection when configured, and isolated local test environment.');
