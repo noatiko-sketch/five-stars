@@ -1,10 +1,21 @@
+import { createHash } from 'node:crypto';
 import { mkdir, copyFile, readFile, writeFile, rm } from 'node:fs/promises';
 const root = new URL('../', import.meta.url);
 const output = new URL('dist/', root);
 await rm(output, {recursive:true,force:true});
 await mkdir(output, {recursive:true});
 for (const file of ['app.js','style.css','share-cover-v2.jpg','local-store.js','google-store.js']) await copyFile(new URL(`public/${file}`,root),new URL(file,output));
-const html = await readFile(new URL('public/index.html',root),'utf8');
+const hash = content => createHash('sha256').update(content).digest('hex').slice(0,12);
+let appCode = await readFile(new URL('public/app.js',root),'utf8');
+for(const file of ['local-store.js','google-store.js']) {
+ const version=hash(await readFile(new URL(`public/${file}`,root)));
+ appCode=appCode.replace(`'./${file}'`,`'./${file}?v=${version}'`);
+}
+await writeFile(new URL('app.js',output),appCode);
+const cssVersion=hash(await readFile(new URL('public/style.css',root)));
+const html = (await readFile(new URL('public/index.html',root),'utf8'))
+ .replace('href="style.css"',`href="style.css?v=${cssVersion}"`)
+ .replace('src="app.js"',`src="app.js?v=${hash(appCode)}"`);
 await writeFile(new URL('index.html',output),html.replace('<script type="module"','<script>globalThis.FIVE_STARS_PREVIEW = true;</script><script type="module"'));
 await copyFile(new URL('data/catalog.json',root),new URL('catalog.json',output));
 await mkdir(new URL('test/',output),{recursive:true});
