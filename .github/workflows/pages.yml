@@ -1,7 +1,7 @@
 name: Publish GitHub Pages
 on:
   push:
-    branches: [main]
+    branches: [main, staging]
   workflow_dispatch:
 permissions:
   contents: read
@@ -15,11 +15,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: main
       - uses: actions/setup-node@v4
         with:
           node-version: '24'
       - run: npm test
       - run: node scripts/export-pages.mjs
+      - uses: actions/checkout@v4
+        with:
+          ref: staging
+          path: .staging
+      - run: npm test
+        working-directory: .staging
+      - run: node scripts/export-pages.mjs
+        working-directory: .staging
+        env:
+          FIVE_STARS_ENV: test
+      - name: Compose production and test sites
+        run: node -e "const fs=require('node:fs');fs.rmSync('dist/test',{recursive:true,force:true});fs.cpSync('.staging/dist','dist/test',{recursive:true})"
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

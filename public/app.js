@@ -3,7 +3,8 @@ import { createLocalStore } from './local-store.js';
 const previewMode = globalThis.FIVE_STARS_PREVIEW === true;
 const sandbox = globalThis.FIVE_STARS_SANDBOX === true;
 let localStore;
-const googleRequest = !sandbox && globalThis.FIVE_STARS_STORAGE_URL ? connectGoogleStore(globalThis.FIVE_STARS_STORAGE_URL) : null;
+const googleRequest = globalThis.FIVE_STARS_STORAGE_URL ? connectGoogleStore(globalThis.FIVE_STARS_STORAGE_URL) : null;
+const sharedIdentityKey=sandbox?'five-stars:identity:shared-test':'five-stars:identity:shared';
 const app = document.querySelector('#app');
 const dialog = document.querySelector('#dialog');
 let catalog, state, tab = 'songs', stats, statsView = 'songs', statsLimit = 50, busy = false;
@@ -22,13 +23,13 @@ async function api(path, body) {
       return response.json();
     }
     if(googleRequest){
-      const person=body?.person||state?.person||localStorage.getItem('five-stars:identity:shared');
+      const person=body?.person||state?.person||localStorage.getItem(sharedIdentityKey);
       if(!person||!catalog.people.some(p=>p.id===person&&p.active!==false))throw Object.assign(new Error('יש לבחור שם'),{status:401});
       let result=await googleRequest(path,{...body,person});
-      if(path==='session'&&Object.keys(result.votes).length===0){
+      if(!sandbox&&path==='session'&&Object.keys(result.votes).length===0){
        try{const prior=JSON.parse(localStorage.getItem('five-stars:live-local:v1')||'{}').people?.[person]?.votes;if(prior&&Object.keys(prior).length)result=await googleRequest('import',{person,votes:prior});}catch{notice('הבחירות המקומיות נשארו במכשיר; אפשר לבדוק אותן בהמשך');}
       }
-      if(path==='session')localStorage.setItem('five-stars:identity:shared',person);
+      if(path==='session')localStorage.setItem(sharedIdentityKey,person);
       return result;
     }
     localStore ||= createLocalStore(catalog, localStorage, sandbox?'sandbox':'live-local');
@@ -66,10 +67,10 @@ function renderLogin(){
 }
 function render(){
  observer?.disconnect();
- app.innerHTML=`<header><a class="brand" href="./">חמישה כוכבים.</a><button class="identity">${escape(personName(state.person))}</button></header><div class="sticky-status"><div class="vote-counters"><span id="like-count" role="status" aria-live="polite"></span><span id="love-count" role="status" aria-live="polite"></span></div>${previewMode?`<small>${sandbox?'מעבדת ניסויים · נשמר במכשיר':(googleRequest?'מחובר לשמירה':'נשמר במכשיר הזה בלבד · ללא סנכרון')}</small>`:''}${sandbox?'<button id="review-names">עריכת שמות</button><button id="test-reset">איפוס ניסוי</button>':''}</div><main class="wrap"><section class="hero"><h1 class="intro">${tab==='songs'?'תסמנו שירים שבזכות הקבוצה הכרתם' :'הכי הרבה<span>אהבה.</span>'}</h1><div class="count"><strong>${number(tab==='songs'?catalog.songs.length:stats?.participants||0)}</strong><small>${tab==='songs'?'שירים מהקבוצה':'משתתפים הצביעו'}</small></div></section><div id="content"></div></main>`;
+ app.innerHTML=`<header><a class="brand" href="./">חמישה כוכבים.</a><button class="identity">${escape(personName(state.person))}</button></header><div class="sticky-status"><div class="vote-counters"><span id="like-count" role="status" aria-live="polite"></span><span id="love-count" role="status" aria-live="polite"></span></div>${previewMode?`<small>${sandbox?(googleRequest?'סביבת ניסוי · שמירה נפרדת':'סביבת ניסוי · נשמר במכשיר'):(googleRequest?'מחובר לשמירה':'נשמר במכשיר הזה בלבד · ללא סנכרון')}</small>`:''}${sandbox?'<button id="review-names">עריכת שמות</button><button id="test-reset">איפוס ניסוי</button>':''}</div><main class="wrap"><section class="hero"><h1 class="intro">${tab==='songs'?'תסמנו שירים שבזכות הקבוצה הכרתם' :'הכי הרבה<span>אהבה.</span>'}</h1><div class="count"><strong>${number(tab==='songs'?catalog.songs.length:stats?.participants||0)}</strong><small>${tab==='songs'?'שירים מהקבוצה':'משתתפים הצביעו'}</small></div></section><div id="content"></div></main>`;
  app.querySelector('.identity').onclick=()=>{if(busy||flushing){notice('רגע, שומרים את הבחירה');return;}queuedSeen.clear();viewed.clear();state=null;renderLogin();};
 
- if(sandbox){app.querySelector('#review-names').onclick=renderNameReview;app.querySelector('#test-reset').onclick=()=>{modal('לאפס את נתוני הניסוי?', '<p>הבחירות, ההתקדמות והערות השמות במכשיר הזה יימחקו.</p><button id="confirm-reset" class="person">איפוס</button>');dialog.querySelector('#confirm-reset').onclick=()=>{const person=state.person;queuedSeen.clear();viewed.clear();clearTimeout(seenTimer);localStore.reset();dialog.close();state=null;setState(localStore.state(person));render();};};}
+ if(sandbox){app.querySelector('#review-names').onclick=()=>{localStore ||= createLocalStore(catalog,localStorage,'sandbox');renderNameReview();};app.querySelector('#test-reset').onclick=()=>{modal('לאפס את נתוני הניסוי?', '<p>הצבעות הניסוי וההתקדמות של כל המשתתפים בטסט יימחקו.</p><button id="confirm-reset" class="person">איפוס</button>');dialog.querySelector('#confirm-reset').onclick=async()=>{if(busy||flushing){notice('רגע, שומרים');return;}busy=true;try{const person=state.person;queuedSeen.clear();viewed.clear();clearTimeout(seenTimer);if(googleRequest){const next=await api('reset',{});dialog.close();state=null;setState(next);}else{localStore.reset();dialog.close();state=null;setState(localStore.state(person));}render();notice('נתוני הניסוי אופסו');}catch(e){notice(e.message);}finally{busy=false;}};};}
  if(tab==='songs')renderSongs();else renderStats();updateProgress();
 }
 function renderSongs(){
