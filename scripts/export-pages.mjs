@@ -21,5 +21,17 @@ await copyFile(new URL('data/catalog.json',root),new URL('catalog.json',output))
 await mkdir(new URL('test/',output),{recursive:true});
 for(const file of ['app.js','style.css','share-cover-v2.jpg','local-store.js','google-store.js','catalog.json']) await copyFile(new URL(file,output),new URL(`test/${file}`,output));
 await writeFile(new URL('test/index.html',output),html.replace('<script type="module"','<script>globalThis.FIVE_STARS_PREVIEW = true;globalThis.FIVE_STARS_SANDBOX = true;</script><script type="module"'));
+// A separate statistics URL for live-local and isolated sandbox ballots.
+let statsCode=await readFile(new URL('public/stats.js',root),'utf8');
+const storeVersion=hash(await readFile(new URL('public/local-store.js',root)));
+statsCode=statsCode.replace("'../local-store.js'",`'../local-store.js?v=${storeVersion}'`);
+const statsHtml=(await readFile(new URL('public/stats.html',root),'utf8'))
+ .replace('href="../style.css"',`href="../style.css?v=${cssVersion}"`)
+ .replace('src="stats.js"',`src="stats.js?v=${hash(statsCode)}"`);
+for(const prefix of ['', 'test/']) {
+ await mkdir(new URL(`${prefix}stats/`,output),{recursive:true});
+ await writeFile(new URL(`${prefix}stats/stats.js`,output),statsCode);
+ await writeFile(new URL(`${prefix}stats/index.html`,output),prefix?statsHtml.replace('<script type="module"','<script>globalThis.FIVE_STARS_SANDBOX = true;</script><script type="module"'):statsHtml);
+}
 await writeFile(new URL('.nojekyll',output),'');
 console.log('Exported live catalog with shared-storage connection when configured, and isolated local test environment.');

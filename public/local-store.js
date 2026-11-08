@@ -19,8 +19,8 @@ export function createLocalStore(catalog, storage, namespace) {
    data.revision=(data.revision||0)+1;write(data);return personState(data,person);
   },
   stats(person,admin=false){const data=read();if(!admin&&!personState(data,person).unlocked)throw new Error('התוצאות ייפתחו אחרי מעבר על כל השירים');
-   const songs=catalog.songs.map(s=>{const voters=Object.entries(data.people).filter(([,p])=>p.votes[s.id]).map(([person,p])=>({person,value:p.votes[s.id]}));return {id:s.id,score:voters.reduce((n,v)=>n+v.value,0),likes:voters.filter(v=>v.value===1).length,loves:voters.filter(v=>v.value===3).length,voters};}).sort((a,b)=>b.score-a.score);
-   const contributors=catalog.people.map(p=>({person:p.id,score:songs.reduce((n,s)=>n+(catalog.songs.find(c=>c.id===s.id).shares.some(x=>x.person===p.id)?s.score:0),0)})).sort((a,b)=>b.score-a.score);
+   const songs=catalog.songs.map(s=>{const voters=Object.entries(data.people).filter(([,p])=>p.votes[s.id]).map(([person,p])=>({person,value:p.votes[s.id]}));return {id:s.id,score:voters.reduce((n,v)=>n+(v.value===3?2:1),0),likes:voters.filter(v=>v.value===1).length,loves:voters.filter(v=>v.value===3).length,voters};}).sort((a,b)=>b.score-a.score);
+   const scores=new Map(catalog.people.map(p=>[p.id,0]));const songById=new Map(catalog.songs.map(s=>[s.id,s]));for(const result of songs)for(const id of new Set(songById.get(result.id).shares.map(x=>x.person)))scores.set(id,(scores.get(id)||0)+result.score);const contributors=[...scores].map(([person,score])=>({person,score})).sort((a,b)=>b.score-a.score);
    return {songs,contributors,participants:Object.values(data.people).filter(p=>Object.keys(p.votes).length).length,votes:songs.reduce((n,s)=>n+s.voters.length,0)};
   },
   reviews(){return read().reviews;},

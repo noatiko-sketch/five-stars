@@ -73,7 +73,7 @@ export function createApp({ directory = process.env.DATA_DIR || join(root, 'runt
       if (url.pathname === '/api/stats' && req.method === 'GET') {
         if (!state(person).unlocked) throw error('התוצאות ייפתחו אחרי מעבר על כל השירים',403);
         const votes = db.prepare('SELECT person,song,value FROM votes').all().filter(v => songs.has(v.song));
-        const ranked = catalog.songs.map(s => { const entries=votes.filter(v=>v.song===s.id);return {id:s.id,score:entries.reduce((a,v)=>a+v.value,0),likes:entries.filter(v=>v.value===1).length,loves:entries.filter(v=>v.value===3).length,voters:entries.map(v=>({person:v.person,value:v.value}))}; }).sort((a,b)=>b.score-a.score || b.loves-a.loves || a.id.localeCompare(b.id));
+        const ranked = catalog.songs.map(s => { const entries=votes.filter(v=>v.song===s.id);return {id:s.id,score:entries.reduce((a,v)=>a+(v.value===3?2:1),0),likes:entries.filter(v=>v.value===1).length,loves:entries.filter(v=>v.value===3).length,voters:entries.map(v=>({person:v.person,value:v.value}))}; }).sort((a,b)=>b.score-a.score || b.loves-a.loves || a.id.localeCompare(b.id));
         const contributors=catalog.people.map(p=>({person:p.id,score:ranked.reduce((a,r)=>a+(songs.get(r.id).shares.some(s=>s.person===p.id)?r.score:0),0)})).sort((a,b)=>b.score-a.score);
         return send(200,{songs:ranked,contributors,votes:votes.length,participants:new Set(votes.map(v=>v.person)).size});
       }
