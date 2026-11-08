@@ -22,6 +22,7 @@ function fiveStarsApi(path,body){
   if(path==='vote'){
    const song=FS_SONGS.findIndex(s=>s.id===body.song);if(song<0||![0,1,3].includes(body.value))throw new Error('בחירה לא תקינה');
    if(FS_SONGS[song].people.includes(body.person))throw new Error('אי אפשר להצביע לשיר שלך');
+   if(body.value===1&&votes[song]!==1&&Object.values(votes).filter(v=>v===1).length>=10)throw new Error('אפשר לסמן עד 10 שירים באהבתי');
    if(body.value===3&&votes[song]!==3&&Object.values(votes).filter(v=>v===3).length>=3)throw new Error('אפשר לסמן עד 3 שירים בממש אהבתי');
    if(body.value)votes[song]=body.value;else delete votes[song];changed=true;
   }

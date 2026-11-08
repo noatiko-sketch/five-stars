@@ -61,7 +61,8 @@ export function createApp({ directory = process.env.DATA_DIR || join(root, 'runt
         if (song.shares.some(s => s.person === person)) throw error('אי אפשר להצביע לשיר ששיתפת',403);
         db.exec('BEGIN IMMEDIATE');
         try {
-          const count = db.prepare('SELECT count(*) AS n FROM votes WHERE person=? AND value=3 AND song<>?').get(person,body.song).n;
+          const count = db.prepare('SELECT count(*) AS n FROM votes WHERE person=? AND value=? AND song<>?').get(person,body.value,body.song).n;
+          if (body.value === 1 && count >= 10) throw error('אפשר לבחור עד עשרה שירים באהבתי',409);
           if (body.value === 3 && count >= 3) throw error('אפשר לבחור עד שלושה שירים בממש אהבתי',409);
           if (body.value === 0) db.prepare('DELETE FROM votes WHERE person=? AND song=?').run(person,body.song);
           else db.prepare('INSERT INTO votes VALUES(?,?,?) ON CONFLICT(person,song) DO UPDATE SET value=excluded.value').run(person,body.song,body.value);
