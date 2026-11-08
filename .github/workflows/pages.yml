@@ -1,8 +1,12 @@
 name: Publish GitHub Pages
 on:
   push:
-    branches: [main, staging]
+    branches: [main]
   workflow_dispatch:
+  workflow_run:
+    workflows: [Validate staging]
+    types: [completed]
+    branches: [staging]
 permissions:
   contents: read
   pages: write
@@ -12,6 +16,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   build:
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
