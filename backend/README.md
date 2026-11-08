@@ -1,17 +1,15 @@
 # Shared Google storage
 
-The source catalog is served by GitHub Pages. Choices and seen progress are stored separately in the private existing spreadsheet, tab `בחירות האתר`.
+Live votes, seen progress and statistics use an owner-deployed Google Apps Script Web App. The existing spreadsheet remains private. The frontend receives only the operations provided by `fiveStarsApi` through an HTML bridge.
 
-The owner manages the bound script from Extensions → Apps Script in the existing private spreadsheet.
+The public API endpoint is in `config/storage.json`; no private spreadsheet ID or editor URL is stored in the frontend. `backend/Code.gs` is a template. Its empty `FS_PEOPLE` and `FS_SONGS` arrays must be populated in the owner-controlled deployed script from `data/catalog.json`, preserving catalog order. Never deploy the empty public template over the live script. Set the spreadsheet ID privately in that owner-controlled script.
 
-1. Review Google Sheets authorization for the bound script; Google requests Sheets access. Code opens only the configured spreadsheet.
-2. Run `setupFiveStars` once to create the choices table. Never remove/reorder rows manually.
-3. Deploy as Web App, execute as owner, access Anyone. Keep spreadsheet sharing private. This public API permits choosing a name and modifying its votes by design (trust-based identity); it is not verified authentication.
-4. Set `globalThis.FIVE_STARS_STORAGE_URL` to the deployed `/exec` URL in the main exported HTML only; the test environment uses device-local data and must never point to production storage.
-5. Test vote creation, cancellation, fourth-love rejection, own-song rejection and persistence from another browser session with the same selected person; verify saved rows in Sheets before opening voting to the group.
+Run `setupFiveStars` once to create the choices table. Do not reorder participant rows or song indexes without migration. Execute the Web App as its owner, with access for Anyone so participants do not need Google accounts. The spreadsheet itself must remain private. The app uses trust-based name selection, with no verified login or secure admin roles.
 
-Bridge: a hidden Apps Script HTML iframe uses `google.script.run` for requests. Replies use a random channel and the exact GitHub Pages origin. This avoids relying on unsupported cross-origin fetch response headers. No Sheets credentials go into GitHub.
+The live Pages export injects the shared endpoint into the voting and statistics pages. `/test/` and `/test/stats/` remain isolated device-local experiments and never receive the production endpoint.
 
-Each participant has one compact row, vote/seen keys use catalog indexes, mutations use a script lock, and the UI applies only monotonic revisions. Catalog index order must remain stable; migrate stored indexes before changing that order. Source song IDs in the backend include co-sharers and merged entries.
+Each participant has one compact row. Mutations enforce self-vote rejection, up to ten likes and three loves under a script lock. Loves retain stored value 3 for compatibility and score two points in statistics. Likes score one. When the shared ballot is empty, a valid existing device-local ballot can be imported once; imports never overwrite an existing shared ballot. Shared statistics refresh every twenty seconds and when the tab becomes visible.
 
-Not yet production-verified: OAuth, deployment, iframe message round-trip and concurrent real Sheets saves. The frontend remains disabled until a storage URL is configured. Apps Script has execution quotas; keep seen updates batched and avoid aggressive polling. All current live/shared choices must be treated as trust-based, with no secure admin permissions.
+Apps Script has execution quotas. Keep seen updates batched, handle transport failures visibly, and do not replace failed shared saves with a device-local success message. The bridge uses a random channel, validates message source and exact origin, and avoids cross-origin fetch redirect assumptions.
+
+Verified 2026-11-08: owner authorization and deployment, live vote write read back from Sheets, reload in a separate browser session, and voter details in the shared statistics view. Mocked Apps Script tests also cover both vote caps, self-voting rejection, import idempotency and weighted scores. Mobile and real browser tests complement those deterministic checks; they do not remove Google service quotas.

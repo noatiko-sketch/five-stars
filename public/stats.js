@@ -9,6 +9,7 @@ let latestStats,refreshSequence=0;
 let catalog,store,sort='score',sender='',limit=50;
 const name=id=>catalog.people.find(p=>p.id===id&&p.active!==false)?.name||'משתתף שהוסר';
 function render(){
+ if(shared&&!latestStats)return;
  const all=latestStats||store.stats(null,true);
  const byId=new Map(all.songs.map(s=>[s.id,s]));
  const rows=catalog.songs.filter(s=>!sender||s.shares.some(x=>x.person===sender)).map(song=>({song,...byId.get(song.id)})).filter(r=>sender||r.voters.length);

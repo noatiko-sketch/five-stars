@@ -23,7 +23,7 @@ async function api(path, body) {
     }
     if(googleRequest){
       const person=body?.person||state?.person||localStorage.getItem('five-stars:identity:shared');
-      if(!person)throw Object.assign(new Error('יש לבחור שם'),{status:401});
+      if(!person||!catalog.people.some(p=>p.id===person&&p.active!==false))throw Object.assign(new Error('יש לבחור שם'),{status:401});
       let result=await googleRequest(path,{...body,person});
       if(path==='session'&&Object.keys(result.votes).length===0){
        try{const prior=JSON.parse(localStorage.getItem('five-stars:live-local:v1')||'{}').people?.[person]?.votes;if(prior&&Object.keys(prior).length)result=await googleRequest('import',{person,votes:prior});}catch{notice('הבחירות המקומיות נשארו במכשיר; אפשר לבדוק אותן בהמשך');}
