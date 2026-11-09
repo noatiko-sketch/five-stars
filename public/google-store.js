@@ -10,6 +10,6 @@ export function connectGoogleStore(url){
   if(event.data.error)request.reject(new Error(event.data.error));else request.resolve(event.data.result);
  });
  const frame=document.createElement('iframe');frame.hidden=true;frame.title='שמירת בחירות';frame.src=url+'?channel='+encodeURIComponent(channel);document.body.append(frame);
- const request=async(path,body)=>{await ready;const id=crypto.randomUUID();return new Promise((resolve,reject)=>{const timer=setTimeout(()=>{waiting.delete(id);reject(new Error('השמירה מתעכבת. הבחירה לא אושרה, נסו שוב'));},40000);waiting.set(id,{resolve,reject,timer});bridge.postMessage({channel,id,path,body},origin);});};
- return async(path,body)=>{try{return await request(path,body);}catch(e){if(!['save','qa-save'].includes(path)||!e.message.includes('עומס רגעי'))throw e;await new Promise(resolve=>setTimeout(resolve,1000+Math.random()*1500));return request(path,body);}};
+ const request=async(path,body)=>{await ready;const id=crypto.randomUUID();return new Promise((resolve,reject)=>{const timer=setTimeout(()=>{waiting.delete(id);reject(new Error('השמירה מתעכבת. הבחירה לא אושרה, נסו שוב'));},45000);waiting.set(id,{resolve,reject,timer});bridge.postMessage({channel,id,path,body},origin);});};
+ return async(path,body)=>{for(let attempt=0;;attempt++){try{return await request(path,body);}catch(error){if(attempt>=2||!['save','qa-save'].includes(path)||!/(עומס|מתעכבת|too many|Service invoked)/i.test(error.message))throw error;await new Promise(resolve=>setTimeout(resolve,1000+Math.random()*1500));}}};
 }

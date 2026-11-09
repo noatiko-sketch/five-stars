@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import {readFileSync} from 'node:fs';
+function fixture(errors=[]){let listener,channel,calls=0;const origin='https://test.googleusercontent.com';const bridge={postMessage(request){calls++;queueMicrotask(()=>listener({origin,source:bridge,data:{channel,id:request.id,...(errors.length?{error:errors.shift()}:{result:{saved:true}})}}));}};const context=vm.createContext({crypto:{randomUUID:()=>String(Math.random())},Map,Promise,Error,Math,setTimeout(fn,ms){if(ms<5000)queueMicrotask(fn);return 1;},clearTimeout(){},window:{addEventListener(event,fn){listener=fn;}},document:{createElement(){return{};},body:{append(frame){channel=new URL(frame.src).searchParams.get('channel');queueMicrotask(()=>listener({origin,source:bridge,data:{channel,ready:true}}));}}}});vm.runInContext(readFileSync(new URL('../public/google-store.js',import.meta.url),'utf8').replace('export function','function'),context);return{request:context.connectGoogleStore('https://script.google.com/exec'),calls:()=>calls};}
+test('Google bridge retries transient overload then confirms success',async()=>{const f=fixture(['יש עומס רגעי. נסו שוב','השמירה מתעכבת']);assert.equal((await f.request('save',{})).saved,true);assert.equal(f.calls(),3);});
+test('Google bridge keeps permanent validation errors visible without retries',async()=>{const f=fixture(['צריך לבחור לפחות 10 שירים באהבתי']);await assert.rejects(f.request('save',{}),/לפחות 10/);assert.equal(f.calls(),1);});

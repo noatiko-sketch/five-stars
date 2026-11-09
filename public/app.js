@@ -53,7 +53,7 @@ function setState(next) {
  if(state?.person===next.person && next.revision < state.revision)return;
  if(!draft||state?.person!==next.person)draft=createDraft(localStorage,draftKey(next.person),next.person,next.votes);
  else draft.receive(next.votes);
- state={...next,votes:draft.votes};next.seen.forEach(id=>viewed.add(id));updateProgress();
+ state={...next,votes:draft.votes};app.querySelectorAll('.song .choice').forEach(b=>b.setAttribute('aria-pressed',String(state.votes[b.closest('[data-song]').dataset.song]===Number(b.dataset.value))));next.seen.forEach(id=>viewed.add(id));updateProgress();
 }
 function updateSave(){const button=document.querySelector('#save-ballot');if(button){button.disabled=savingBallot||!draft?.dirty;button.textContent=savingBallot?'שומרים…':'שמירת הבחירות';}const status=document.querySelector('#ballot-status');if(status)status.textContent=draft?.dirty?'יש שינויים שלא נשמרו':savedMessage;}
 async function saveBallot(){
@@ -134,7 +134,7 @@ function renderStats(){
  content.querySelectorAll('[data-voters]').forEach(b=>b.onclick=()=>{const r=stats.songs.find(s=>s.id===b.dataset.voters);modal('מי אהבו?',r.voters.map(v=>`<div class="modal-row"><span>${escape(personName(v.person))}</span><span>${v.value===3?'ממש אהבתי':'אהבתי'}</span></div>`).join(''));});
 }
 async function start(){app.innerHTML='<div class="loading">טוענים את השירים…</div>';try{catalog=await api('catalog');try{const restored=await api('state');if(!selectablePeople().some(p=>p.id===restored.person))throw Object.assign(new Error('יש לבחור שם'),{status:401});setState(restored);render();}catch(e){if(e.status===401)renderLogin();else throw e;}}catch(e){app.innerHTML='<div class="loading">לא הצלחנו לטעון את השירים<br><button class="retry">ננסה שוב</button></div>';app.querySelector('button').onclick=start;}}
-setInterval(async()=>{if(!state||busy||savingBallot||document.hidden||document.querySelector('.login'))return;try{setState(await api('state'));if(tab==='stats'){stats=await api('stats');renderStats();}}catch{}},30000);
+setInterval(async()=>{if(!state||busy||savingBallot||document.hidden||document.querySelector('.login'))return;try{const person=state.person;const next=await api('state');if(state?.person!==person)return;setState(next);if(tab==='stats'){stats=await api('stats');renderStats();}}catch{}},30000);
 window.addEventListener('online',flushSeen);
 window.addEventListener('beforeunload',e=>{if(draft?.dirty){e.preventDefault();e.returnValue='';}});
 window.addEventListener('storage',async()=>{if(!state||!previewMode||googleRequest)return;setState(await api('state'));if(tab==='stats'){stats=await api('stats');renderStats();}else listSongs();});
