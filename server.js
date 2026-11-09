@@ -1,3 +1,4 @@
+import {validateBallot,sameVotes} from './public/ballot.js';
 import { createServer } from 'node:http';
 import { DatabaseSync } from 'node:sqlite';
 import { readFileSync, mkdirSync } from 'node:fs';
@@ -25,7 +26,7 @@ export function createApp({ directory = process.env.DATA_DIR || join(root, 'runt
     const send = (status, body) => { res.writeHead(status, {'Content-Type':'application/json; charset=utf-8', 'Cache-Control':'no-store'}); res.end(JSON.stringify(body)); };
     try {
       if (!url.pathname.startsWith('/api/')) {
-        const paths = { '/':'index.html', '/app.js':'app.js', '/local-store.js':'local-store.js','/google-store.js':'google-store.js', '/style.css':'style.css' };
+        const paths = { '/':'index.html', '/app.js':'app.js', '/ballot.js':'ballot.js', '/local-store.js':'local-store.js','/google-store.js':'google-store.js', '/style.css':'style.css' };
         const file = paths[url.pathname];
         if (!file) throw error('לא נמצא',404);
         res.writeHead(200, {'Content-Type':file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html; charset=utf-8','X-Content-Type-Options':'nosniff'});
@@ -55,6 +56,18 @@ export function createApp({ directory = process.env.DATA_DIR || join(root, 'runt
         try { const insert = db.prepare('INSERT OR IGNORE INTO seen VALUES(?,?)'); for (const id of body.songs) insert.run(person,id); db.exec('COMMIT'); } catch(e) { db.exec('ROLLBACK'); throw e; }
         return send(200,state(person));
       }
+      if(url.pathname==='/api/save'&&req.method==='POST'){
+        try{validateBallot(catalog,person,body.votes);}catch(e){throw error(e.message);}
+        db.exec('BEGIN IMMEDIATE');
+        try{
+          const current=state(person).votes;
+          if(!sameVotes(current,body.votes)&&(!body.baseVotes||!sameVotes(current,body.baseVotes)))throw error('הבחירות השתנו במכשיר אחר. רעננו לפני השמירה',409);
+          db.prepare('DELETE FROM votes WHERE person=?').run(person);
+          const insert=db.prepare('INSERT INTO votes VALUES(?,?,?)');for(const [song,value]of Object.entries(body.votes))insert.run(person,song,value);
+          db.exec('COMMIT');
+        }catch(e){db.exec('ROLLBACK');throw e;}
+        return send(200,state(person));
+      }
       if (url.pathname === '/api/vote' && req.method === 'POST') {
         const song = songs.get(body.song);
         if (!song || ![0,1,3].includes(body.value)) throw error('בחירה לא תקינה');
@@ -62,7 +75,6 @@ export function createApp({ directory = process.env.DATA_DIR || join(root, 'runt
         db.exec('BEGIN IMMEDIATE');
         try {
           const count = db.prepare('SELECT count(*) AS n FROM votes WHERE person=? AND value=? AND song<>?').get(person,body.value,body.song).n;
-          if (body.value === 1 && count >= 10) throw error('אפשר לבחור עד עשרה שירים באהבתי',409);
           if (body.value === 3 && count >= 3) throw error('אפשר לבחור עד שלושה שירים בממש אהבתי',409);
           if (body.value === 0) db.prepare('DELETE FROM votes WHERE person=? AND song=?').run(person,body.song);
           else db.prepare('INSERT INTO votes VALUES(?,?,?) ON CONFLICT(person,song) DO UPDATE SET value=excluded.value').run(person,body.song,body.value);

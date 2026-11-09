@@ -1,0 +1,20 @@
+<!doctype html><html lang="he" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>בדיקת עומס — טסט בלבד</title><style>body{font:16px system-ui;margin:32px;line-height:1.7}button{font:inherit;padding:12px}pre{white-space:pre-wrap;direction:ltr;text-align:left}</style><h1>בדיקת 30 משתמשים — טסט בלבד</h1><p>הבדיקה כותבת לגיליון QA נפרד. הבחירות הרגילות והבחירות בטסט אינן משתנות.</p><button id="run">הפעלת בדיקה</button><pre id="result" role="status"></pre><script type="module">
+import {connectGoogleStore} from '../google-store.js';
+const output=document.querySelector('#result'),button=document.querySelector('#run');
+button.onclick=async()=>{button.disabled=true;const started=performance.now();const report={started:new Date().toISOString(),clients:30};const log=()=>output.textContent=JSON.stringify({...report,elapsedSeconds:Math.round((performance.now()-started)/1000)},null,2);log();
+ try{
+ const catalog=await(await fetch('../catalog.json')).json();const people=catalog.people.filter(p=>p.active!==false).slice(0,30);
+ const request=connectGoogleStore(globalThis.FIVE_STARS_STORAGE_URL);report.phase='Preparing isolated QA data';log();await request('qa-session',{person:people[0].id});await request('qa-reset',{person:people[0].id});
+ report.phase='Connecting 30 independent clients';log();
+ const clients=people.map(person=>({person,request:connectGoogleStore(globalThis.FIVE_STARS_STORAGE_URL)}));
+ const connected=await Promise.allSettled(clients.map(c=>c.request('qa-state',{person:c.person.id})));report.connected=connected.filter(r=>r.status==='fulfilled').length;log();
+ report.phase='Saving 30 ballots concurrently';log();
+ const outcomes=await Promise.all(clients.map(async c=>{const eligible=catalog.songs.filter(s=>!s.shares.some(x=>x.person===c.person.id)).slice(0,15);const votes=Object.fromEntries(eligible.map((s,i)=>[s.id,i<12?1:3]));const t=performance.now();try{const saved=await c.request('qa-save',{person:c.person.id,votes,baseVotes:{}});if(Object.keys(saved.votes).length!==15)throw new Error('Wrong ballot length');return{person:c.person.id,ok:true,ms:Math.round(performance.now()-t),votes};}catch(e){return{person:c.person.id,ok:false,ms:Math.round(performance.now()-t),error:e.message};}}));
+ report.saved=outcomes.filter(r=>r.ok).length;report.failures=outcomes.filter(r=>!r.ok);report.saveMs=outcomes.map(r=>r.ms).sort((a,b)=>a-b);report.phase='Checking scores and voter details';log();
+ const stats=await request('qa-stats',{});report.participants=stats.participants;report.votes=stats.votes;report.weightedPoints=stats.songs.reduce((n,s)=>n+s.score,0);
+ const expected=new Map();for(const o of outcomes.filter(r=>r.ok))for(const [id,value]of Object.entries(o.votes)){const r=expected.get(id)||{score:0,likes:0,loves:0,voters:[]};r.score+=value===3?2:1;r[value===3?'loves':'likes']++;r.voters.push(o.person);expected.set(id,r);}
+ report.exactScores=stats.songs.every(s=>{const e=expected.get(s.id)||{score:0,likes:0,loves:0,voters:[]};return s.score===e.score&&s.likes===e.likes&&s.loves===e.loves&&s.voters.map(v=>v.person).sort().join()===e.voters.sort().join();});
+ report.pass=report.saved===30&&report.participants===30&&report.votes===450&&report.weightedPoints===540&&report.exactScores;report.phase='Complete';log();
+ }catch(e){report.error=e.message;report.pass=false;log();}finally{button.disabled=false;}
+};
+</script></html>

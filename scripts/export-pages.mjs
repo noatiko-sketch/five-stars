@@ -9,8 +9,8 @@ if(!endpoint||testing&&endpoint===storage.url)throw new Error('Test storage must
 const config=`<script>globalThis.FIVE_STARS_STORAGE_URL=${JSON.stringify(endpoint)};globalThis.FIVE_STARS_PREVIEW=true;globalThis.FIVE_STARS_SANDBOX=${testing};</script>`;
 const hash=s=>createHash('sha256').update(s).digest('hex').slice(0,12);
 await rm(output,{recursive:true,force:true});await mkdir(output,{recursive:true});
-for(const file of ['style.css','share-cover-v2.jpg','local-store.js','google-store.js'])await copyFile(new URL(`public/${file}`,root),new URL(file,output));
-const versions={};for(const file of ['local-store.js','google-store.js'])versions[file]=hash(await readFile(new URL(`public/${file}`,root)));
+for(const file of ['style.css','share-cover-v2.jpg','local-store.js','google-store.js','ballot.js'])await copyFile(new URL(`public/${file}`,root),new URL(file,output));
+const versions={};for(const file of ['local-store.js','google-store.js','ballot.js'])versions[file]=hash(await readFile(new URL(`public/${file}`,root)));
 const catalogVersion=hash(await readFile(new URL('data/catalog.json',root)));
 const cssVersion=hash(await readFile(new URL('public/style.css',root)));
 let app=await readFile(new URL('public/app.js',root),'utf8');
@@ -28,3 +28,5 @@ await mkdir(new URL('stats/',output));await writeFile(new URL('stats/index.html'
 await mkdir(new URL('names/',output));await copyFile(new URL('public/names.html',root),new URL('names/index.html',output));
 await writeFile(new URL('.nojekyll',output),'');
 console.log(`Exported ${testing?'test':'production'} with its own shared storage endpoint`);
+
+if(testing){await mkdir(new URL('qa/',output));const qa=(await readFile(new URL('test/qa.html',root),'utf8')).replace('<script type="module">',config+'<script type="module">');await writeFile(new URL('qa/index.html',output),qa);}
