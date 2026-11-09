@@ -12,25 +12,38 @@ function setupFiveStars(){
  return 'Ready';
 }
 function fiveStarsApi(path,body){
- if(!['session','state','vote','seen','stats','import'].includes(path))throw new Error('פעולה לא נתמכת');
+ if(!['session','state','vote','ballot','seen','stats','import','reset'].includes(path))throw new Error('פעולה לא נתמכת');
  if(path==='stats')return fiveStarsStats();
+ if(path==='reset')throw new Error('איפוס סביבת ניסוי דורש הרשאת מנהל');
  const index=FS_PEOPLE.findIndex(p=>p.id===body.person&&p.active!==false);if(index<0)throw new Error('יש לבחור שם');
- const lock=LockService.getScriptLock();if(!lock.tryLock(10000))throw new Error('יש עומס רגעי. נסו שוב');
+ if(path==='state'||path==='session')return fiveStarsReadState(body.person,index);
+ const lock=LockService.getScriptLock();lock.waitLock(30000);
  try{
   const sheet=SpreadsheetApp.openById(FS_SPREADSHEET).getSheetByName('בחירות האתר');if(!sheet)throw new Error('השמירה עדיין לא הוגדרה');
   const range=sheet.getRange(index+2,1,1,5);const row=range.getValues()[0];if(row[0]!==body.person)throw new Error('סדר המשתתפים השתנה');
   const votes=JSON.parse(row[1]||'{}');let seen=JSON.parse(row[2]||'[]');let revision=Number(row[3])||0;let changed=false;
+  if(path==='ballot'){
+   if(!body.votes||typeof body.votes!=='object'||Array.isArray(body.votes)||!body.baseVotes||typeof body.baseVotes!=='object'||Array.isArray(body.baseVotes))throw new Error('בקשה לא תקינה');
+   const keys=Object.keys(body.votes), proposed={};
+   if(keys.length>FS_SONGS.length)throw new Error('בחירה לא תקינה');
+   for(const id of keys){const i=FS_SONGS.findIndex(s=>s.id===id),v=body.votes[id];if(i<0||![1,3].includes(v))throw new Error('בחירה לא תקינה');if(FS_SONGS[i].people.includes(body.person))throw new Error('אי אפשר להצביע לשיר שלך');proposed[i]=v;}
+   if(Object.values(proposed).filter(v=>v===1).length<10)throw new Error('צריך לסמן לפחות 10 שירים באהבתי');
+   if(Object.values(proposed).filter(v=>v===3).length>3)throw new Error('אפשר לסמן עד 3 שירים בממש אהבתי');
+   const current={};Object.entries(votes).forEach(([i,v])=>{if(FS_SONGS[i])current[FS_SONGS[i].id]=v;});
+   const signature=x=>JSON.stringify(Object.entries(x).sort(([a],[b])=>a.localeCompare(b)));
+   if(signature(current)!==signature(body.baseVotes))throw new Error('הבחירות השתנו במכשיר אחר. רעננו לפני שמירה');
+   Object.keys(votes).forEach(k=>delete votes[k]);Object.assign(votes,proposed);changed=true;
+  }
   if(path==='vote'){
    const song=FS_SONGS.findIndex(s=>s.id===body.song);if(song<0||![0,1,3].includes(body.value))throw new Error('בחירה לא תקינה');
    if(FS_SONGS[song].people.includes(body.person))throw new Error('אי אפשר להצביע לשיר שלך');
-   if(body.value===1&&votes[song]!==1&&Object.values(votes).filter(v=>v===1).length>=10)throw new Error('אפשר לסמן עד 10 שירים באהבתי');
    if(body.value===3&&votes[song]!==3&&Object.values(votes).filter(v=>v===3).length>=3)throw new Error('אפשר לסמן עד 3 שירים בממש אהבתי');
    if(body.value)votes[song]=body.value;else delete votes[song];changed=true;
   }
   if(path==='import'&&Object.keys(votes).length===0){
    if(!body.votes||typeof body.votes!=='object'||Array.isArray(body.votes))throw new Error('בקשה לא תקינה');
    const proposed={};for(const id of Object.keys(body.votes)){const i=FS_SONGS.findIndex(s=>s.id===id);const value=body.votes[id];if(i<0||![1,3].includes(value)||FS_SONGS[i].people.includes(body.person))continue;proposed[i]=value;}
-   if(Object.values(proposed).filter(v=>v===3).length>3||Object.values(proposed).filter(v=>v===1).length>10)throw new Error('הבחירות המקומיות חורגות מהמגבלה');
+   if(Object.values(proposed).filter(v=>v===3).length>3||false)throw new Error('הבחירות המקומיות חורגות מהמגבלה');
    Object.assign(votes,proposed);changed=Object.keys(proposed).length>0;
   }
   if(path==='seen'){
@@ -43,6 +56,13 @@ function fiveStarsApi(path,body){
  }finally{lock.releaseLock();}
 }
 
+function fiveStarsReadState(person,index){
+ const sheet=SpreadsheetApp.openById(FS_SPREADSHEET).getSheetByName('בחירות האתר');if(!sheet)throw new Error('השמירה עדיין לא הוגדרה');
+ const row=sheet.getRange(index+2,1,1,5).getValues()[0];if(row[0]!==person)throw new Error('סדר המשתתפים השתנה');
+ const ballot=JSON.parse(row[1]||'{}'),seen=JSON.parse(row[2]||'[]'),votes={};
+ Object.entries(ballot).forEach(([i,v])=>{if(FS_SONGS[i])votes[FS_SONGS[i].id]=v;});
+ return {person,votes,seen:seen.filter(i=>FS_SONGS[i]).map(i=>FS_SONGS[i].id),total:FS_SONGS.length,unlocked:seen.length===FS_SONGS.length,revision:Number(row[3])||0};
+}
 function fiveStarsStats(){
  const sheet=SpreadsheetApp.openById(FS_SPREADSHEET).getSheetByName('בחירות האתר');if(!sheet)throw new Error('השמירה עדיין לא הוגדרה');
  const people=new Set(FS_PEOPLE.filter(p=>p.active!==false).map(p=>p.id));
