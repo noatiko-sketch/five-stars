@@ -14,11 +14,12 @@ function setupFiveStars(){
 }
 function fiveStarsApi(path,body){
  const qa=String(path).startsWith('qa-');if(qa)path=path.slice(3);
- const sheetName=qa?'QA — עומס ניסוי':'בחירות האתר — ניסוי';
+ const run=qa&&typeof body.run==='string'&&/^[a-zA-Z0-9-]{1,40}$/.test(body.run)?' '+body.run:'';
+ const sheetName=qa?'QA — עומס ניסוי'+run:'בחירות האתר — ניסוי';
  if(!['session','state','vote','seen','stats','import','reset','save'].includes(path))throw new Error('פעולה לא נתמכת');
  if(path==='stats')return fiveStarsStats(sheetName);
  const index=FS_PEOPLE.findIndex(p=>p.id===body.person&&p.active!==false);if(index<0)throw new Error('יש לבחור שם');
- const lock=!qa&&['session','state'].includes(path)?null:LockService.getScriptLock();if(lock&&!lock.tryLock(25000))throw new Error('יש עומס רגעי. נסו שוב');
+ const lock=!qa&&['session','state'].includes(path)?null:LockService.getScriptLock();if(lock&&!lock.tryLock(30000))throw new Error('יש עומס רגעי. נסו שוב');
  try{
   const book=SpreadsheetApp.openById(FS_SPREADSHEET);let sheet=book.getSheetByName(sheetName);
   if(!sheet&&qa){sheet=book.insertSheet(sheetName);sheet.getRange(1,1,1,5).setValues([['QA participant','Votes','Seen','Revision','Updated']]);sheet.getRange(2,1,FS_PEOPLE.length,5).setValues(FS_PEOPLE.map(p=>[p.id,'{}','[]',0,'']));}
