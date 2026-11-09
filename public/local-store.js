@@ -11,9 +11,18 @@ export function createLocalStore(catalog, storage, namespace) {
     const song=catalog.songs.find(s=>s.id===body.song);
     if(!song||![0,1,3].includes(body.value))throw new Error('בחירה לא תקינה');
     if(song.shares.some(s=>s.person===person))throw new Error('אי אפשר להצביע לשיר שלך');
-    if(body.value===1&&p.votes[body.song]!==1&&Object.values(p.votes).filter(v=>v===1).length>=10)throw new Error('אפשר לבחור עד 10 שירים באהבתי');
     if(body.value===3&&p.votes[body.song]!==3&&Object.values(p.votes).filter(v=>v===3).length>=3)throw new Error('אפשר לבחור עד 3 שירים בממש אהבתי');
     if(body.value)p.votes[body.song]=body.value;else delete p.votes[body.song];
+   } else if(path==='ballot'){
+    if(!body.votes||typeof body.votes!=='object'||Array.isArray(body.votes)||!body.baseVotes||typeof body.baseVotes!=='object'||Array.isArray(body.baseVotes))throw new Error('בקשה לא תקינה');
+    const entries=Object.entries(body.votes);
+    if(entries.length>catalog.songs.length||entries.some(([id,v])=>![1,3].includes(v)||!catalog.songs.some(s=>s.id===id)))throw new Error('בחירה לא תקינה');
+    if(entries.some(([id])=>catalog.songs.find(s=>s.id===id).shares.some(x=>x.person===person)))throw new Error('אי אפשר להצביע לשיר שלך');
+    if(entries.filter(([,v])=>v===1).length<10)throw new Error('צריך לסמן לפחות 10 שירים באהבתי');
+    if(entries.filter(([,v])=>v===3).length>3)throw new Error('אפשר לבחור עד 3 שירים בממש אהבתי');
+    const normalized=x=>JSON.stringify(Object.entries(x).sort(([a],[b])=>a.localeCompare(b)));
+    if(normalized(p.votes)!==normalized(body.baseVotes))throw new Error('הבחירות השתנו במכשיר אחר. רעננו לפני שמירה');
+    p.votes=Object.fromEntries(entries);
    } else if(path==='seen') p.seen=[...new Set([...p.seen,...body.songs.filter(id=>catalog.songs.some(s=>s.id===id))])];
    else throw new Error('פעולה לא תקינה');
    data.revision=(data.revision||0)+1;write(data);return personState(data,person);
