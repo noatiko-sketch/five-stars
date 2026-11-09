@@ -2,7 +2,7 @@
 export function connectGoogleStore(url){
  const channel=crypto.randomUUID();const waiting=new Map();let bridge,origin;
  let readyResolve,readyReject;const ready=new Promise((resolve,reject)=>{readyResolve=resolve;readyReject=reject;});
- const startup=setTimeout(()=>readyReject(new Error('לא הצלחנו להתחבר לשמירה. נסו לרענן')),25000);
+ const startup=setTimeout(()=>readyReject(new Error('לא הצלחנו להתחבר לשמירה. נסו לרענן')),45000);
  window.addEventListener('message',event=>{
   if(!/^https:\/\/[a-zA-Z0-9.-]+\.googleusercontent\.com$/.test(event.origin)||event.data?.channel!==channel)return;
   if(event.data.ready&&!bridge){bridge=event.source;origin=event.origin;clearTimeout(startup);readyResolve();return;}
@@ -10,5 +10,6 @@ export function connectGoogleStore(url){
   if(event.data.error)request.reject(new Error(event.data.error));else request.resolve(event.data.result);
  });
  const frame=document.createElement('iframe');frame.hidden=true;frame.title='שמירת בחירות';frame.src=url+'?channel='+encodeURIComponent(channel);document.body.append(frame);
- return async(path,body)=>{await ready;const id=crypto.randomUUID();return new Promise((resolve,reject)=>{const timer=setTimeout(()=>{waiting.delete(id);reject(new Error('השמירה מתעכבת. הבחירה לא אושרה, נסו שוב'));},30000);waiting.set(id,{resolve,reject,timer});bridge.postMessage({channel,id,path,body},origin);});};
+ const request=async(path,body)=>{await ready;const id=crypto.randomUUID();return new Promise((resolve,reject)=>{const timer=setTimeout(()=>{waiting.delete(id);reject(new Error('השמירה מתעכבת. הבחירה לא אושרה, נסו שוב'));},40000);waiting.set(id,{resolve,reject,timer});bridge.postMessage({channel,id,path,body},origin);});};
+ return async(path,body)=>{try{return await request(path,body);}catch(e){if(!['save','qa-save'].includes(path)||!e.message.includes('עומס רגעי'))throw e;await new Promise(resolve=>setTimeout(resolve,1000+Math.random()*1500));return request(path,body);}};
 }
