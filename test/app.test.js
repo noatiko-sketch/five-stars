@@ -15,3 +15,31 @@ test('co-sharers cannot vote and unknown routes and invalid values fail',async()
 test('ten likes are enforced atomically and a cancellation frees a slot',async()=>{const source={people:catalog.people,songs:Array.from({length:12},(_,i)=>({id:'s'+i,title:'Song '+i,shares:[{person:'b',date:'2025-01-01'}]}))};const f=await fixture(source);try{const result=await Promise.all(source.songs.map(s=>f.request('vote',{song:s.id,value:1},f.cookie)));assert.equal(result.filter(r=>r.status===200).length,10);assert.equal(result.filter(r=>r.status===409).length,2);const before=(await f.request('state',null,f.cookie)).data;const selected=Object.keys(before.votes)[0];const unselected=source.songs.find(s=>!before.votes[s.id]).id;await f.request('vote',{song:selected,value:0},f.cookie);assert.equal((await f.request('vote',{song:unselected,value:1},f.cookie)).status,200);assert.equal(Object.values((await f.request('state',null,f.cookie)).data.votes).filter(v=>v===1).length,10);}finally{await f.close();}});
 
 test('removed names cannot start sessions while their shared songs remain available',async()=>{const source={people:catalog.people.map(p=>p.id==='b'?{...p,active:false}:p),songs:catalog.songs};const f=await fixture(source);try{assert.equal((await f.request('session',{person:'b'})).status,400);assert.equal((await f.request('vote',{song:'s1',value:1},f.cookie)).status,200);assert.equal((await f.request('state',null,f.cookie)).data.votes.s1,1);}finally{await f.close();}});
+
+test('ballot requires ten likes, permits more than ten and limits top picks',async()=>{
+ const source={people:catalog.people,songs:Array.from({length:18},(_,i)=>({id:'s'+i,title:'Song '+i,shares:[{person:'b',date:'2025-01-01'}]}))};
+ const f=await fixture(source);try{
+  const votes=Object.fromEntries(source.songs.slice(0,12).map(s=>[s.id,1]));
+  assert.equal((await f.request('ballot',{votes:Object.fromEntries(Object.entries(votes).slice(0,9)),baseVotes:{}},f.cookie)).status,409);
+  assert.equal((await f.request('ballot',{votes,baseVotes:{}},f.cookie)).status,200);
+  assert.equal(Object.keys((await f.request('state',null,f.cookie)).data.votes).length,12);
+  assert.equal((await f.request('ballot',{votes:{...votes,s12:3,s13:3,s14:3,s15:3},baseVotes:votes},f.cookie)).status,409);
+  assert.equal((await f.request('ballot',{votes,baseVotes:{}},f.cookie)).status,409);
+  assert.equal(Object.keys((await f.request('state',null,f.cookie)).data.votes).length,12);
+ }finally{await f.close();}
+});
+test('thirty concurrent participants can save ballots without lost updates',async()=>{
+ const people=Array.from({length:31},(_,i)=>({id:'p'+i,name:'Person '+i}));
+ const songs=Array.from({length:20},(_,i)=>({id:'s'+i,title:'Song '+i,shares:[{person:'p30',date:'2025-01-01'}]}));
+ const f=await fixture({people,songs});try{
+  const sessions=await Promise.all(people.slice(0,30).map(p=>f.request('session',{person:p.id})));
+  const votes=Object.fromEntries(songs.slice(0,12).map(s=>[s.id,1]));
+  const responses=await Promise.all(sessions.map(s=>f.request('ballot',{votes,baseVotes:{}},s.cookie)));
+  assert.equal(responses.filter(r=>r.status===200).length,30);
+  const statSession=sessions[0].cookie;
+  await f.request('seen',{songs:songs.map(s=>s.id)},statSession);
+  const stats=await f.request('stats',null,statSession);
+  assert.equal(stats.status,200);assert.equal(stats.data.participants,30);
+  assert.equal(stats.data.votes,360);assert.equal(stats.data.songs[0].score,30);
+ }finally{await f.close();}
+});
