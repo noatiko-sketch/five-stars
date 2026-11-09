@@ -50,9 +50,29 @@ export function createApp({ directory = process.env.DATA_DIR || join(root, 'runt
       if (!person || !people.has(person)) throw error('יש לבחור מי אני',401);
       if (url.pathname === '/api/state' && req.method === 'GET') return send(200,state(person));
       if (url.pathname === '/api/seen' && req.method === 'POST') {
-        if (!Array.isArray(body.songs) || body.songs.length > 100 || body.songs.some(id => !songs.has(id))) throw error('רשימת שירים לא תקינה');
+        if (!Array.isArray(body.songs) || body.songs.length > 500 || body.songs.some(id => !songs.has(id))) throw error('רשימת שירים לא תקינה');
         db.exec('BEGIN IMMEDIATE');
         try { const insert = db.prepare('INSERT OR IGNORE INTO seen VALUES(?,?)'); for (const id of body.songs) insert.run(person,id); db.exec('COMMIT'); } catch(e) { db.exec('ROLLBACK'); throw e; }
+        return send(200,state(person));
+      }
+      if (url.pathname === '/api/ballot' && req.method === 'POST') {
+        const validMap = value => value && typeof value === 'object' && !Array.isArray(value);
+        if (!validMap(body.votes) || !validMap(body.baseVotes)) throw error('בקשה לא תקינה');
+        const entries = Object.entries(body.votes);
+        if (entries.length > songs.size || entries.some(([id,value]) => !songs.has(id) || ![1,3].includes(value))) throw error('בחירה לא תקינה');
+        if (entries.some(([id]) => songs.get(id).shares.some(s => s.person === person))) throw error('אי אפשר להצביע לשיר ששיתפת',403);
+        if (entries.filter(([,v]) => v===1).length < 10) throw error('צריך לסמן לפחות 10 שירים באהבתי',409);
+        if (entries.filter(([,v]) => v===3).length > 3) throw error('אפשר לבחור עד שלושה שירים בממש אהבתי',409);
+        const signature = map => JSON.stringify(Object.entries(map).sort(([a],[b]) => a.localeCompare(b)));
+        db.exec('BEGIN IMMEDIATE');
+        try {
+          const current = Object.fromEntries(db.prepare('SELECT song,value FROM votes WHERE person=?').all(person).map(r => [r.song,r.value]));
+          if (signature(current) !== signature(body.baseVotes)) throw error('הבחירות השתנו במכשיר אחר. רעננו לפני שמירה',409);
+          db.prepare('DELETE FROM votes WHERE person=?').run(person);
+          const insert = db.prepare('INSERT INTO votes(person,song,value) VALUES(?,?,?)');
+          for(const [id,value] of entries) insert.run(person,id,value);
+          db.exec('COMMIT');
+        } catch(e) { db.exec('ROLLBACK'); throw e; }
         return send(200,state(person));
       }
       if (url.pathname === '/api/vote' && req.method === 'POST') {
@@ -62,7 +82,6 @@ export function createApp({ directory = process.env.DATA_DIR || join(root, 'runt
         db.exec('BEGIN IMMEDIATE');
         try {
           const count = db.prepare('SELECT count(*) AS n FROM votes WHERE person=? AND value=? AND song<>?').get(person,body.value,body.song).n;
-          if (body.value === 1 && count >= 10) throw error('אפשר לבחור עד עשרה שירים באהבתי',409);
           if (body.value === 3 && count >= 3) throw error('אפשר לבחור עד שלושה שירים בממש אהבתי',409);
           if (body.value === 0) db.prepare('DELETE FROM votes WHERE person=? AND song=?').run(person,body.song);
           else db.prepare('INSERT INTO votes VALUES(?,?,?) ON CONFLICT(person,song) DO UPDATE SET value=excluded.value').run(person,body.song,body.value);
