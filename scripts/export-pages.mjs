@@ -29,4 +29,4 @@ await mkdir(new URL('names/',output));await copyFile(new URL('public/names.html'
 await writeFile(new URL('.nojekyll',output),'');
 console.log(`Exported ${testing?'test':'production'} with its own shared storage endpoint`);
 
-if(testing){await mkdir(new URL('qa/',output));const qa=(await readFile(new URL('test/qa.html',root),'utf8')).replace('<script type="module">',config+'<script type="module">');await writeFile(new URL('qa/index.html',output),qa);}
+if(testing){await mkdir(new URL('qa/',output));const qa=(await readFile(new URL('test/qa.html',root),'utf8')).replace("'../google-store.js'",`'../google-store.js?v=${versions['google-store.js']}'`).replace('<script type="module">',config+'<script type="module">');await writeFile(new URL('qa/index.html',output),qa);}
