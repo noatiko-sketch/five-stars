@@ -14,8 +14,7 @@ function setupFiveStars(){
 }
 function fiveStarsApi(path,body){
  const qa=String(path).startsWith('qa-');if(qa)path=path.slice(3);
- const run=qa&&typeof body.run==='string'&&/^[a-zA-Z0-9-]{1,40}$/.test(body.run)?' '+body.run:'';
- const sheetName=qa?'QA — עומס ניסוי'+run:'בחירות האתר — ניסוי';
+ const sheetName=qa?'QA — עומס ניסוי':'בחירות האתר — ניסוי';
  if(!['session','state','vote','seen','stats','import','reset','save'].includes(path))throw new Error('פעולה לא נתמכת');
  if(path==='stats')return fiveStarsStats(sheetName);
  const index=FS_PEOPLE.findIndex(p=>p.id===body.person&&p.active!==false);if(index<0)throw new Error('יש לבחור שם');
