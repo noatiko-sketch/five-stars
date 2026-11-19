@@ -59,7 +59,7 @@ function setState(next) {
   autoSave?.stop();draft=createDraft(localStorage,draftKey(next.person),next.person,next.votes);
   receivedCount=null;receivedAt=0;autoSaveError=false;
   const person=next.person,ballot=draft;
-  autoSave=createAutoSave(ballot,body=>api('vote',{...body,person}),{changed:status=>{if(draft!==ballot)return;autoSaveError=status.error?.message||'';if(state?.person===person){state.votes=ballot.votes;updateProgress();}else updateSave();}});
+  autoSave=createAutoSave(ballot,async body=>{const next=await api('vote',{...body,person});if(state?.person===person)state.revision=Math.max(state.revision||0,next.revision||0);return next;},{changed:status=>{if(draft!==ballot)return;autoSaveError=status.error?.message||'';if(state?.person===person){state.votes=ballot.votes;updateProgress();}else updateSave();}});
   if(draft.dirty)autoSave.queue();
  }
  else draft.receive(next.votes);
