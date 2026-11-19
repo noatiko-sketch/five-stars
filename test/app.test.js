@@ -29,3 +29,12 @@ test('30 simultaneous ballot saves preserve every participant and exact statisti
 });
 
 test('removed names cannot start sessions while their shared songs remain available',async()=>{const source={people:catalog.people.map(p=>p.id==='b'?{...p,active:false}:p),songs:catalog.songs};const f=await fixture(source);try{assert.equal((await f.request('session',{person:'b'})).status,400);assert.equal((await f.request('vote',{song:'s1',value:1},f.cookie)).status,200);assert.equal((await f.request('state',null,f.cookie)).data.votes.s1,1);}finally{await f.close();}});
+
+test('30 users save partial votes without final save; author count updates without unlocking stats',async()=>{
+ const source={people:[{id:'a'},...Array.from({length:30},(_,i)=>({id:'p'+i}))],songs:[{id:'s0',shares:[{person:'a'},{person:'a'}]},{id:'s1',shares:[{person:'a'}]}]};const f=await fixture(source);
+ try{const sessions=await Promise.all(source.people.slice(1).map(p=>f.request('session',{person:p.id})));const votes=await Promise.all(sessions.map(s=>f.request('vote',{song:'s0',value:3},s.cookie)));assert.ok(votes.every(v=>v.status===200));
+ assert.equal((await f.request('received',null,f.cookie)).data.count,30);assert.equal((await f.request('stats',null,f.cookie)).status,403);
+ const reopened=await f.request('session',{person:'p0'});assert.deepEqual(reopened.data.votes,{s0:3});await f.request('vote',{song:'s0',value:0},reopened.cookie);assert.equal((await f.request('received',null,f.cookie)).data.count,29);
+ assert.equal((await f.request('received')).status,401);
+ }finally{await f.close();}
+});

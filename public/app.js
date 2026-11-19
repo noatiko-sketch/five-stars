@@ -2,12 +2,13 @@ import { connectGoogleStore } from './google-store.js';
 import { createLocalStore } from './local-store.js';
 import {createPeopleClient,activePeople,personName as displayName,songNames} from './people.js';
 let peopleClient;
-import { createDraft, validateBallot } from './ballot.js';
+import { createDraft, validateBallot, createAutoSave, receivedVotes } from './ballot.js';
+import { createIdentity } from './identity.js';
 const previewMode = globalThis.FIVE_STARS_PREVIEW === true;
 const sandbox = globalThis.FIVE_STARS_SANDBOX === true;
 let localStore;
 const googleRequest = globalThis.FIVE_STARS_STORAGE_URL ? connectGoogleStore(globalThis.FIVE_STARS_STORAGE_URL) : null;
-const sharedIdentityKey=sandbox?'five-stars:identity:shared-test':'five-stars:identity:shared';
+const identity=createIdentity(localStorage,document,sandbox);
 const app = document.querySelector('#app');
 const dialog = document.querySelector('#dialog');
 let catalog, state, tab = 'songs', stats, statsView = 'songs', statsLimit = 50, busy = false;
@@ -15,6 +16,7 @@ let query = '', sender = '', month = '', observer, noticeTimer, seenTimer;
 const queuedSeen = new Set();
 const viewed = new Set();
 let draft, savingBallot=false, savedMessage='';
+let autoSave,autoSaveError=false,receivedCount=null,receivedAt=0,refreshingReceived=false;
 const draftKey=person=>`five-stars:draft:${sandbox?'test':'live'}:${person}`;
 const escape = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number = n => n.toLocaleString('he-IL');
@@ -28,18 +30,18 @@ async function api(path, body) {
       return response.json();
     }
     if(googleRequest){
-      const person=body?.person||state?.person||localStorage.getItem(sharedIdentityKey);
+      const person=body?.person||state?.person||identity.get();
       if(!person||!catalog.people.some(p=>p.id===person&&p.active!==false))throw Object.assign(new Error('יש לבחור שם'),{status:401});
       let result=await googleRequest(path,{...body,person});
       if(!sandbox&&path==='session'&&Object.keys(result.votes).length===0){
        try{const prior=JSON.parse(localStorage.getItem('five-stars:live-local:v1')||'{}').people?.[person]?.votes;if(prior&&Object.keys(prior).length)result=await googleRequest('import',{person,votes:prior});}catch{notice('הבחירות המקומיות נשארו במכשיר; אפשר לבדוק אותן בהמשך');}
       }
-      if(path==='session')localStorage.setItem(sharedIdentityKey,person);
+      if(path==='session')identity.set(person);
       return result;
     }
     localStore ||= createLocalStore(catalog, localStorage, sandbox?'sandbox':'live-local');
-    if (path === 'session') {localStorage.setItem(`five-stars:identity:${sandbox?'sandbox':'live-local'}`,body.person);return localStore.state(body.person);}
-    if (!state) {const person=localStorage.getItem(`five-stars:identity:${sandbox?'sandbox':'live-local'}`);if(path==='state'&&selectablePeople().some(p=>p.id===person))return localStore.state(person);throw Object.assign(new Error('יש לבחור שם'), {status:401});}
+    if (path === 'session') {identity.set(body.person);return localStore.state(body.person);}
+    if (!state) {const person=identity.get();if(path==='state'&&selectablePeople().some(p=>p.id===person))return localStore.state(person);throw Object.assign(new Error('יש לבחור שם'), {status:401});}
     if (path === 'state') return localStore.state(state.person);
     if (path === 'stats') return Promise.reject(new Error('הסטטיסטיקות אינן זמינות כרגע'));
     return localStore.mutate(state.person,path,body);
@@ -53,27 +55,40 @@ function notice(text) { const node=document.querySelector('#notice');node.textCo
 function modal(title, content) { dialog.innerHTML=`<h2>${escape(title)}</h2><div class="modal-list">${content}</div><button class="close">סגירה</button>`;dialog.querySelector('.close').onclick=()=>dialog.close();dialog.showModal(); }
 function setState(next) {
  if(state?.person===next.person && next.revision < state.revision)return;
- if(!draft||state?.person!==next.person)draft=createDraft(localStorage,draftKey(next.person),next.person,next.votes);
+ if(!draft||state?.person!==next.person){
+  autoSave?.stop();draft=createDraft(localStorage,draftKey(next.person),next.person,next.votes);
+  receivedCount=null;receivedAt=0;autoSaveError=false;
+  const person=next.person,ballot=draft;
+  autoSave=createAutoSave(ballot,async body=>{const next=await api('vote',{...body,person});if(state?.person===person)state.revision=Math.max(state.revision||0,next.revision||0);return next;},{changed:status=>{if(draft!==ballot)return;autoSaveError=status.error?.message||'';if(state?.person===person){state.votes=ballot.votes;updateProgress();}else updateSave();}});
+  if(draft.dirty)autoSave.queue();
+ }
  else draft.receive(next.votes);
+ identity.set(next.person);
  state={...next,votes:draft.votes};app.querySelectorAll('.song .choice').forEach(b=>b.setAttribute('aria-pressed',String(state.votes[b.closest('[data-song]').dataset.song]===Number(b.dataset.value))));next.seen.forEach(id=>viewed.add(id));updateProgress();
 }
-function updateSave(){const button=document.querySelector('#save-ballot');if(button){button.disabled=savingBallot||!draft?.dirty;button.textContent=savingBallot?'שומרים…':'שמירת הבחירות';}const status=document.querySelector('#ballot-status');if(status)status.textContent=draft?.dirty?'יש שינויים שלא נשמרו':savedMessage;}
+function updateSave(){const hasVotes=Object.keys(draft?.votes||{}).length;const button=document.querySelector('#save-ballot');if(button){button.disabled=savingBallot||!hasVotes;button.textContent=savingBallot?'שומרים…':'שמירת הבחירות';}const status=document.querySelector('#ballot-status');if(status)status.textContent=autoSaveError?(/3|שלך|תקינה/.test(autoSaveError)?autoSaveError:'הבחירות במכשיר; ננסה לשמור שוב כשהחיבור יחזור'):draft?.dirty?'':savedMessage||(hasVotes?'נשמר אוטומטית':'');}
 async function saveBallot(){
- if(savingBallot||!draft?.dirty)return;
+ if(savingBallot||!draft)return;
  try{validateBallot(catalog,state.person,draft.votes);}catch(e){notice(e.message);return;}
  savingBallot=true;updateSave();
- try{const next=await api('save',{votes:draft.votes,baseVotes:draft.baseVotes});draft.saved(next.votes);setState(next);savedMessage='נשמר';}
+ try{await autoSave.flush();const next=await api('save',{votes:draft.votes,baseVotes:draft.baseVotes});draft.saved(next.votes);setState(next);savedMessage='נשמר';}
  catch(e){notice(e.message);savedMessage='';if(e.message.includes('מכשיר אחר')){modal('הבחירות השתנו במכשיר אחר','<button id="reload-ballot" class="person">טעינת הבחירות השמורות במקום הטיוטה</button>');dialog.querySelector('#reload-ballot').onclick=async()=>{try{const next=await api('state');draft.clear();draft=null;state=null;setState(next);dialog.close();render();}catch(error){notice(error.message);}};}}
  finally{savingBallot=false;updateSave();}
+}
+function updateReceived(){const node=document.querySelector('#received-votes');if(node)node.textContent=receivedCount===null?'':`${number(receivedCount)} הצבעות לשירים שלך`;}
+async function refreshReceived(){
+ if(!state||document.hidden||refreshingReceived||Date.now()-receivedAt<120000)return;
+ const person=state.person;refreshingReceived=true;
+ try{let count;if(googleRequest)count=receivedVotes(catalog,person,await googleRequest('stats',{person}));else if(previewMode)count=receivedVotes(catalog,person,localStore.stats(person,true));else count=(await api('received')).count;if(state?.person!==person)return;receivedCount=count;receivedAt=Date.now();updateReceived();}catch{}finally{refreshingReceived=false;}
 }
 function updateProgress() {
   const label=document.querySelector('#progress-label');
   if(label) label.textContent=`${number(state.seen.length)} / ${number(state.total)}`;
   const fill=document.querySelector('.track i'); if(fill)fill.style.width=`${state.seen.length/state.total*100}%`;
   const results=document.querySelector('#stats-tab');if(results){results.classList.toggle('locked',!state.unlocked&&!sandbox);results.setAttribute('aria-disabled',String(!state.unlocked&&!sandbox));}
-  const likes=document.querySelector('#like-count');if(likes)likes.textContent=`אהבתי · ${Object.values(state.votes).filter(v=>v===1).length} · לפחות 10`;
+  const likes=document.querySelector('#like-count');if(likes)likes.textContent=`${Object.values(state.votes).filter(v=>v===1).length} אהבתי מתוך 10 ומעלה`;
   updateSave();
-  const loves=document.querySelector('#love-count');if(loves)loves.textContent=`ממש אהבתי · ${Object.values(state.votes).filter(v=>v===3).length} מתוך 3`;
+  const loves=document.querySelector('#love-count');if(loves)loves.textContent=`${Object.values(state.votes).filter(v=>v===3).length} ממש אהבתי מתוך 3`;
 }
 function image(song) { return song.image ? `<img class="art" src="${escape(song.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">` : ''; }
 function names(song){return songNames(catalog,song);}
@@ -88,16 +103,16 @@ function renderLogin(){
 }
 function render(){
  observer?.disconnect();
- app.innerHTML=`<header><a class="brand" href="./">חמישה כוכבים.</a><button class="identity">${escape(personName(state.person))}</button></header><div class="sticky-status"><div class="vote-counters"><span id="like-count" role="status" aria-live="polite"></span><span id="love-count" role="status" aria-live="polite"></span></div>${previewMode?`<small>${sandbox?(googleRequest?'סביבת ניסוי · שמירה נפרדת':'סביבת ניסוי · נשמר במכשיר'):(googleRequest?'מחובר לשמירה':'נשמר במכשיר הזה בלבד · ללא סנכרון')}</small>`:''}${sandbox?'<button id="review-names">עריכת שמות</button><button id="test-reset">איפוס ניסוי</button>':''}</div><main class="wrap"><section class="hero"><h1 class="intro">${tab==='songs'?'תסמנו שירים שבזכות הקבוצה הכרתם' :'הכי הרבה<span>אהבה.</span>'}</h1><div class="count"><strong>${number(tab==='songs'?catalog.songs.length:stats?.participants||0)}</strong><small>${tab==='songs'?'שירים מהקבוצה':'משתתפים הצביעו'}</small></div></section><div id="content"></div></main>`;
- app.querySelector('.identity').onclick=()=>{if(savingBallot||busy||flushing){notice('רגע, שומרים');return;}queuedSeen.clear();viewed.clear();draft=null;clearTimeout(seenTimer);state=null;renderLogin();};
+ app.innerHTML=`<header><a class="brand" href="./">חמישה כוכבים.</a><div class="identity-summary"><button class="identity">${escape(personName(state.person))}</button><span id="received-votes" role="status" aria-live="polite"></span></div></header><div class="sticky-status"><div class="vote-counters"><button id="like-count" type="button" aria-label="עריכת שירי אהבתי"></button><button id="love-count" type="button" aria-label="עריכת שירי ממש אהבתי"></button></div>${previewMode?`<small>${sandbox?(googleRequest?'סביבת ניסוי · שמירה נפרדת':'סביבת ניסוי · נשמר במכשיר'):(googleRequest?'מחובר לשמירה':'נשמר במכשיר הזה בלבד · ללא סנכרון')}</small>`:''}<div id="sticky-search"></div>${sandbox?'<button id="review-names">עריכת שמות</button><button id="test-reset">איפוס ניסוי</button>':''}</div><main class="wrap"><section class="hero"><h1 class="intro">${tab==='songs'?'תסמנו שירים שבזכות הקבוצה הכרתם' :'הכי הרבה<span>אהבה.</span>'}</h1><div class="count"><strong>${number(tab==='songs'?catalog.songs.length:stats?.participants||0)}</strong><small>${tab==='songs'?'שירים מהקבוצה':'משתתפים הצביעו'}</small></div></section><div id="content"></div></main>`;
+ app.querySelector('.identity').onclick=async()=>{if(savingBallot||busy||flushing)return;busy=true;try{await autoSave?.flush();autoSave?.stop();queuedSeen.clear();viewed.clear();draft=null;clearTimeout(seenTimer);state=null;identity.clear();renderLogin();}catch(e){notice('ההחלפה תתאפשר כשהבחירות יישמרו');}finally{busy=false;}};
 
- if(sandbox){app.querySelector('#review-names').onclick=()=>{localStore ||= createLocalStore(catalog,localStorage,'sandbox');renderNameReview();};app.querySelector('#test-reset').onclick=()=>{modal('לאפס את נתוני הניסוי?', '<p>הצבעות הניסוי וההתקדמות של כל המשתתפים בטסט יימחקו.</p><button id="confirm-reset" class="person">איפוס</button>');dialog.querySelector('#confirm-reset').onclick=async()=>{if(savingBallot||busy||flushing){notice('רגע, שומרים');return;}busy=true;try{const person=state.person;queuedSeen.clear();viewed.clear();clearTimeout(seenTimer);if(googleRequest){const next=await api('reset',{});draft?.clear();draft=null;dialog.close();state=null;setState(next);}else{localStore.reset();draft?.clear();draft=null;dialog.close();state=null;setState(localStore.state(person));}render();notice('נתוני הניסוי אופסו');}catch(e){notice(e.message);}finally{busy=false;}};};}
- if(tab==='songs')renderSongs();else renderStats();updateProgress();
+ if(sandbox){app.querySelector('#review-names').onclick=()=>{localStore ||= createLocalStore(catalog,localStorage,'sandbox');renderNameReview();};app.querySelector('#test-reset').onclick=()=>{modal('לאפס את נתוני הניסוי?', '<p>הצבעות הניסוי וההתקדמות של כל המשתתפים בטסט יימחקו.</p><button id="confirm-reset" class="person">איפוס</button>');dialog.querySelector('#confirm-reset').onclick=async()=>{if(savingBallot||busy||flushing||autoSave?.running||autoSave?.pending){notice('רגע, שומרים');return;}busy=true;try{autoSave?.stop();const person=state.person;queuedSeen.clear();viewed.clear();clearTimeout(seenTimer);if(googleRequest){const next=await api('reset',{});draft?.clear();draft=null;dialog.close();state=null;setState(next);}else{localStore.reset();draft?.clear();draft=null;dialog.close();state=null;setState(localStore.state(person));}render();notice('נתוני הניסוי אופסו');}catch(e){notice(e.message);}finally{busy=false;}};};}
+ app.querySelector('#like-count').onclick=()=>editSelections(1);app.querySelector('#love-count').onclick=()=>editSelections(3);if(tab==='songs')renderSongs();else renderStats();updateProgress();updateReceived();refreshReceived();
 }
 function renderSongs(){
  const months=[...new Set(catalog.songs.flatMap(s=>s.shares.map(x=>x.date.slice(0,7))))].sort();
- app.querySelector('#content').innerHTML=`<div class="toolbar"><input id="search" type="search" placeholder="איזה שיר?" aria-label="חיפוש שיר או אמן" value="${escape(query)}"><select id="sender" aria-label="סינון לפי משתף"><option value="">כולם</option>${selectablePeople().map(p=>`<option value="${p.id}" ${sender===p.id?'selected':''}>${escape(p.name)}</option>`).join('')}</select><select id="month" aria-label="סינון לפי חודש"><option value="">כל החודשים</option>${months.map(m=>`<option value="${m}" ${month===m?'selected':''}>${monthName(m)}</option>`).join('')}</select></div><div class="progress"><span id="progress-label"></span><div class="track"><i></i></div></div><div class="save-status" id="save-status"></div><div id="song-list"></div><div class="ballot-save"><span id="ballot-status" role="status"></span><button id="save-ballot" type="button">שמירת הבחירות</button></div>`;
- app.querySelector('#save-ballot').onclick=saveBallot;updateSave();
+ app.querySelector('#content').innerHTML=`<div class="toolbar"><input id="search" type="search" placeholder="איזה שיר?" aria-label="חיפוש שיר או אמן" value="${escape(query)}"><button type="button" id="filter-toggle" aria-label="סינון שירים" aria-expanded="false" aria-controls="song-filters"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 5h16l-6 7v6l-4 2v-8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button><div id="song-filters" hidden><select id="sender" aria-label="סינון לפי משתף"><option value="">כולם</option>${selectablePeople().map(p=>`<option value="${p.id}" ${sender===p.id?'selected':''}>${escape(p.name)}</option>`).join('')}</select><select id="month" aria-label="סינון לפי חודש"><option value="">כל החודשים</option>${months.map(m=>`<option value="${m}" ${month===m?'selected':''}>${monthName(m)}</option>`).join('')}</select></div></div><div class="progress"><span id="progress-label"></span><div class="track"><i></i></div></div><div class="save-status" id="save-status"></div><div id="song-list"></div><div class="month-scroll"><span id="scroll-month"></span><input id="month-scroll" type="range" min="0" max="1000" value="0" aria-label="גלילה לפי חודש ושנה" orient="vertical"></div><div class="ballot-save"><span id="ballot-status" role="status"></span><button id="save-ballot" type="button">שמירת הבחירות</button></div>`;
+ app.querySelector('#sticky-search').append(app.querySelector('.toolbar'));app.querySelector('#filter-toggle').onclick=()=>{const panel=app.querySelector('#song-filters');panel.hidden=!panel.hidden;app.querySelector('#filter-toggle').setAttribute('aria-expanded',String(!panel.hidden));};app.querySelector('#month-scroll').oninput=e=>window.scrollTo({top:Number(e.target.value)/1000*Math.max(0,document.documentElement.scrollHeight-innerHeight)});app.querySelector('#save-ballot').onclick=saveBallot;updateSave();
  app.querySelector('#search').oninput=e=>{query=e.target.value;listSongs();};app.querySelector('#sender').onchange=e=>{sender=e.target.value;listSongs();};app.querySelector('#month').onchange=e=>{month=e.target.value;listSongs();};listSongs();
 }
 function listSongs(){
@@ -106,11 +121,11 @@ function listSongs(){
  const groupMonth=s=>month||s.shares.filter(x=>!sender||x.person===sender).map(x=>x.date.slice(0,7)).sort()[0];
  const songs=catalog.songs.filter(s=>(!q||`${s.title} ${s.artist}`.toLocaleLowerCase().includes(q))&&s.shares.some(x=>(!sender||x.person===sender)&&(!month||x.date.startsWith(month)))).sort((a,b)=>groupMonth(a).localeCompare(groupMonth(b))||a.title.localeCompare(b.title,'he'));
  let previous='';
- app.querySelector('#song-list').innerHTML=songs.map(s=>{const heading=previous===groupMonth(s)?'':`<h2 class="month">${monthName(groupMonth(s))}</h2>`;previous=groupMonth(s);const own=s.shares.some(x=>x.person===state.person);return `${heading}<article class="song" data-song="${escape(s.id)}"><a class="song-link" href="${escape(s.url)}" target="_blank" rel="noopener noreferrer" aria-label="האזנה ל${escape(s.title)}">${image(s)}<div class="text"><div class="title" dir="auto">${escape(s.title)}</div><div class="artist" dir="auto">${escape(s.artist)}</div><div class="sender">${escape(names(s))}</div></div></a>${own?'<div class="own">שיר ששיתפת</div>':`<div class="actions"><button class="choice like"  data-value="1" aria-pressed="${state.votes[s.id]===1}">♡ אהבתי</button><button class="choice love"  data-value="3" aria-pressed="${state.votes[s.id]===3}">★ ממש אהבתי</button></div>`}</article>`;}).join('')||'<div class="empty">לא נמצאו שירים</div>';
+ app.querySelector('#song-list').innerHTML=songs.map(s=>{const heading=previous===groupMonth(s)?'':`<h2 class="month" data-month="${escape(groupMonth(s))}">${monthName(groupMonth(s))}</h2>`;previous=groupMonth(s);const own=s.shares.some(x=>x.person===state.person);return `${heading}<article class="song" data-song="${escape(s.id)}"><a class="song-link" href="${escape(s.url)}" target="_blank" rel="noopener noreferrer" aria-label="האזנה ל${escape(s.title)}">${image(s)}<div class="text"><div class="title" dir="auto">${escape(s.title)}</div><div class="artist" dir="auto">${escape(s.artist)}</div><div class="sender">${escape(names(s))}</div></div></a>${own?'<div class="own">שיר ששיתפת</div>':`<div class="actions"><button class="choice like"  data-value="1" aria-pressed="${state.votes[s.id]===1}"><span>אהבתי</span><small>והכרתי בזכותך</small></button><button class="choice love"  data-value="3" aria-pressed="${state.votes[s.id]===3}"><span>ממש אהבתי</span><small>והכרתי בזכותך</small></button></div>`}</article>`;}).join('')||'<div class="empty">לא נמצאו שירים</div>';
  app.querySelectorAll('.choice').forEach(button=>button.onclick=()=>vote(button.closest('[data-song]').dataset.song,Number(button.dataset.value)));
  observer=new IntersectionObserver(entries=>{for(const entry of entries){const id=entry.target.dataset.song;if(entry.isIntersecting&&!viewed.has(id)){viewed.add(id);queuedSeen.add(id);clearTimeout(seenTimer);seenTimer=setTimeout(flushSeen,15000);}}},{threshold:.6});
  app.querySelectorAll('[data-song]').forEach(n=>observer.observe(n));
- app.querySelectorAll('img').forEach(img=>img.onerror=()=>{img.style.visibility='hidden';});
+ app.querySelectorAll('img').forEach(img=>img.onerror=()=>{img.style.visibility='hidden';});updateScrollMonth();
 }
 let flushing=false;
 async function flushSeen(){
@@ -122,10 +137,26 @@ async function flushSeen(){
 function vote(id,value){
  if(savingBallot)return;
  if(catalog.songs.find(s=>s.id===id)?.shares.some(s=>s.person===state.person)){notice('אי אפשר להצביע לשיר שלך');return;}
- try{draft.choose(id,value);state.votes=draft.votes;savedMessage='';updateProgress();
+ try{draft.choose(id,value);state.votes=draft.votes;savedMessage='';autoSaveError=false;autoSave.queue();updateProgress();
  const card=app.querySelector(`[data-song="${CSS.escape(id)}"]`);card?.querySelectorAll('.choice').forEach(b=>b.setAttribute('aria-pressed',String(state.votes[id]===Number(b.dataset.value))));}
  catch(e){notice(e.message);}
 }
+function editSelections(value){
+ const title=value===3?'ממש אהבתי':'אהבתי';
+ const selected=catalog.songs.filter(s=>draft.votes[s.id]===value);
+ modal(title,selected.map(s=>`<div class="selection-row"><div><strong dir="auto">${escape(s.title)}</strong><small dir="auto">${escape(s.artist)}</small></div><button type="button" data-change="${escape(s.id)}">${value===3?'אהבתי':'ממש אהבתי'}</button><button type="button" data-remove="${escape(s.id)}" aria-label="ביטול הבחירה ב${escape(s.title)}">ביטול</button></div>`).join('')||'<p>עדיין אין בחירות</p>');
+ dialog.querySelectorAll('[data-remove]').forEach(b=>b.onclick=()=>{vote(b.dataset.remove,value);dialog.close();editSelections(value);});
+ dialog.querySelectorAll('[data-change]').forEach(b=>b.onclick=()=>{vote(b.dataset.change,value===3?1:3);dialog.close();editSelections(value);});
+}
+let scrollFrame=0,scrollLabelTimer;
+function updateScrollMonth(){
+ scrollFrame=0;const slider=app.querySelector('#month-scroll'),label=app.querySelector('#scroll-month');if(!slider||!label)return;
+ const headings=[...app.querySelectorAll('h2.month')];if(!headings.length){slider.parentElement.hidden=true;return;}slider.parentElement.hidden=false;
+ const boundary=(app.querySelector('.sticky-status')?.getBoundingClientRect().bottom||0)+70;
+ const current=headings.filter(h=>h.getBoundingClientRect().top<=boundary).at(-1)||headings[0];
+ label.textContent=current.textContent;slider.setAttribute('aria-valuetext',current.textContent);slider.value=String(Math.round(scrollY/Math.max(1,document.documentElement.scrollHeight-innerHeight)*1000));
+}
+window.addEventListener('scroll',()=>{if(!scrollFrame)scrollFrame=requestAnimationFrame(updateScrollMonth);const rail=app.querySelector('.month-scroll');rail?.classList.add('scrolling');clearTimeout(scrollLabelTimer);scrollLabelTimer=setTimeout(()=>rail?.classList.remove('scrolling'),1400);},{passive:true});
 
 function renderStats(){
  const content=app.querySelector('#content');
@@ -136,9 +167,13 @@ function renderStats(){
  if(ranked.length>statsLimit){const more=document.createElement('button');more.className='more';more.textContent='עוד';more.onclick=()=>{statsLimit+=50;renderStats();};content.append(more);}
  content.querySelectorAll('[data-voters]').forEach(b=>b.onclick=()=>{const r=stats.songs.find(s=>s.id===b.dataset.voters);modal('מי אהבו?',r.voters.map(v=>`<div class="modal-row"><span>${escape(personName(v.person))}</span><span>${v.value===3?'ממש אהבתי':'אהבתי'}</span></div>`).join(''));});
 }
-async function start(){app.innerHTML='<div class="loading">טוענים את השירים…</div>';try{catalog=await api('catalog');peopleClient=createPeopleClient(googleRequest,catalog.people);catalog.people=await peopleClient.load();try{const restored=await api('state');if(!selectablePeople().some(p=>p.id===restored.person))throw Object.assign(new Error('יש לבחור שם'),{status:401});setState(restored);render();}catch(e){if(e.status===401)renderLogin();else throw e;}}catch(e){app.innerHTML='<div class="loading">לא הצלחנו לטעון את השירים<br><button class="retry">ננסה שוב</button></div>';app.querySelector('button').onclick=start;}}
-setInterval(async()=>{if(!state||busy||savingBallot||document.hidden||document.querySelector('.login'))return;try{const person=state.person;const next=await api('state');if(state?.person!==person)return;setState(next);if(tab==='stats'){stats=await api('stats');renderStats();}}catch{}},30000);
-window.addEventListener('online',flushSeen);
+async function restoreSession(){try{return await api('state');}catch(error){if(error.status!==401)throw error;const person=identity.get();if(selectablePeople().some(p=>p.id===person))return api('session',{person});identity.clear();throw error;}}
+async function start(){app.innerHTML='<div class="loading">טוענים את השירים…</div>';try{catalog=await api('catalog');peopleClient=createPeopleClient(googleRequest,catalog.people);catalog.people=await peopleClient.load();try{const restored=await restoreSession();if(!selectablePeople().some(p=>p.id===restored.person))throw Object.assign(new Error('יש לבחור שם'),{status:401});setState(restored);render();}catch(e){if(e.status===401){identity.clear();renderLogin();}else throw e;}}catch(e){app.innerHTML='<div class="loading">לא הצלחנו לטעון את השירים<br><button class="retry">ננסה שוב</button></div>';app.querySelector('button').onclick=start;}}
+setInterval(async()=>{if(!state||busy||savingBallot||autoSave?.running||autoSave?.pending||document.hidden||document.querySelector('.login'))return;try{const person=state.person;const next=await api('state');if(state?.person!==person)return;setState(next);if(tab==='stats'){stats=await api('stats');renderStats();}}catch{}},30000);
+setInterval(refreshReceived,120000+Math.random()*30000);
+window.addEventListener('online',()=>{flushSeen();autoSave?.queue(0);refreshReceived();});
+document.addEventListener('visibilitychange',()=>{if(state){autoSave?.flush().catch(()=>{});if(!document.hidden)refreshReceived();}});
+window.addEventListener('pagehide',()=>autoSave?.flush().catch(()=>{}));
 window.addEventListener('beforeunload',e=>{if(draft?.dirty){e.preventDefault();e.returnValue='';}});
 window.addEventListener('storage',async()=>{if(!state||!previewMode||googleRequest)return;setState(await api('state'));if(tab==='stats'){stats=await api('stats');renderStats();}else listSongs();});
 start();
