@@ -26,7 +26,7 @@ export function createApp({ directory = process.env.DATA_DIR || join(root, 'runt
     const send = (status, body) => { res.writeHead(status, {'Content-Type':'application/json; charset=utf-8', 'Cache-Control':'no-store'}); res.end(JSON.stringify(body)); };
     try {
       if (!url.pathname.startsWith('/api/')) {
-        const paths = { '/':'index.html', '/app.js':'app.js', '/people.js':'people.js', '/ballot.js':'ballot.js', '/local-store.js':'local-store.js','/google-store.js':'google-store.js', '/style.css':'style.css' };
+        const paths = { '/':'index.html', '/app.js':'app.js', '/people.js':'people.js', '/identity.js':'identity.js', '/ballot.js':'ballot.js', '/local-store.js':'local-store.js','/google-store.js':'google-store.js', '/style.css':'style.css' };
         const file = paths[url.pathname];
         if (!file) throw error('לא נמצא',404);
         res.writeHead(200, {'Content-Type':file.endsWith('.js')?'text/javascript':file.endsWith('.css')?'text/css':'text/html; charset=utf-8','X-Content-Type-Options':'nosniff'});
@@ -50,6 +50,10 @@ export function createApp({ directory = process.env.DATA_DIR || join(root, 'runt
       const person = db.prepare('SELECT person FROM sessions WHERE token=?').get(token || '')?.person;
       if (!person || !people.has(person)) throw error('יש לבחור מי אני',401);
       if (url.pathname === '/api/state' && req.method === 'GET') return send(200,state(person));
+      if (url.pathname === '/api/received' && req.method === 'GET') {
+        const own=new Set(catalog.songs.filter(s=>s.shares.some(x=>x.person===person)).map(s=>s.id));
+        return send(200,{count:db.prepare('SELECT song FROM votes').all().filter(v=>own.has(v.song)).length});
+      }
       if (url.pathname === '/api/seen' && req.method === 'POST') {
         if (!Array.isArray(body.songs) || body.songs.length > 100 || body.songs.some(id => !songs.has(id))) throw error('רשימת שירים לא תקינה');
         db.exec('BEGIN IMMEDIATE');

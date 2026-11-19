@@ -9,8 +9,8 @@ if(!endpoint||testing&&endpoint===storage.url)throw new Error('Test storage must
 const config=`<script>globalThis.FIVE_STARS_STORAGE_URL=${JSON.stringify(endpoint)};globalThis.FIVE_STARS_PREVIEW=true;globalThis.FIVE_STARS_SANDBOX=${testing};</script>`;
 const hash=s=>createHash('sha256').update(s).digest('hex').slice(0,12);
 await rm(output,{recursive:true,force:true});await mkdir(output,{recursive:true});
-for(const file of ['style.css','share-cover-v2.jpg','local-store.js','google-store.js','ballot.js','people.js'])await copyFile(new URL(`public/${file}`,root),new URL(file,output));
-const versions={};for(const file of ['local-store.js','google-store.js','ballot.js','people.js'])versions[file]=hash(await readFile(new URL(`public/${file}`,root)));
+for(const file of ['style.css','share-cover-v3.jpg','local-store.js','google-store.js','ballot.js','people.js','identity.js'])await copyFile(new URL(`public/${file}`,root),new URL(file,output));
+const versions={};for(const file of ['local-store.js','google-store.js','ballot.js','people.js','identity.js'])versions[file]=hash(await readFile(new URL(`public/${file}`,root)));
 const catalogVersion=hash(await readFile(new URL('data/catalog.json',root)));
 const cssVersion=hash(await readFile(new URL('public/style.css',root)));
 let app=await readFile(new URL('public/app.js',root),'utf8');
