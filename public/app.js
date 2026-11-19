@@ -1,5 +1,7 @@
 import { connectGoogleStore } from './google-store.js';
 import { createLocalStore } from './local-store.js';
+import {createPeopleClient,activePeople,personName as displayName,songNames} from './people.js';
+let peopleClient;
 import { createDraft, validateBallot } from './ballot.js';
 const previewMode = globalThis.FIVE_STARS_PREVIEW === true;
 const sandbox = globalThis.FIVE_STARS_SANDBOX === true;
@@ -16,8 +18,8 @@ let draft, savingBallot=false, savedMessage='';
 const draftKey=person=>`five-stars:draft:${sandbox?'test':'live'}:${person}`;
 const escape = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number = n => n.toLocaleString('he-IL');
-const selectablePeople = () => catalog.people.filter(p=>p.active!==false);
-const personName = id => selectablePeople().find(p => p.id === id)?.name || '';
+const selectablePeople = () => activePeople(catalog);
+const personName = id => displayName(catalog,id);
 async function api(path, body) {
   if (previewMode) {
     if (path === 'catalog') {
@@ -74,13 +76,14 @@ function updateProgress() {
   const loves=document.querySelector('#love-count');if(loves)loves.textContent=`ממש אהבתי · ${Object.values(state.votes).filter(v=>v===3).length} מתוך 3`;
 }
 function image(song) { return song.image ? `<img class="art" src="${escape(song.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">` : ''; }
-function names(song){return [...new Set(song.shares.map(s=>personName(s.person)).filter(Boolean))].join(' · ') || 'מהקבוצה';}
+function names(song){return songNames(catalog,song);}
 function monthName(key){return new Intl.DateTimeFormat('he-IL',{month:'long',year:'numeric'}).format(new Date(key+'-02T12:00:00'));}
 function renderLogin(){
   observer?.disconnect();
-  app.innerHTML=`<section class="login"><div class="kicker">${sandbox?'סביבת ניסוי':'שירי מוצ״ש · חוגגים 2,000'}</div><h1>חמישה<br><span>כוכבים.</span></h1><h2>מי כאן?</h2><input id="name-search" aria-label="חיפוש השם שלי" placeholder="השם שלי"><div class="names"></div><p class="note">השם שבחרת יופיע לצד הבחירות שלך בסטטיסטיקות.</p></section>`;
+  app.innerHTML=`<section class="login"><div class="kicker">${sandbox?'סביבת ניסוי':'שירי מוצ״ש · חוגגים 2,000'}</div><h1>חמישה<br><span>כוכבים.</span></h1><h2>מי כאן?</h2><input id="name-search" aria-label="חיפוש השם שלי" placeholder="השם שלי"><div class="names"></div>${peopleClient?.supported?'<button class="identity" id="add-person">הוספת שם</button>':''}<p class="note">השם שבחרת יופיע לצד הבחירות שלך בסטטיסטיקות.</p></section>`;
   const namesNode=app.querySelector('.names');
   function list(q=''){namesNode.innerHTML=selectablePeople().filter(p=>p.name.includes(q)).map(p=>`<button class="person" data-person="${p.id}">${escape(p.name)}</button>`).join('') || '<p>לא נמצא שם</p>';namesNode.querySelectorAll('button').forEach(b=>b.onclick=async()=>{if(busy)return;busy=true;b.disabled=true;try{setState(await api('session',{person:b.dataset.person}));viewed.clear();state.seen.forEach(id=>viewed.add(id));query='';sender='';month='';tab='songs';render();}catch(e){notice(e.message);b.disabled=false;}finally{busy=false;}});}
+  app.querySelector('#add-person')?.addEventListener('click',()=>{modal('הוספת שם','<form id="add-person-form"><input id="new-person-name" aria-label="שם מלא" placeholder="שם מלא" maxlength="80" required><button class="person" type="submit">הוספה</button></form>');dialog.querySelector('form').onsubmit=async e=>{e.preventDefault();const button=e.target.querySelector('button');button.disabled=true;try{const result=await peopleClient.add(dialog.querySelector('input').value);catalog.people=result.people;dialog.close();renderLogin();}catch(error){notice(error.message);button.disabled=false;}};});
   app.querySelector('input').oninput=e=>list(e.target.value.trim());list();
 }
 function render(){
@@ -133,7 +136,7 @@ function renderStats(){
  if(ranked.length>statsLimit){const more=document.createElement('button');more.className='more';more.textContent='עוד';more.onclick=()=>{statsLimit+=50;renderStats();};content.append(more);}
  content.querySelectorAll('[data-voters]').forEach(b=>b.onclick=()=>{const r=stats.songs.find(s=>s.id===b.dataset.voters);modal('מי אהבו?',r.voters.map(v=>`<div class="modal-row"><span>${escape(personName(v.person))}</span><span>${v.value===3?'ממש אהבתי':'אהבתי'}</span></div>`).join(''));});
 }
-async function start(){app.innerHTML='<div class="loading">טוענים את השירים…</div>';try{catalog=await api('catalog');try{const restored=await api('state');if(!selectablePeople().some(p=>p.id===restored.person))throw Object.assign(new Error('יש לבחור שם'),{status:401});setState(restored);render();}catch(e){if(e.status===401)renderLogin();else throw e;}}catch(e){app.innerHTML='<div class="loading">לא הצלחנו לטעון את השירים<br><button class="retry">ננסה שוב</button></div>';app.querySelector('button').onclick=start;}}
+async function start(){app.innerHTML='<div class="loading">טוענים את השירים…</div>';try{catalog=await api('catalog');peopleClient=createPeopleClient(googleRequest,catalog.people);catalog.people=await peopleClient.load();try{const restored=await api('state');if(!selectablePeople().some(p=>p.id===restored.person))throw Object.assign(new Error('יש לבחור שם'),{status:401});setState(restored);render();}catch(e){if(e.status===401)renderLogin();else throw e;}}catch(e){app.innerHTML='<div class="loading">לא הצלחנו לטעון את השירים<br><button class="retry">ננסה שוב</button></div>';app.querySelector('button').onclick=start;}}
 setInterval(async()=>{if(!state||busy||savingBallot||document.hidden||document.querySelector('.login'))return;try{const person=state.person;const next=await api('state');if(state?.person!==person)return;setState(next);if(tab==='stats'){stats=await api('stats');renderStats();}}catch{}},30000);
 window.addEventListener('online',flushSeen);
 window.addEventListener('beforeunload',e=>{if(draft?.dirty){e.preventDefault();e.returnValue='';}});

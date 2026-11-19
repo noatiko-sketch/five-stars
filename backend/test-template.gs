@@ -13,23 +13,26 @@ function setupFiveStars(){
  return 'Ready';
 }
 function fiveStarsApi(path,body){
+ if(path==='people')return {people:fiveStarsPeople()};
+ if(path==='add-person')return fiveStarsAddPerson(body);
+ const participants=fiveStarsPeople();
  const qa=String(path).startsWith('qa-');if(qa)path=path.slice(3);
  const sheetName=qa?'QA — עומס ניסוי':'בחירות האתר — ניסוי';
  if(!['session','state','vote','seen','stats','import','reset','save'].includes(path))throw new Error('פעולה לא נתמכת');
  if(path==='stats')return fiveStarsStats(sheetName);
- const index=FS_PEOPLE.findIndex(p=>p.id===body.person&&p.active!==false);if(index<0)throw new Error('יש לבחור שם');
- const lock=!qa&&['session','state'].includes(path)?null:LockService.getScriptLock();if(lock&&!lock.tryLock(30000))throw new Error('יש עומס רגעי. נסו שוב');
+ const index=participants.findIndex(p=>p.id===body.person&&p.active!==false);if(index<0)throw new Error('יש לבחור שם');
+ const lock=!qa&&index<FS_PEOPLE.length&&['session','state'].includes(path)?null:LockService.getScriptLock();if(lock&&!lock.tryLock(30000))throw new Error('יש עומס רגעי. נסו שוב');
  try{
   const book=SpreadsheetApp.openById(FS_SPREADSHEET);let sheet=book.getSheetByName(sheetName);
   if(!sheet&&qa){sheet=book.insertSheet(sheetName);sheet.getRange(1,1,1,5).setValues([['QA participant','Votes','Seen','Revision','Updated']]);sheet.getRange(2,1,FS_PEOPLE.length,5).setValues(FS_PEOPLE.map(p=>[p.id,'{}','[]',0,'']));}
   if(!sheet)throw new Error('השמירה עדיין לא הוגדרה');
   if(path==='reset'){
-   const range=sheet.getRange(2,1,FS_PEOPLE.length,5);const previous=range.getValues();const now=Date.now();
-   const rows=FS_PEOPLE.map((p,i)=>[p.id,'{}','[]',Math.max(Number(previous[i][3])||0,now)+1,new Date().toISOString()]);
+   const range=sheet.getRange(2,1,participants.length,5);const previous=range.getValues();const now=Date.now();
+   const rows=participants.map((p,i)=>[p.id,'{}','[]',Math.max(Number(previous[i][3])||0,now)+1,new Date().toISOString()]);
    range.setValues(rows);SpreadsheetApp.flush();
    return {person:body.person,votes:{},seen:[],total:FS_SONGS.length,unlocked:false,revision:rows[index][3]};
   }
-  const range=sheet.getRange(index+2,1,1,5);const row=range.getValues()[0];if(row[0]!==body.person)throw new Error('סדר המשתתפים השתנה');
+  const range=sheet.getRange(index+2,1,1,5);const row=range.getValues()[0];if(!row[0]&&index>=FS_PEOPLE.length){row[0]=body.person;row[1]='{}';row[2]='[]';row[3]=0;row[4]='';range.setValues([row]);SpreadsheetApp.flush();}if(row[0]!==body.person)throw new Error('סדר המשתתפים השתנה');
   const votes=JSON.parse(row[1]||'{}');let seen=JSON.parse(row[2]||'[]');let revision=Number(row[3])||0;let changed=false;
   if(path==='save'){
    if(!body.votes||typeof body.votes!=='object'||Array.isArray(body.votes))throw new Error('בחירה לא תקינה');
@@ -70,11 +73,33 @@ function fiveStarsApi(path,body){
 
 function fiveStarsStats(sheetName='בחירות האתר — ניסוי'){
  const sheet=SpreadsheetApp.openById(FS_SPREADSHEET).getSheetByName(sheetName);if(!sheet)throw new Error('השמירה עדיין לא הוגדרה');
- const people=new Set(FS_PEOPLE.filter(p=>p.active!==false).map(p=>p.id));
- const entries=sheet.getRange(2,1,FS_PEOPLE.length,2).getValues();
+ const directory=fiveStarsPeople();const people=new Set(directory.filter(p=>p.active!==false).map(p=>p.id));
+ const entries=sheet.getRange(2,1,directory.length,2).getValues();
  const songs=FS_SONGS.map(s=>({id:s.id,score:0,likes:0,loves:0,voters:[]}));let participants=0,votes=0;
  for(const row of entries){if(!people.has(row[0]))continue;const ballot=JSON.parse(row[1]||'{}');let voted=false;for(const [index,value] of Object.entries(ballot)){const s=songs[index];if(!s||![1,3].includes(value))continue;s.score+=value===3?2:1;s[value===3?'loves':'likes']++;s.voters.push({person:row[0],value});voted=true;votes++;}if(voted)participants++;}
  return {songs,participants,votes};
+}
+
+// Additional names share one directory across production and test. Existing IDs stay unchanged.
+function fiveStarsPeople(){
+ const sheet=SpreadsheetApp.openById(FS_SPREADSHEET).getSheetByName('משתתפים נוספים');
+ if(!sheet||sheet.getLastRow()<2)return FS_PEOPLE.slice();
+ const extra=sheet.getRange(2,1,sheet.getLastRow()-1,2).getValues();
+ const known=new Set(FS_PEOPLE.map(p=>p.id));
+ return FS_PEOPLE.concat(extra.filter(row=>/^u-[a-zA-Z0-9-]+$/.test(row[0])&&typeof row[1]==='string'&&row[1].trim()&&!known.has(row[0])&&known.add(row[0])).map(row=>({id:row[0],name:row[1],active:true})));
+}
+function fiveStarsAddPerson(body){
+ const name=typeof body.name==='string'?body.name.normalize('NFC').trim().replace(/\s+/g,' '):'';
+ if(!name||name.length>80||/[\x00-\x1f<>]/.test(name)||/^[=+@-]/.test(name))throw new Error('יש להזין שם תקין, עד 80 תווים');
+ const lock=LockService.getScriptLock();if(!lock.tryLock(30000))throw new Error('יש עומס רגעי. נסו שוב');
+ try{
+  const people=fiveStarsPeople();const existing=people.find(p=>String(p.name||'').normalize('NFC').trim().toLocaleLowerCase()===name.toLocaleLowerCase());
+  if(existing){if(existing.active===false)throw new Error('השם הזה הוסר מהרשימה');return {person:existing.id,people};}
+  const book=SpreadsheetApp.openById(FS_SPREADSHEET);let sheet=book.getSheetByName('משתתפים נוספים');
+  if(!sheet){sheet=book.insertSheet('משתתפים נוספים');sheet.getRange(1,1,1,2).setValues([['מזהה','שם תצוגה']]);}
+  const person={id:'u-'+Utilities.getUuid(),name,active:true};sheet.getRange(sheet.getLastRow()+1,1,1,2).setValues([[person.id,name]]);SpreadsheetApp.flush();
+  return {person:person.id,people:people.concat([person])};
+ }finally{lock.releaseLock();}
 }
 
 const FS_PEOPLE=[];

@@ -4,11 +4,12 @@ import vm from 'node:vm';
 import {readFileSync} from 'node:fs';
 function fixture(template='../backend/Code.gs',options={}){
  const requestedSheets=new Set();
- const people=options.people||[{id:'a'},{id:'b'},{id:'gone',active:false}];
+ const people=options.people||[{id:'a',name:'A'},{id:'b',name:'B'},{id:'gone',name:'Gone',active:false}];
  const songs=options.songs||Array.from({length:16},(_,i)=>({id:'s'+i,people:[i===15?'a':'b']}));
  const rows=people.map(p=>[p.id,'{}','[]',0,'']);let locked=false;
- const sheet={getRange(row,col,n=1,m=1){return {getValues:()=>rows.slice(row-2,row-2+n).map(r=>r.slice(col-1,col-1+m)),setValues:values=>{for(let i=0;i<n;i++)for(let j=0;j<m;j++)rows[row-2+i][col-1+j]=values[i][j];}};}};
- const context=vm.createContext({SpreadsheetApp:{openById:()=>({getSheetByName:name=>{requestedSheets.add(name);return sheet;}}),flush(){}},LockService:{getScriptLock:()=>({tryLock(){if(locked)return false;locked=true;return true;},releaseLock(){locked=false;}})}});
+ const sheet={getRange(row,col,n=1,m=1){return {getValues:()=>Array.from({length:n},(_,i)=>(rows[row-2+i]||Array(5).fill('')).slice(col-1,col-1+m)),setValues:values=>{for(let i=0;i<n;i++)for(let j=0;j<m;j++)(rows[row-2+i] ||= Array(5).fill(''))[col-1+j]=values[i][j];}};}};
+ let extra=null;let uuid=0;const extraSheet={getLastRow:()=>extra.length,getRange(row,col,n=1,m=1){return{getValues:()=>extra.slice(row-1,row-1+n).map(r=>r.slice(col-1,col-1+m)),setValues:values=>{for(let i=0;i<n;i++)extra[row-1+i]=values[i].slice();}};}};
+ const context=vm.createContext({Utilities:{getUuid:()=>String(++uuid)},SpreadsheetApp:{openById:()=>({getSheetByName:name=>{if(name==='משתתפים נוספים')return extra?extraSheet:null;requestedSheets.add(name);return sheet;},insertSheet(){extra=[];return extraSheet;}}),flush(){}},LockService:{getScriptLock:()=>({tryLock(){if(locked)return false;locked=true;return true;},releaseLock(){locked=false;}})}});
  const source=readFileSync(new URL(template,import.meta.url),'utf8').split('const FS_PEOPLE=')[0]+`const FS_PEOPLE=${JSON.stringify(people)};const FS_SONGS=${JSON.stringify(songs)};`;
  vm.runInContext(source,context);
  return {api:context.fiveStarsApi,rows,requestedSheets};
@@ -33,4 +34,16 @@ test('30 Google participant saves retain weighted scores and voter details (simu
  await Promise.all(people.map(async p=>f.api('save',{person:p.id,votes,baseVotes:{}})));
  const stats=f.api('stats',{});assert.equal(stats.participants,30);assert.equal(stats.votes,450);assert.equal(stats.songs[0].score,30);assert.equal(stats.songs[12].score,60);assert.equal(stats.songs[12].voters.length,30);
  assert.deepEqual([...f.requestedSheets],['בחירות האתר — ניסוי']);
+});
+
+for(const template of ['../backend/Code.gs','../backend/test-template.gs'])test('shared names append stable identities and preserve earlier votes: '+template,()=>{
+ const f=fixture(template);f.api('vote',{person:'a',song:'s0',value:1});
+ assert.equal(f.api('people',{}).people.length,3);
+ const added=f.api('add-person',{name:'  New   Person  '});assert.equal(added.people.at(-1).name,'New Person');
+ assert.equal(f.api('add-person',{name:'new person'}).person,added.person);
+ assert.throws(()=>f.api('add-person',{name:'Gone'}),/הוסר/);
+ for(const name of ['', '=formula', '<script>', 'x'.repeat(81)])assert.throws(()=>f.api('add-person',{name}));
+ const state=f.api('session',{person:added.person});assert.equal(Object.keys(state.votes).length,0);
+ f.api('vote',{person:added.person,song:'s0',value:1});assert.equal(f.api('state',{person:'a'}).votes.s0,1);
+ assert.equal(f.api('stats',{}).songs[0].voters.length,2);
 });
