@@ -8,7 +8,7 @@ function fixture(template='../backend/Code.gs'){
  const songs=Array.from({length:16},(_,i)=>({id:'s'+i,people:[i===15?'a':'b']}));
  const rows=people.map(p=>[p.id,'{}','[]',0,'']);let locked=false;
  const sheet={getRange(row,col,n=1,m=1){return {getValues:()=>rows.slice(row-2,row-2+n).map(r=>r.slice(col-1,col-1+m)),setValues:values=>{for(let i=0;i<n;i++)for(let j=0;j<m;j++)rows[row-2+i][col-1+j]=values[i][j];}};}};
- const context=vm.createContext({SpreadsheetApp:{openById:()=>({getSheetByName:name=>{requestedSheets.add(name);return sheet;}}),flush(){}},LockService:{getScriptLock:()=>({tryLock(){if(locked)return false;locked=true;return true;},releaseLock(){locked=false;}})}});
+ const context=vm.createContext({SpreadsheetApp:{openById:()=>({getSheetByName:name=>{if(name==='משתתפים נוספים')return null;requestedSheets.add(name);return sheet;}}),flush(){}},LockService:{getScriptLock:()=>({tryLock(){if(locked)return false;locked=true;return true;},releaseLock(){locked=false;}})}});
  const source=readFileSync(new URL(template,import.meta.url),'utf8').split('const FS_PEOPLE=')[0]+`const FS_PEOPLE=${JSON.stringify(people)};const FS_SONGS=${JSON.stringify(songs)};`;
  vm.runInContext(source,context);
  return {api:context.fiveStarsApi,rows,requestedSheets};
