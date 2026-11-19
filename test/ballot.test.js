@@ -1,0 +1,20 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {createDraft,validateBallot} from '../public/ballot.js';
+const memory=()=>{const m=new Map();return{getItem:k=>m.get(k),setItem:(k,v)=>m.set(k,v),removeItem:k=>m.delete(k)};};
+const catalog={songs:Array.from({length:20},(_,i)=>({id:'s'+i,shares:[{person:i===19?'a':'b'}]}))};
+test('immediate drafts survive reload, failed saves, background progress and identity switching',()=>{
+ const storage=memory();let draft=createDraft(storage,'test:a','a',{});
+ for(let i=0;i<12;i++)draft.choose('s'+i,1);
+ assert.equal(draft.dirty,true);assert.equal(Object.keys(draft.votes).length,12);
+ draft.receive({});assert.equal(Object.keys(draft.votes).length,12);
+ draft=createDraft(storage,'test:a','a',{});assert.equal(Object.keys(draft.votes).length,12);
+ assert.deepEqual(createDraft(storage,'test:b','b',{}).votes,{});
+ assert.doesNotThrow(()=>validateBallot(catalog,'a',draft.votes));
+ draft.saved(draft.votes);assert.equal(draft.dirty,false);
+ draft.choose('s0',1);assert.equal(draft.votes.s0,undefined);draft.choose('s0',3);assert.equal(draft.votes.s0,3);
+ for(const id of ['s1','s2'])draft.choose(id,3);assert.throws(()=>draft.choose('s3',3));
+ assert.throws(()=>validateBallot(catalog,'a',{s0:1}),/לפחות 10/);
+ assert.throws(()=>validateBallot(catalog,'a',{...draft.votes,s19:1}),/שלך/);
+});
+test('stale drafts retain their original baseline for conflict detection',()=>{const storage=memory();const draft=createDraft(storage,'a','a',{s0:1});draft.choose('s1',1);draft.receive({s0:3});assert.deepEqual(draft.baseVotes,{s0:1});assert.deepEqual(draft.votes,{s0:1,s1:1});});
