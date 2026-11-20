@@ -8,32 +8,33 @@ const ranking=document.querySelector('#stats-ranking');
 const dialog=document.querySelector('#voter-dialog');
 const shared=globalThis.FIVE_STARS_STORAGE_URL?connectGoogleStore(globalThis.FIVE_STARS_STORAGE_URL):null;
 let latestStats,refreshSequence=0,refreshing=false;
-let catalog,store,sort='score',sender='',limit=50;
+let catalog,store,sort='score',rankingType='songs',sender='',limit=50;
+const metricLabel=()=>sort==='score'?'נקודות':sort==='votes'?'הצבעות':'ממש אהבתי';
+const metric=r=>sort==='score'?r.score:sort==='votes'?(r.votes??((r.likes||0)+(r.loves||0))):r.loves;
 const name=id=>personName(catalog,id)||'משתתף שהוסר';
 function render(){
  if(shared&&!latestStats)return;
  const all=latestStats||store.stats(null,true);
- if(sort==='contributors'){
-  const people=rankContributors(catalog,all.songs).filter(p=>!sender||p.person===sender);
-  ranking.innerHTML=people.slice(0,limit).map((p,i)=>`<article class="ranking-card ranking-person"><span class="rank">${i+1}</span><span class="text"><strong class="contributor-name">${escape(p.name)}</strong></span><span class="score">${p.score}<small>נקודות</small></span></article>`).join('')||'<p class="empty">אין משתתפים להצגה</p>';
+ if(rankingType==='people'){
+  const people=rankContributors(catalog,all.songs,sort).filter(p=>!sender||p.person===sender);
+  ranking.innerHTML=people.slice(0,limit).map((p,i)=>`<article class="ranking-card ranking-person"><span class="rank">${i+1}</span><span class="text"><strong class="contributor-name">${escape(p.name)}</strong></span><span class="score">${metric(p)}<small>${metricLabel()}</small></span></article>`).join('')||'<p class="empty">אין משתתפים להצגה</p>';
   addMore(people.length,'עוד משתתפים');return;
  }
  const byId=new Map(all.songs.map(s=>[s.id,s]));
  const rows=catalog.songs.filter(s=>!sender||s.shares.some(x=>x.person===sender)).map(song=>({song,id:song.id,score:0,likes:0,loves:0,voters:[],...byId.get(song.id)})).filter(r=>sender||r.voters.length);
- const metric=r=>sort==='loves'?r.loves:sort==='likes'?r.likes:sort==='people'?r.voters.length:r.score;
  rows.sort((a,b)=>metric(b)-metric(a)||b.score-a.score||a.song.title.localeCompare(b.song.title,'he'));
- ranking.innerHTML=rows.length?rows.slice(0,limit).map((r,i)=>`<button class="ranking-card" data-song="${escape(r.id)}" aria-label="${escape(r.song.title)} — פירוט הצבעות"><span class="rank">${i+1}</span>${r.song.image?`<img class="art" src="${escape(r.song.image)}" alt="" loading="lazy" decoding="async">`:'<span class="art"></span>'}<span class="text"><span class="title" dir="auto">${escape(r.song.title)}</span><span class="artist" dir="auto">${escape(r.song.artist)}</span><span class="sender">${escape(songNames(catalog,r.song))}</span></span><span class="score">${metric(r)}<small>${sort==='score'?'נקודות':sort==='loves'?'ממש אהבתי':sort==='likes'?'אהבתי':'אנשים'}</small></span></button>`).join(''):`<div class="empty">${shared?'עדיין אין הצבעות.':'עדיין אין בחירות בדפדפן הזה.'}</div>`;
+ ranking.innerHTML=rows.length?rows.slice(0,limit).map((r,i)=>`<button class="ranking-card" data-song="${escape(r.id)}" aria-label="${escape(r.song.title)} — פירוט הצבעות"><span class="rank">${i+1}</span>${r.song.image?`<img class="art" src="${escape(r.song.image)}" alt="" loading="lazy" decoding="async">`:'<span class="art"></span>'}<span class="text"><span class="title" dir="auto">${escape(r.song.title)}</span><span class="artist" dir="auto">${escape(r.song.artist)}</span><span class="sender">${escape(songNames(catalog,r.song))}</span></span><span class="score">${metric(r)}<small>${metricLabel()}</small></span></button>`).join(''):`<div class="empty">${shared?'עדיין אין הצבעות.':'עדיין אין בחירות בדפדפן הזה.'}</div>`;
  addMore(rows.length,'עוד שירים');
  ranking.querySelectorAll('[data-song]').forEach(button=>button.onclick=()=>openSong(button.dataset.song));
 }
 function addMore(count,label){if(count<=limit)return;const button=document.createElement('button');button.className='more';button.textContent=label;button.onclick=()=>{limit+=50;render();};ranking.append(button);}
 function openSong(id){
  const song=catalog.songs.find(s=>s.id===id);
- const result=(latestStats||store.stats(null,true)).songs.find(s=>s.id===id);
+ const result=(latestStats||store.stats(null,true)).songs.find(s=>s.id===id)||{score:0,voters:[]};
  dialog.innerHTML=`<h2 dir="auto">${escape(song.title)}</h2><p class="artist" dir="auto">${escape(song.artist)}</p><p>${result.score} נקודות · ${result.voters.length} אנשים</p><div class="modal-list">${result.voters.length?result.voters.map(v=>`<div class="modal-row"><span>${escape(name(v.person))}</span><span class="vote-tag ${v.value===3?'love':'like'}">${v.value===3?'ממש אהבתי':'אהבתי'}</span></div>`).join(''):'<p class="note">עדיין אין הצבעות לשיר הזה</p>'}</div><div class="dialog-actions"><a class="identity" href="${escape(song.url)}" target="_blank" rel="noopener noreferrer">האזנה לשיר ↗</a><button class="close">סגירה</button></div>`;
  dialog.querySelector('.close').onclick=()=>dialog.close();dialog.showModal();
 }
-async function start(){if(sandbox)document.querySelector('.score-key').insertAdjacentHTML('beforebegin','<p class="local-notice">סביבת ניסוי · נתונים נפרדים</p>');try{const r=await fetch('../catalog.json');if(!r.ok)throw new Error('catalog');catalog=await r.json();catalog.people=await createPeopleClient(shared,catalog.people).load();if(!shared)store=createLocalStore(catalog,localStorage,sandbox?'sandbox':'live-local');const filter=document.querySelector('#stats-sender');filter.insertAdjacentHTML('beforeend',activePeople(catalog).map(p=>`<option value="${escape(p.id)}">${escape(p.name)}</option>`).join(''));filter.onchange=()=>{sender=filter.value;limit=50;render();};document.querySelectorAll('[data-sort]').forEach(b=>b.onclick=()=>{sort=b.dataset.sort;limit=50;document.querySelectorAll('[data-sort]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render();});if(shared)await refresh();else render();}catch{ranking.innerHTML='<p class="empty">לא הצלחנו לטעון את הנתונים. נסו לרענן.</p>';}finally{refreshing=false;}}
+async function start(){if(sandbox)document.querySelector('.score-key').insertAdjacentHTML('beforebegin','<p class="local-notice">סביבת ניסוי · נתונים נפרדים</p>');try{const r=await fetch('../catalog.json');if(!r.ok)throw new Error('catalog');catalog=await r.json();catalog.people=await createPeopleClient(shared,catalog.people).load();if(!shared)store=createLocalStore(catalog,localStorage,sandbox?'sandbox':'live-local');const filter=document.querySelector('#stats-sender');filter.insertAdjacentHTML('beforeend',activePeople(catalog).map(p=>`<option value="${escape(p.id)}">${escape(p.name)}</option>`).join(''));filter.onchange=()=>{sender=filter.value;limit=50;render();};document.querySelectorAll('[data-sort]').forEach(b=>b.onclick=()=>{sort=b.dataset.sort;limit=50;document.querySelectorAll('[data-sort]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render();});document.querySelectorAll('[data-ranking-type]').forEach(b=>b.onclick=()=>{rankingType=b.dataset.rankingType;limit=50;document.querySelectorAll('[data-ranking-type]').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));render();});if(shared)await refresh();else render();}catch{ranking.innerHTML='<p class="empty">לא הצלחנו לטעון את הנתונים. נסו לרענן.</p>';}finally{refreshing=false;}}
 async function refresh(){if(!shared||refreshing)return;refreshing=true;if(!latestStats)ranking.innerHTML='<p class="empty">טוענים את הבחירות…</p>';const sequence=++refreshSequence;try{const next=await shared('stats',{});if(sequence!==refreshSequence)return;latestStats=next;render();}catch{if(!latestStats)ranking.innerHTML='<p class="empty">לא הצלחנו לטעון את הבחירות. נסו לרענן.</p>';}finally{refreshing=false;}}
 window.addEventListener('storage',()=>{if(store)render();});
 setInterval(()=>{if(!document.hidden&&catalog&&shared)refresh();},20000);

@@ -1,3 +1,4 @@
+import {rankContributors} from './rankings.js';
 import { connectGoogleStore } from './google-store.js';
 import { createLocalStore } from './local-store.js';
 import {createPeopleClient,activePeople,personName as displayName,songNames} from './people.js';
@@ -11,7 +12,7 @@ const googleRequest = globalThis.FIVE_STARS_STORAGE_URL ? connectGoogleStore(glo
 const identity=createIdentity(localStorage,document,sandbox);
 const app = document.querySelector('#app');
 const dialog = document.querySelector('#dialog');
-let catalog, state, tab = 'songs', stats, statsView = 'songs', statsLimit = 50, busy = false;
+let catalog, state, tab = 'songs', stats, statsView = 'songs', statsMetric = 'score', statsLimit = 50, busy = false;
 let query = '', sender = '', month = '', observer, noticeTimer, seenTimer;
 const queuedSeen = new Set();
 const viewed = new Set();
@@ -306,10 +307,13 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 function renderStats(){
  const content=app.querySelector('#content');
- content.innerHTML=`<div class="metrics"><div class="metric"><strong>${number(stats.votes)}</strong><span>בחירות</span></div><div class="metric"><strong>${number(stats.songs.filter(s=>s.score>0).length)}</strong><span>שירים אהובים</span></div></div><div class="stat-switch"><button data-view="songs" class="${statsView==='songs'?'active':''}">השירים</button><button data-view="people" class="${statsView==='people'?'active':''}">מי ששלחו</button></div><div id="ranking"></div>`;
+ const label=statsMetric==='score'?'נקודות':statsMetric==='votes'?'הצבעות':'ממש אהבתי';
+ const metric=r=>statsMetric==='score'?r.score:statsMetric==='votes'?(r.votes??((r.likes||0)+(r.loves||0))):r.loves;
+ content.innerHTML=`<div class="ranking-tabs embedded-metrics" role="group" aria-label="דירוג לפי"><button data-metric="score" aria-pressed="${statsMetric==='score'}">הכי הרבה נקודות</button><button data-metric="votes" aria-pressed="${statsMetric==='votes'}">הכי הרבה הצבעות</button><button data-metric="loves" aria-pressed="${statsMetric==='loves'}">הכי הרבה ממש אהבתי</button></div><div class="stat-switch"><button data-view="songs" class="${statsView==='songs'?'active':''}" aria-pressed="${statsView==='songs'}">לפי שירים</button><button data-view="people" class="${statsView==='people'?'active':''}" aria-pressed="${statsView==='people'}">לפי אנשים</button></div><div id="ranking"></div>`;
+ content.querySelectorAll('[data-metric]').forEach(b=>b.onclick=()=>{statsMetric=b.dataset.metric;statsLimit=50;renderStats();});
  content.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{statsView=b.dataset.view;statsLimit=50;renderStats();});
- const ranked=statsView==='songs'?stats.songs.filter(s=>s.score>0):stats.contributors.filter(p=>p.score>0);
- content.querySelector('#ranking').innerHTML=ranked.slice(0,statsLimit).map((r,i)=>{const song=statsView==='songs'?catalog.songs.find(s=>s.id===r.id):null;return `<article class="statrow"><span class="rank">${i+1}</span>${song?`<a href="${escape(song.url)}" target="_blank" rel="noopener noreferrer">${image(song)}</a>`:''}<div class="text"><div class="title" dir="auto">${escape(song?song.title:personName(r.person))}</div>${song?`<div class="artist" dir="auto">${escape(song.artist)}</div><div class="sender">${escape(names(song))}</div><button class="voters" data-voters="${escape(song.id)}">${r.likes} אהבתי · ${r.loves} ממש אהבתי</button>`:''}</div><div class="score">${number(r.score)}<small>נקודות</small></div></article>`;}).join('')||'<p class="empty">הבחירות הראשונות בדרך</p>';
+ const ranked=statsView==='songs'?stats.songs.filter(s=>s.score>0).slice().sort((a,b)=>metric(b)-metric(a)||b.score-a.score):rankContributors(catalog,stats.songs,statsMetric).filter(p=>p.score>0);
+ content.querySelector('#ranking').innerHTML=ranked.slice(0,statsLimit).map((r,i)=>{const song=statsView==='songs'?catalog.songs.find(s=>s.id===r.id):null;return `<article class="statrow"><span class="rank">${i+1}</span>${song?`<a href="${escape(song.url)}" target="_blank" rel="noopener noreferrer">${image(song)}</a>`:''}<div class="text"><div class="title" dir="auto">${escape(song?song.title:personName(r.person))}</div>${song?`<div class="artist" dir="auto">${escape(song.artist)}</div><div class="sender">${escape(names(song))}</div><button class="voters" data-voters="${escape(song.id)}">${r.likes} אהבתי · ${r.loves} ממש אהבתי</button>`:''}</div><div class="score">${number(metric(r))}<small>${label}</small></div></article>`;}).join('')||'<p class="empty">הבחירות הראשונות בדרך</p>';
  if(ranked.length>statsLimit){const more=document.createElement('button');more.className='more';more.textContent='עוד';more.onclick=()=>{statsLimit+=50;renderStats();};content.append(more);}
  content.querySelectorAll('[data-voters]').forEach(b=>b.onclick=()=>{const r=stats.songs.find(s=>s.id===b.dataset.voters);modal('מי אהבו?',r.voters.map(v=>`<div class="modal-row"><span>${escape(personName(v.person))}</span><span>${v.value===3?'ממש אהבתי':'אהבתי'}</span></div>`).join(''));});
 }
