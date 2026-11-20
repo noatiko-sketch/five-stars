@@ -53,8 +53,8 @@ async function api(path, body) {
   if (!response.ok) throw Object.assign(new Error(result.error), {status:response.status});
   return result;
 }
-function notice(text) { const node=document.querySelector('#notice');node.textContent=text;node.classList.add('visible');clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>node.classList.remove('visible'),4000); }
-function modal(title, content) { selectionObserver?.disconnect();dialog.classList.remove('selections-dialog','love-selections');dialog.innerHTML=`<h2>${escape(title)}</h2><div class="modal-list">${content}</div><button class="close">סגירה</button>`;dialog.querySelector('.close').onclick=()=>dialog.close();dialog.showModal(); }
+function notice(text) { const node=dialog.open?(dialog.querySelector('.dialog-notice')||document.querySelector('#notice')):document.querySelector('#notice');document.querySelector('#notice').classList.remove('visible');node.textContent=text;node.classList.add('visible');clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>node.classList.remove('visible'),4000); }
+function modal(title, content) { selectionObserver?.disconnect();dialog.classList.remove('selections-dialog','love-selections');dialog.innerHTML=`<h2>${escape(title)}</h2><div class="modal-list">${content}</div><div class="dialog-notice" role="status" aria-live="polite"></div><button class="close">סגירה</button>`;dialog.querySelector('.close').onclick=()=>dialog.close();dialog.showModal(); }
 function setState(next) {
  if(state?.person===next.person && next.revision < state.revision)return;
  if(!draft||state?.person!==next.person){
