@@ -1,0 +1,18 @@
+{
+  "old_songs": 1219,
+  "songs": 1997,
+  "added_songs": 778,
+  "people": 91,
+  "added_people": 19,
+  "added_shares": 848,
+  "spotify_links_added": 3,
+  "duplicates_merged": 11,
+  "preserved_song_order_sha256": "9ce739f2d7161c7a343d2562f4e9f1b287c205bd9a7f5622556ba5c74220ebd6",
+  "preserved_person_order_sha256": "0e54eda9e66f3782821d5af1f7cf0116e22ffee5c1c01d75454eda05e53c2d83",
+  "skipped_counts": {
+    "unidentified_track": 94,
+    "ambiguous_sender": 13
+  },
+  "date": "2026-11-20",
+  "source_through": "2026-11-15"
+}

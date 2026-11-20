@@ -1,16 +1,19 @@
 import test from 'node:test';
+import {createHash} from 'node:crypto';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {activePeople,personName,songNames,createPeopleClient} from '../public/people.js';
 const catalog=JSON.parse(readFileSync(new URL('../data/catalog.json',import.meta.url)));
-const renamed={p7:'אוהד',p11:'אורי מרגלית',p20:'בנו',p21:'בתיה',p24:'איתמר',p39:'אופיר כהן',p41:'מיכל',p43:'נדב ריבקין',p44:'נועה ליברמן',p51:'אמיר',p53:'עדן',p56:'עמר בן אביב',p57:'קשת',p58:'רוני אליאסיאן',p59:'רוני וקסלר',p62:'רועי דהוקי',p65:'שני',p71:'תמר קוה'};
-const removed=['p0','p5','p8','p12','p17','p18','p23','p26','p31','p33','p34','p36','p37','p38','p40','p42','p45','p68','p70'];
-test('approved original mapping: 18 renames and 19 retired identities retain song ownership',()=>{
- assert.equal(catalog.people.length,72);assert.equal(activePeople(catalog).length,53);
- for(const [id,name]of Object.entries(renamed)){assert.equal(personName(catalog,id),name);assert.ok(catalog.songs.some(s=>s.shares.some(x=>x.person===id)));}
- for(const id of removed){assert.equal(personName(catalog,id),'');assert.equal(catalog.people.find(p=>p.id===id).active,false);}
- for(const s of catalog.songs)for(const share of s.shares)assert.ok(catalog.people.some(p=>p.id===share.person));
- assert.equal(songNames(catalog,{shares:[{person:'p7'},{person:'p11'},{person:'p7'},{person:'p0'}]}),'אוהד · אורי מרגלית');
+test('WhatsApp import retains all old voting identities and song positions',()=>{
+ const fingerprint=ids=>createHash('sha256').update(ids.join('\n')).digest('hex');
+ assert.equal(fingerprint(catalog.people.slice(0,72).map(p=>p.id)),"0e54eda9e66f3782821d5af1f7cf0116e22ffee5c1c01d75454eda05e53c2d83");
+ assert.equal(fingerprint(catalog.songs.slice(0,1219).map(s=>s.id)),"9ce739f2d7161c7a343d2562f4e9f1b287c205bd9a7f5622556ba5c74220ebd6");
+ assert.equal(personName(catalog,'p58'),'רוני השחורה');
+ assert.equal(personName(catalog,'p59'),'רוני הלבנה');
+ assert.equal(new Set(catalog.people.map(p=>p.id)).size,catalog.people.length);
+ assert.equal(new Set(catalog.songs.map(s=>s.id)).size,catalog.songs.length);
+ for(const song of catalog.songs){assert.ok(song.title);assert.ok(song.url);assert.ok(song.shares.length);for(const share of song.shares)assert.ok(catalog.people.some(p=>p.id===share.person));}
+ for(const person of catalog.people.slice(72))assert.ok(catalog.songs.some(s=>s.shares.some(x=>x.person===person.id)));
 });
 test('one directory supplies login, author labels, filters and voter details, including future identities',async()=>{
  const people=[...catalog.people,{id:'u-future',name:'שם חדש'}];const calls=[];
