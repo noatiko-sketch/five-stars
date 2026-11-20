@@ -165,3 +165,9 @@
 .login .confetti:before{top:0;right:20%;box-shadow:-130px 46px 0 #acd6f5, -48px -4px 0 #eb6024}
 .login .confetti:after{bottom:0;left:20%;background:var(--lime);box-shadow:100px -42px 0 #eb6024, 46px 4px 0 #acd6f5}
 @media(max-width:650px){.voting-intro h1{font-size:clamp(11px,3.6vw,17px);letter-spacing:-.35px}}
+
+/* A single three-second shower on entry; the page remains fully usable. */
+.confetti-shower{position:fixed;inset:0;z-index:30;overflow:hidden;pointer-events:none}
+.confetti-shower i{position:absolute;top:var(--y);left:var(--x);width:var(--size);height:calc(var(--size)*1.35);border-radius:2px;background:var(--color);transform:rotate(var(--rotation));animation:confetti-fall 3s linear both;will-change:transform}
+.confetti-shower i:nth-child(3n){border-radius:50%;height:var(--size)}
+@keyframes confetti-fall{to{transform:translate(var(--drift),130vh) rotate(760deg)}}
