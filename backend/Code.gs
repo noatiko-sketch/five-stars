@@ -35,7 +35,7 @@ function fiveStarsApi(path,body){
     proposed[i]=value;
    }
    if(Object.values(proposed).filter(v=>v===1).length<10)throw new Error('צריך לבחור לפחות 10 שירים באהבתי');
-   if(Object.values(proposed).filter(v=>v===3).length>3)throw new Error('אפשר לבחור עד 3 שירים בממש אהבתי');
+   if(Object.values(proposed).filter(v=>v===3).length>5)throw new Error('אפשר לבחור עד 5 שירים בממש אהבתי');
    const mappedBase={};for(const [id,value]of Object.entries(body.baseVotes||{})){const i=FS_SONGS.findIndex(s=>s.id===id);if(i>=0)mappedBase[i]=value;}
    const same=(a,b)=>JSON.stringify(Object.entries(a).sort())===JSON.stringify(Object.entries(b).sort());
    if(!same(votes,proposed)&&(!body.baseVotes||!same(votes,mappedBase)))throw new Error('הבחירות השתנו במכשיר אחר. רעננו לפני השמירה');
@@ -44,13 +44,13 @@ function fiveStarsApi(path,body){
   if(path==='vote'){
    const song=FS_SONGS.findIndex(s=>s.id===body.song);if(song<0||![0,1,3].includes(body.value))throw new Error('בחירה לא תקינה');
    if(FS_SONGS[song].people.includes(body.person))throw new Error('אי אפשר להצביע לשיר שלך');
-   if(body.value===3&&votes[song]!==3&&Object.values(votes).filter(v=>v===3).length>=3)throw new Error('אפשר לסמן עד 3 שירים בממש אהבתי');
+   if(body.value===3&&votes[song]!==3&&Object.values(votes).filter(v=>v===3).length>=5)throw new Error('אפשר לסמן עד 5 שירים בממש אהבתי');
    if(body.value)votes[song]=body.value;else delete votes[song];changed=true;
   }
   if(path==='import'&&Object.keys(votes).length===0){
    if(!body.votes||typeof body.votes!=='object'||Array.isArray(body.votes))throw new Error('בקשה לא תקינה');
    const proposed={};for(const id of Object.keys(body.votes)){const i=FS_SONGS.findIndex(s=>s.id===id);const value=body.votes[id];if(i<0||![1,3].includes(value)||FS_SONGS[i].people.includes(body.person))continue;proposed[i]=value;}
-   if(Object.values(proposed).filter(v=>v===3).length>3)throw new Error('הבחירות המקומיות חורגות מהמגבלה');
+   if(Object.values(proposed).filter(v=>v===3).length>5)throw new Error('הבחירות המקומיות חורגות מהמגבלה');
    Object.assign(votes,proposed);changed=Object.keys(proposed).length>0;
   }
   if(path==='seen'){

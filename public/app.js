@@ -68,7 +68,7 @@ function setState(next) {
  identity.set(next.person);
  state={...next,votes:draft.votes};document.querySelectorAll('.song .choice').forEach(b=>b.setAttribute('aria-pressed',String(state.votes[b.closest('[data-song]').dataset.song]===Number(b.dataset.value))));next.seen.forEach(id=>viewed.add(id));updateSeenIndicators();updateProgress();
 }
-function updateSave(){const hasVotes=Object.keys(draft?.votes||{}).length;const button=document.querySelector('#save-ballot');if(button){button.disabled=savingBallot||!hasVotes;button.textContent=savingBallot?'שומרים…':'שמירת הבחירות';}const status=document.querySelector('#ballot-status');if(status)status.textContent=autoSaveError?(/3|שלך|תקינה/.test(autoSaveError)?autoSaveError:'הבחירות במכשיר; ננסה לשמור שוב כשהחיבור יחזור'):draft?.dirty?'':savedMessage||(hasVotes?'נשמר אוטומטית':'');}
+function updateSave(){const hasVotes=Object.keys(draft?.votes||{}).length;const button=document.querySelector('#save-ballot');if(button){button.disabled=savingBallot||!hasVotes;button.textContent=savingBallot?'שומרים…':'שמירת הבחירות';}const status=document.querySelector('#ballot-status');if(status)status.textContent=autoSaveError?(/5|שלך|תקינה/.test(autoSaveError)?autoSaveError:'הבחירות במכשיר; ננסה לשמור שוב כשהחיבור יחזור'):draft?.dirty?'':savedMessage||(hasVotes?'נשמר אוטומטית':'');}
 async function saveBallot(){
  if(savingBallot||!draft)return;
  try{validateBallot(catalog,state.person,draft.votes);}catch(e){notice(e.message);return;}
@@ -108,7 +108,7 @@ function updateProgress() {
   const results=document.querySelector('#stats-tab');if(results){results.classList.toggle('locked',!state.unlocked&&!sandbox);results.setAttribute('aria-disabled',String(!state.unlocked&&!sandbox));}
   const likes=document.querySelector('#like-count bdi');if(likes)likes.textContent=`${Object.values(state.votes).filter(v=>v===1).length}/10+`;
   updateSave();
-  const loves=document.querySelector('#love-count bdi');if(loves)loves.textContent=`${Object.values(state.votes).filter(v=>v===3).length}/3`;
+  const loves=document.querySelector('#love-count bdi');if(loves)loves.textContent=`${Object.values(state.votes).filter(v=>v===3).length}/5`;
 }
 function image(song) { return song.image ? `<img class="art" src="${escape(song.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">` : ''; }
 function names(song){return songNames(catalog,song);}
@@ -215,7 +215,8 @@ async function flushSeen(){
 function vote(id,value){
  if(savingBallot)return;
  if(catalog.songs.find(s=>s.id===id)?.shares.some(s=>s.person===state.person)){notice('אי אפשר להצביע לשיר שלך');return;}
- try{draft.choose(id,value);state.votes=draft.votes;savedMessage='';autoSaveError=false;autoSave.queue();updateProgress();
+ try{const previous=draft.votes[id];draft.choose(id,value);state.votes=draft.votes;savedMessage='';autoSaveError=false;autoSave.queue();updateProgress();
+ const loveCount=Object.values(state.votes).filter(v=>v===3).length;if(value===3&&previous!==3&&(loveCount===4||loveCount===5))notice('רק המעזים ואלה שלא מקשיבים לחוקים יוכלו לבחור עוד שניים שהם ממש אהבו');
  const cards=document.querySelectorAll(`[data-song="${CSS.escape(id)}"] .choice`);cards.forEach(b=>b.setAttribute('aria-pressed',String(state.votes[id]===Number(b.dataset.value))));}
  catch(e){notice(e.message);}
 }
