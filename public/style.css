@@ -61,7 +61,7 @@
 }
 .voting-wrap {
   padding-top: 0;
-  padding-left: calc(64px + env(safe-area-inset-left));
+  padding-left: calc(36px + env(safe-area-inset-left));
   padding-bottom: calc(var(--voting-footer-height, 70px) + 20px);
 }
 .voting-wrap #song-list { padding-bottom: 0; }
@@ -75,48 +75,11 @@
   bottom: calc(var(--voting-footer-height, 70px) + 20px);
   left: max(3px, env(safe-area-inset-left));
   display: grid;
-  grid-template-columns: 24px 16px 12px;
+  grid-template-columns: 16px 12px;
   column-gap: 3px;
   direction: ltr;
 }
 .month-scroll[hidden] { display: none; }
-.month-jumps {
-  position: relative;
-  margin-block: 8px;
-}
-.month-jump {
-  position: absolute;
-  left: 0;
-  width: 24px;
-  height: 26px;
-  translate: 0 -50%;
-  display: grid;
-  place-items: center;
-  padding: 0;
-  background: transparent;
-  border-radius: 20px;
-}
-.month-jump::after {
-  content: '';
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--pink);
-}
-.month-jump:hover::after, .month-jump:focus-visible::after { background: white; }
-.month-jump:hover::before, .month-jump:focus-visible::before {
-  content: attr(data-label);
-  position: absolute;
-  left: 60px;
-  direction: rtl;
-  white-space: nowrap;
-  padding: 6px 10px;
-  background: #333;
-  color: white;
-  border-radius: 12px;
-  font-size: 13px;
-  pointer-events: none;
-}
 #month-scroll {
   writing-mode: vertical-lr;
   direction: ltr;
@@ -154,7 +117,6 @@
 .month-scroll.scrolling #scroll-month,
 #month-scroll:focus-visible ~ #scroll-month,
 #month-scroll:hover ~ #scroll-month { visibility: visible; }
-.month-jumps:focus-within ~ #scroll-month, .month-jumps:hover ~ #scroll-month { visibility: hidden; }
 @media (max-width: 650px) {
   .sticky-status {
     padding-left: max(12px, env(safe-area-inset-left));

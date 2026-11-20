@@ -161,7 +161,6 @@ function render(){
 function renderSongs(){
  const months=[...new Set(catalog.songs.flatMap(s=>s.shares.map(x=>x.date.slice(0,7))))].sort();
  app.querySelector('#content').innerHTML=`<div class="toolbar"><input id="search" type="search" placeholder="איזה שיר?" aria-label="חיפוש שיר או אמן" value="${escape(query)}"><button type="button" id="filter-toggle" aria-label="סינון שירים" aria-expanded="false" aria-controls="song-filters"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 5h16l-6 7v6l-4 2v-8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button><div id="song-filters" hidden><select id="sender" aria-label="סינון לפי משתף"><option value="">כולם</option>${selectablePeople().map(p=>`<option value="${p.id}" ${sender===p.id?'selected':''}>${escape(p.name)}</option>`).join('')}</select><select id="month" aria-label="סינון לפי חודש"><option value="">כל החודשים</option>${months.map(m=>`<option value="${m}" ${month===m?'selected':''}>${monthName(m)}</option>`).join('')}</select></div></div><div class="save-status" id="save-status"></div><div id="song-list"></div><aside class="month-scroll" aria-label="ניווט וצפייה ברשימת השירים" hidden>
-  <div class="month-jumps" aria-label="קפיצה לתאריך"></div>
   <input id="month-scroll" type="range" min="0" max="1000" value="0" aria-label="גלילה לפי חודש ושנה" orient="vertical">
   <div class="seen-rail" role="img" aria-label="מיקומי השירים שנצפו">
    ${eyeIcon()}
@@ -264,24 +263,6 @@ function layoutList(){
   top:heading.getBoundingClientRect().top+scrollY-headerHeight-8,
   label:heading.textContent
  }));
- const jumps=rail.querySelector('.month-jumps');
- jumps.replaceChildren();
- const count=Math.min(5,monthPositions.length);
- let last=-Infinity;
- for(let i=0;i<count;i++){
-  const date=monthPositions[count===1?0:Math.round(i*(monthPositions.length-1)/(count-1))];
-  const position=Math.min(1,Math.max(0,date.top/scrollMax));
-  if(position-last<.08)continue;
-  const button=document.createElement('button');
-  button.type='button';
-  button.className='month-jump';
-  button.style.insetBlockStart=`${position*100}%`;
-  button.dataset.label=date.label;
-  button.setAttribute('aria-label',`קפיצה ל${date.label}`);
-  button.onclick=()=>window.scrollTo(0,Math.min(maxScroll(),Math.max(0,date.top)));
-  jumps.append(button);
-  last=position;
- }
  updateViewedProgress();
  updateScrollMonth();
 }
