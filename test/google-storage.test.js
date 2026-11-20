@@ -6,8 +6,8 @@ function fixture(template='../backend/Code.gs',options={}){
  const requestedSheets=new Set();
  const people=options.people||[{id:'a',name:'A'},{id:'b',name:'B'},{id:'gone',name:'Gone',active:false}];
  const songs=options.songs||Array.from({length:16},(_,i)=>({id:'s'+i,people:[i===15?'a':'b']}));
- const rows=people.map(p=>[p.id,'{}','[]',0,'']);let locked=false;
- const sheet={getRange(row,col,n=1,m=1){return {getValues:()=>Array.from({length:n},(_,i)=>(rows[row-2+i]||Array(5).fill('')).slice(col-1,col-1+m)),setValues:values=>{for(let i=0;i<n;i++)for(let j=0;j<m;j++)(rows[row-2+i] ||= Array(5).fill(''))[col-1+j]=values[i][j];}};}};
+ const rows=(options.rows||people.map(p=>[p.id,'{}','[]',0,''])).map(row=>row.slice());let locked=false;
+ const sheet={getLastRow:()=>rows.length+1,getRange(row,col,n=1,m=1){return {getValues:()=>Array.from({length:n},(_,i)=>(rows[row-2+i]||Array(5).fill('')).slice(col-1,col-1+m)),setValues:values=>{for(let i=0;i<n;i++)for(let j=0;j<m;j++)(rows[row-2+i] ||= Array(5).fill(''))[col-1+j]=values[i][j];}};}};
  let extra=null;let uuid=0;const extraSheet={getLastRow:()=>extra.length,getRange(row,col,n=1,m=1){return{getValues:()=>extra.slice(row-1,row-1+n).map(r=>r.slice(col-1,col-1+m)),setValues:values=>{for(let i=0;i<n;i++)extra[row-1+i]=values[i].slice();}};}};
  const context=vm.createContext({Utilities:{getUuid:()=>String(++uuid)},SpreadsheetApp:{openById:()=>({getSheetByName:name=>{if(name==='משתתפים נוספים')return extra?extraSheet:null;requestedSheets.add(name);return sheet;},insertSheet(){extra=[];return extraSheet;}}),flush(){}},LockService:{getScriptLock:()=>({tryLock(){if(locked)return false;locked=true;return true;},releaseLock(){locked=false;}})}});
  const source=readFileSync(new URL(template,import.meta.url),'utf8').split('const FS_PEOPLE=')[0]+`const FS_PEOPLE=${JSON.stringify(people)};const FS_SONGS=${JSON.stringify(songs)};`;
@@ -46,4 +46,18 @@ for(const template of ['../backend/Code.gs','../backend/test-template.gs'])test(
  const state=f.api('session',{person:added.person});assert.equal(Object.keys(state.votes).length,0);
  f.api('vote',{person:added.person,song:'s0',value:1});assert.equal(f.api('state',{person:'a'}).votes.s0,1);
  assert.equal(f.api('stats',{}).songs[0].voters.length,2);
+});
+
+for(const template of ['../backend/Code.gs','../backend/test-template.gs'])test('catalog growth locates ballots by identity and never overwrites existing rows: '+template,()=>{
+ const rows=[['a','{"0":3}','[1]',7,'before'],['u-existing','{"1":1}','[]',4,'before'],['b','{}','[]',0,'']];
+ const people=[{id:'a',name:'Renamed A'},{id:'b',name:'B'},{id:'new',name:'Imported'},{id:'u-existing',name:'Existing addition'}];
+ const f=fixture(template,{people,rows});
+ assert.equal(f.api('state',{person:'u-existing'}).votes.s1,1);
+ assert.equal(f.api('state',{person:'a'}).votes.s0,3);
+ assert.equal(f.api('state',{person:'a'}).seen[0],'s1');
+ f.api('session',{person:'new'});f.api('vote',{person:'new',song:'s0',value:1});
+ assert.deepEqual(f.rows.slice(0,3),rows);
+ assert.equal(f.rows[3][0],'new');
+ assert.equal(f.api('stats',{}).votes,3);
+ assert.equal(f.api('state',{person:'u-existing'}).revision,4);
 });
