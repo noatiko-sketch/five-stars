@@ -114,7 +114,7 @@ function image(song) { return song.image ? `<img class="art" src="${escape(song.
 function names(song){return songNames(catalog,song);}
 function eyeIcon(unseen=false){return `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>${unseen?'<path class="eye-unseen" d="M3 3l18 18"/>':''}</svg>`;}
 function eyeMarkup(id){const seen=viewed.has(id);return `<span class="seen-indicator ${seen?'is-seen':''}" role="img" aria-label="${seen?'נצפה':'טרם נצפה'}" title="${seen?'נצפה':'טרם נצפה'}">${eyeIcon(true)}</span>`;}
-function songMarkup(s){const own=s.shares.some(x=>x.person===state.person);return `<article class="song" data-song="${escape(s.id)}"><a class="song-link" href="${escape(s.url)}" target="_blank" rel="noopener noreferrer" aria-label="האזנה ל${escape(s.title)}">${image(s)}<div class="text"><div class="title" dir="auto">${escape(s.title)}</div><div class="artist" dir="auto">${escape(s.artist)}</div><div class="song-meta"><div class="sender">${escape(names(s))}</div>${eyeMarkup(s.id)}</div></div></a>${own?'<div class="own">שיר ששיתפת</div>':`<div class="actions"><button class="choice like" data-value="1" aria-pressed="${state.votes[s.id]===1}"><span>אהבתי</span><small>והכרתי בזכותך</small></button><button class="choice love" data-value="3" aria-pressed="${state.votes[s.id]===3}"><span>ממש אהבתי</span><small>והכרתי בזכותך</small></button></div>`}</article>`;}
+function songMarkup(s){const own=s.shares.some(x=>x.person===state.person);return `<article class="song" data-song="${escape(s.id)}"><a class="song-link" href="${escape(s.url)}" target="_blank" rel="noopener noreferrer" aria-label="האזנה ל${escape(s.title)}">${image(s)}<div class="text"><div class="title" dir="auto">${escape(s.title)} <span class="title-eye">${eyeMarkup(s.id)}</span></div><div class="artist" dir="auto">${escape(s.artist)}</div><div class="song-meta"><div class="sender">${escape(names(s))}</div></div></div></a>${own?'<div class="own">שיר ששיתפת</div>':`<div class="actions"><button class="choice like" data-value="1" aria-pressed="${state.votes[s.id]===1}"><span>אהבתי</span><small>והכרתי בזכותך</small></button><button class="choice love" data-value="3" aria-pressed="${state.votes[s.id]===3}"><span>ממש אהבתי</span><small>והכרתי בזכותך</small></button></div>`}</article>`;}
 function updateSeenIndicators(id){
  const cards=id?document.querySelectorAll(`[data-song="${CSS.escape(id)}"]`):document.querySelectorAll('.song[data-song]');
  for(const card of cards){const seen=viewed.has(card.dataset.song),icon=card.querySelector('.seen-indicator');if(!icon)continue;icon.classList.toggle('is-seen',seen);icon.setAttribute('aria-label',seen?'נצפה':'טרם נצפה');icon.title=seen?'נצפה':'טרם נצפה';}
@@ -143,8 +143,8 @@ function render(){
   <div class="sticky-status">
    <div class="voting-top">
     <div class="vote-counters">
-     <button id="like-count" type="button">אהבתי <bdi dir="ltr"></bdi></button>
-     <button id="love-count" type="button">ממש אהבתי <bdi dir="ltr"></bdi></button>
+     <button id="like-count" type="button">★ אהבתי <bdi dir="ltr"></bdi></button>
+     <button id="love-count" type="button">★★ ממש אהבתי <bdi dir="ltr"></bdi></button>
     </div>
     <div class="identity-summary">
      <button class="identity" type="button">${escape(personName(state.person))}</button>
@@ -307,9 +307,9 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 function renderStats(){
  const content=app.querySelector('#content');
- const label=statsMetric==='score'?'נקודות':statsMetric==='votes'?'הצבעות':'ממש אהבתי';
+ const label=statsMetric==='score'?'כוכבים':statsMetric==='votes'?'הצבעות':'ממש אהבתי';
  const metric=r=>statsMetric==='score'?r.score:statsMetric==='votes'?(r.votes??((r.likes||0)+(r.loves||0))):r.loves;
- content.innerHTML=`<div class="ranking-tabs embedded-metrics" role="group" aria-label="דירוג לפי"><button data-metric="score" aria-pressed="${statsMetric==='score'}">הכי הרבה נקודות</button><button data-metric="votes" aria-pressed="${statsMetric==='votes'}">הכי הרבה הצבעות</button><button data-metric="loves" aria-pressed="${statsMetric==='loves'}">הכי הרבה ממש אהבתי</button></div><div class="stat-switch"><button data-view="songs" class="${statsView==='songs'?'active':''}" aria-pressed="${statsView==='songs'}">לפי שירים</button><button data-view="people" class="${statsView==='people'?'active':''}" aria-pressed="${statsView==='people'}">לפי אנשים</button></div><div id="ranking"></div>`;
+ content.innerHTML=`<div class="ranking-tabs embedded-metrics" role="group" aria-label="דירוג לפי"><button data-metric="score" aria-pressed="${statsMetric==='score'}">הכי הרבה כוכבים</button><button data-metric="votes" aria-pressed="${statsMetric==='votes'}">הכי הרבה הצבעות</button><button data-metric="loves" aria-pressed="${statsMetric==='loves'}">הכי הרבה ממש אהבתי</button></div><div class="stat-switch"><button data-view="songs" class="${statsView==='songs'?'active':''}" aria-pressed="${statsView==='songs'}">לפי שירים</button><button data-view="people" class="${statsView==='people'?'active':''}" aria-pressed="${statsView==='people'}">לפי אנשים</button></div><div id="ranking"></div>`;
  content.querySelectorAll('[data-metric]').forEach(b=>b.onclick=()=>{statsMetric=b.dataset.metric;statsLimit=50;renderStats();});
  content.querySelectorAll('[data-view]').forEach(b=>b.onclick=()=>{statsView=b.dataset.view;statsLimit=50;renderStats();});
  const ranked=statsView==='songs'?stats.songs.filter(s=>s.score>0).slice().sort((a,b)=>metric(b)-metric(a)||b.score-a.score):rankContributors(catalog,stats.songs,statsMetric).filter(p=>p.score>0);
