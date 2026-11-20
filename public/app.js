@@ -122,7 +122,7 @@ function monthName(key){return new Intl.DateTimeFormat('he-IL',{month:'long',yea
 function renderLogin(){
   observer?.disconnect();
   listObserver?.disconnect();
-  app.innerHTML=`<section class="login"><h1>3 כוכבים<br><span>בחוץ</span></h1><div class="kicker celebration">חוגגים אלפיים<span class="confetti" aria-hidden="true"></span></div><h2>מי אתה?</h2><input id="name-search" aria-label="חיפוש השם שלי" placeholder="השם שלי"><div class="names"></div><p class="note">השם שבחרת יופיע לצד הבחירות שלך בסטטיסטיקות.</p></section>`;
+  app.innerHTML=`<section class="login"><h1>3 כוכבים<br><span>בחוץ</span></h1><div class="kicker celebration">חוגגים אלפיים</div><h2>מי אתה?</h2><input id="name-search" aria-label="חיפוש השם שלי" placeholder="השם שלי"><div class="names"></div><p class="note">השם שבחרת יופיע לצד הבחירות שלך בסטטיסטיקות.</p></section>`;
   if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     const shower=document.createElement('div');
     shower.className='confetti-shower';
