@@ -89,8 +89,6 @@ async function refreshReceived(){
  try{let count;if(googleRequest)count=receivedVotes(catalog,person,await googleRequest('stats',{person}));else if(previewMode)count=receivedVotes(catalog,person,localStore.stats(person,true));else count=(await api('received')).count;if(state?.person!==person)return;receivedCount=count;receivedAt=Date.now();updateReceived();}catch{}finally{refreshingReceived=false;}
 }
 function updateViewedProgress(){
- const label=app.querySelector('#progress-label');
- if(label)label.textContent=`עברת על ${number(viewed.size)} שירים מתוך ${number(state.total)}`;
  const canvas=app.querySelector('#seen-map');
  if(!canvas||!songPositions.length||!canvas.clientHeight)return;
  const scale=window.devicePixelRatio||1;
@@ -108,7 +106,7 @@ function updateProgress() {
   const results=document.querySelector('#stats-tab');if(results){results.classList.toggle('locked',!state.unlocked&&!sandbox);results.setAttribute('aria-disabled',String(!state.unlocked&&!sandbox));}
   const likes=document.querySelector('#like-count bdi');if(likes)likes.textContent=`${Object.values(state.votes).filter(v=>v===1).length}/10+`;
   updateSave();
-  const loves=document.querySelector('#love-count bdi');if(loves)loves.textContent=`${Object.values(state.votes).filter(v=>v===3).length}/5`;
+  const loves=document.querySelector('#love-count bdi');if(loves)loves.textContent=`${Object.values(state.votes).filter(v=>v===3).length}/3`;
 }
 function image(song) { return song.image ? `<img class="art" src="${escape(song.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer">` : ''; }
 function names(song){return songNames(catalog,song);}
@@ -145,7 +143,7 @@ function render(){
      <button id="received-votes" type="button" hidden></button>
     </div>
    </div>
-   ${tab==='songs'?'<div class="voting-intro"><h1>סמן שירים שהכרת בזכות הקבוצה</h1><span id="progress-label"></span></div>':''}
+   ${tab==='songs'?'<div class="voting-intro"><h1>סמן שירים שהכרת ואהבת בזכות הקבוצה</h1></div>':''}
    <div id="sticky-search"></div>
    ${previewMode&&!googleRequest&&!sandbox?'<small>נשמר במכשיר הזה בלבד · ללא סנכרון</small>':''}
    ${sandbox?'<small>סביבת ניסוי</small> <button id="review-names">עריכת שמות</button><button id="test-reset">איפוס ניסוי</button>':''}
@@ -159,7 +157,7 @@ function render(){
 }
 function renderSongs(){
  const months=[...new Set(catalog.songs.flatMap(s=>s.shares.map(x=>x.date.slice(0,7))))].sort();
- app.querySelector('#content').innerHTML=`<div class="toolbar"><input id="search" type="search" placeholder="איזה שיר?" aria-label="חיפוש שיר או אמן" value="${escape(query)}"><button type="button" id="filter-toggle" aria-label="סינון שירים" aria-expanded="false" aria-controls="song-filters"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 5h16l-6 7v6l-4 2v-8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button><div id="song-filters" hidden><select id="sender" aria-label="סינון לפי משתף"><option value="">כולם</option>${selectablePeople().map(p=>`<option value="${p.id}" ${sender===p.id?'selected':''}>${escape(p.name)}</option>`).join('')}</select><select id="month" aria-label="סינון לפי חודש"><option value="">כל החודשים</option>${months.map(m=>`<option value="${m}" ${month===m?'selected':''}>${monthName(m)}</option>`).join('')}</select></div></div><div class="save-status" id="save-status"></div><div id="song-list"></div><aside class="month-scroll" aria-label="ניווט וצפייה ברשימת השירים" hidden>
+ app.querySelector('#content').innerHTML=`<div class="toolbar"><input id="search" type="search" placeholder="חפש שיר" aria-label="חיפוש שיר או אמן" value="${escape(query)}"><button type="button" id="filter-toggle" aria-label="סינון שירים" aria-expanded="false" aria-controls="song-filters"><svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M4 5h16l-6 7v6l-4 2v-8z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></button><div id="song-filters" hidden><select id="sender" aria-label="סינון לפי משתף"><option value="">כולם</option>${selectablePeople().map(p=>`<option value="${p.id}" ${sender===p.id?'selected':''}>${escape(p.name)}</option>`).join('')}</select><select id="month" aria-label="סינון לפי חודש"><option value="">כל החודשים</option>${months.map(m=>`<option value="${m}" ${month===m?'selected':''}>${monthName(m)}</option>`).join('')}</select></div></div><div class="save-status" id="save-status"></div><div id="song-list"></div><aside class="month-scroll" aria-label="ניווט וצפייה ברשימת השירים" hidden>
   <input id="month-scroll" type="range" min="0" max="1000" value="0" aria-label="גלילה לפי חודש ושנה" orient="vertical">
   <div class="seen-rail" role="img" aria-label="מיקומי השירים שנצפו">
    ${eyeIcon()}
