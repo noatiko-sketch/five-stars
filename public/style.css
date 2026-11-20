@@ -166,3 +166,8 @@
 .confetti-shower i{position:absolute;top:var(--y);left:var(--x);width:var(--size);height:calc(var(--size)*1.35);border-radius:2px;background:var(--color);transform:rotate(var(--rotation));animation:confetti-fall 3s linear both;will-change:transform}
 .confetti-shower i:nth-child(3n){border-radius:50%;height:var(--size)}
 @keyframes confetti-fall{to{transform:translate(var(--drift),130vh) rotate(760deg)}}
+
+/* Let the milestone lead the login screen. */
+.login h1{font-size:clamp(24px,5vw,34px);line-height:1.15;letter-spacing:-1px;white-space:nowrap;margin-bottom:22px}
+.login .celebration{font-size:clamp(38px,9vw,64px);font-weight:800;line-height:1.2;letter-spacing:-1px}
+.login .celebration span span{color:var(--letter-color)}

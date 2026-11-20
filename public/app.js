@@ -122,7 +122,7 @@ function monthName(key){return new Intl.DateTimeFormat('he-IL',{month:'long',yea
 function renderLogin(){
   observer?.disconnect();
   listObserver?.disconnect();
-  app.innerHTML=`<section class="login"><h1>3 כוכבים<br><span>בחוץ</span></h1><div class="kicker celebration">חוגגים אלפיים</div><h2>מי אתה?</h2><input id="name-search" aria-label="חיפוש השם שלי" placeholder="השם שלי"><div class="names"></div><p class="note">השם שבחרת יופיע לצד הבחירות שלך בסטטיסטיקות.</p></section>`;
+  app.innerHTML=`<section class="login"><h1>3 כוכבים <span>בחוץ</span></h1><div class="kicker celebration" aria-label="חוגגים אלפיים"><span aria-hidden="true"><span style="--letter-color:#f1b9f3">ח</span><span style="--letter-color:#dce58a">ו</span><span style="--letter-color:#acd6f5">ג</span><span style="--letter-color:#eb6024">ג</span><span style="--letter-color:#f1b9f3">י</span><span style="--letter-color:#dce58a">ם</span> <span style="--letter-color:#eb6024">א</span><span style="--letter-color:#f1b9f3">ל</span><span style="--letter-color:#dce58a">פ</span><span style="--letter-color:#acd6f5">י</span><span style="--letter-color:#eb6024">י</span><span style="--letter-color:#f1b9f3">ם</span></span></div><h2>מי אתה?</h2><input id="name-search" aria-label="חיפוש השם שלי" placeholder="השם שלי"><div class="names"></div><p class="note">השם שבחרת יופיע לצד הבחירות שלך בסטטיסטיקות.</p></section>`;
   if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
     const shower=document.createElement('div');
     shower.className='confetti-shower';
