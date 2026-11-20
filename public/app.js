@@ -124,10 +124,9 @@ function monthName(key){return new Intl.DateTimeFormat('he-IL',{month:'long',yea
 function renderLogin(){
   observer?.disconnect();
   listObserver?.disconnect();
-  app.innerHTML=`<section class="login"><div class="kicker">${sandbox?'סביבת ניסוי':'שירי מוצ״ש · חוגגים 2,000'}</div><h1>חמישה<br><span>כוכבים.</span></h1><h2>מי כאן?</h2><input id="name-search" aria-label="חיפוש השם שלי" placeholder="השם שלי"><div class="names"></div>${peopleClient?.supported?'<button class="identity" id="add-person">הוספת שם</button>':''}<p class="note">השם שבחרת יופיע לצד הבחירות שלך בסטטיסטיקות.</p></section>`;
+  app.innerHTML=`<section class="login"><h1>3 כוכבים<br><span>בחוץ</span></h1><div class="kicker">חוגגים אלפיים</div><h2>מי אתה?</h2><input id="name-search" aria-label="חיפוש השם שלי" placeholder="השם שלי"><div class="names"></div><p class="note">השם שבחרת יופיע לצד הבחירות שלך בסטטיסטיקות.</p></section>`;
   const namesNode=app.querySelector('.names');
   function list(q=''){namesNode.innerHTML=selectablePeople().filter(p=>p.name.includes(q)).map(p=>`<button class="person" data-person="${p.id}">${escape(p.name)}</button>`).join('') || '<p>לא נמצא שם</p>';namesNode.querySelectorAll('button').forEach(b=>b.onclick=async()=>{if(busy)return;busy=true;b.disabled=true;try{setState(await api('session',{person:b.dataset.person}));viewed.clear();state.seen.forEach(id=>viewed.add(id));query='';sender='';month='';tab='songs';render();}catch(e){notice(e.message);b.disabled=false;}finally{busy=false;}});}
-  app.querySelector('#add-person')?.addEventListener('click',()=>{modal('הוספת שם','<form id="add-person-form"><input id="new-person-name" aria-label="שם מלא" placeholder="שם מלא" maxlength="80" required><button class="person" type="submit">הוספה</button></form>');dialog.querySelector('form').onsubmit=async e=>{e.preventDefault();const button=e.target.querySelector('button');button.disabled=true;try{const result=await peopleClient.add(dialog.querySelector('input').value);catalog.people=result.people;dialog.close();renderLogin();}catch(error){notice(error.message);button.disabled=false;}};});
   app.querySelector('input').oninput=e=>list(e.target.value.trim());list();
 }
 function render(){
