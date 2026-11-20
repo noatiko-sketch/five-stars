@@ -8,7 +8,7 @@ export function validateBallot(catalog,person,votes){
  }
  const values=Object.values(votes);
  if(values.filter(v=>v===1).length<10)throw new Error('צריך לבחור לפחות 10 שירים באהבתי');
- if(values.filter(v=>v===3).length>3)throw new Error('אפשר לבחור עד 3 שירים בממש אהבתי');
+ if(values.filter(v=>v===3).length>5)throw new Error('אפשר לבחור עד 5 שירים בממש אהבתי');
 }
 export function createDraft(storage,key,person,votes){
  let base={...votes},current={...votes},pendingSong;
@@ -16,7 +16,7 @@ export function createDraft(storage,key,person,votes){
  const persist=()=>{if(sameVotes(base,current)&&!pendingSong)storage.removeItem(key);else storage.setItem(key,JSON.stringify({person,base,votes:current,pendingSong}));};
  return {
   get votes(){return {...current};},get baseVotes(){return {...base};},get pendingSong(){return pendingSong;},get dirty(){return !!pendingSong||!sameVotes(base,current);},
-  choose(id,value){const next=current[id]===value?0:value;if(next===3&&Object.values(current).filter(v=>v===3).length>=3)throw new Error('אפשר לבחור עד 3 שירים בממש אהבתי');if(next)current[id]=next;else delete current[id];persist();},
+  choose(id,value){const next=current[id]===value?0:value;if(next===3&&Object.values(current).filter(v=>v===3).length>=5)throw new Error('אפשר לבחור עד 5 שירים בממש אהבתי');if(next)current[id]=next;else delete current[id];persist();},
   receive(votes){if(!this.dirty){base={...votes};current={...votes};}else if(sameVotes(current,votes)){base={...votes};}persist();},
   writing(id){pendingSong=id;persist();},
   acknowledge(votes){const changed=new Set([...Object.keys(base),...Object.keys(current)].filter(id=>base[id]!==current[id]));if(pendingSong)changed.add(pendingSong);const merged={...votes};for(const id of changed){if(current[id])merged[id]=current[id];else delete merged[id];}pendingSong=undefined;base={...votes};current=merged;persist();},

@@ -13,7 +13,7 @@ test('immediate drafts survive reload, failed saves, background progress and ide
  assert.doesNotThrow(()=>validateBallot(catalog,'a',draft.votes));
  draft.saved(draft.votes);assert.equal(draft.dirty,false);
  draft.choose('s0',1);assert.equal(draft.votes.s0,undefined);draft.choose('s0',3);assert.equal(draft.votes.s0,3);
- for(const id of ['s1','s2'])draft.choose(id,3);assert.throws(()=>draft.choose('s3',3));
+ for(const id of ['s1','s2','s3','s4'])draft.choose(id,3);assert.throws(()=>draft.choose('s5',3));
  assert.throws(()=>validateBallot(catalog,'a',{s0:1}),/לפחות 10/);
  assert.throws(()=>validateBallot(catalog,'a',{...draft.votes,s19:1}),/שלך/);
 });
