@@ -26,8 +26,8 @@
   align-items: center;
   gap: 10px;
 }
-.voting-top .vote-counters { flex-wrap: nowrap; }
-.voting-top .vote-counters button { white-space: nowrap; }
+.sticky-status .voting-top .vote-counters { flex: 0 0 auto; flex-wrap: nowrap; width: auto; }
+.voting-top .vote-counters button { gap: 4px; white-space: nowrap; }
 .voting-top .identity-summary {
   min-width: 0;
   display: flex;
