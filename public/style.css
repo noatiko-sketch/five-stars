@@ -154,4 +154,4 @@
 .stats-page .sender-filter[hidden]{display:none}
 
 
-.dialog-notice{display:none;position:absolute;z-index:2;bottom:80px;left:16px;right:16px;border-radius:16px;background:var(--lime);color:#151515;padding:14px 20px;box-shadow:0 5px 30px #0007;font-size:14px;text-align:center}.dialog-notice.visible{display:block}.selections-dialog .choice{min-width:0;min-height:56px;touch-action:manipulation}.selections-dialog .actions{position:relative;z-index:1}
+.dialog-notice{display:none;pointer-events:none;position:absolute;z-index:2;bottom:80px;left:16px;right:16px;border-radius:16px;background:var(--lime);color:#151515;padding:14px 20px;box-shadow:0 5px 30px #0007;font-size:14px;text-align:center}.dialog-notice.visible{display:block}.selections-dialog .choice{min-width:0;min-height:56px;touch-action:manipulation}.selections-dialog .actions{position:relative;z-index:1}
