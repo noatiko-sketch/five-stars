@@ -53,7 +53,7 @@ async function api(path, body) {
   return result;
 }
 function notice(text) { const node=document.querySelector('#notice');node.textContent=text;node.classList.add('visible');clearTimeout(noticeTimer);noticeTimer=setTimeout(()=>node.classList.remove('visible'),4000); }
-function modal(title, content) { selectionObserver?.disconnect();dialog.classList.remove('selections-dialog');dialog.innerHTML=`<h2>${escape(title)}</h2><div class="modal-list">${content}</div><button class="close">סגירה</button>`;dialog.querySelector('.close').onclick=()=>dialog.close();dialog.showModal(); }
+function modal(title, content) { selectionObserver?.disconnect();dialog.classList.remove('selections-dialog','love-selections');dialog.innerHTML=`<h2>${escape(title)}</h2><div class="modal-list">${content}</div><button class="close">סגירה</button>`;dialog.querySelector('.close').onclick=()=>dialog.close();dialog.showModal(); }
 function setState(next) {
  if(state?.person===next.person && next.revision < state.revision)return;
  if(!draft||state?.person!==next.person){
@@ -222,6 +222,7 @@ function editSelections(value){
  const selected=catalog.songs.filter(s=>draft.votes[s.id]===value);
  modal(value===3?'ממש אהבתי':'אהבתי',selected.map(songMarkup).join('')||'<p>עדיין אין בחירות</p>');
  dialog.classList.add('selections-dialog');
+ dialog.classList.toggle('love-selections',value===3);
  dialog.querySelectorAll('.choice').forEach(button=>button.onclick=()=>vote(button.closest('[data-song]').dataset.song,Number(button.dataset.value)));
  selectionObserver=new IntersectionObserver(observeViewed,{root:dialog.querySelector('.modal-list'),threshold:.6});
  dialog.querySelectorAll('[data-song]').forEach(card=>selectionObserver.observe(card));

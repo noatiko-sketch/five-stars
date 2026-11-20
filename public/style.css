@@ -168,3 +168,21 @@
 @media (max-height: 370px) {
   .month-scroll { top: calc(var(--voting-header-height, 145px) + 20px); bottom: calc(var(--voting-footer-height, 70px) + 8px); }
 }
+
+
+.love-selections .modal-list {
+  scrollbar-width: thin;
+  scrollbar-color: #a8b36b #303030;
+}
+.love-selections .modal-list::-webkit-scrollbar {
+  width: 8px;
+}
+.love-selections .modal-list::-webkit-scrollbar-track {
+  background: #303030;
+  border-radius: 8px;
+}
+.love-selections .modal-list::-webkit-scrollbar-thumb {
+  background: #a8b36b;
+  border: 2px solid #303030;
+  border-radius: 8px;
+}
