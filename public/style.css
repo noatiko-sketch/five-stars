@@ -14,7 +14,7 @@
 
 .ballot-save{position:fixed;bottom:0;left:0;right:0;z-index:20;display:flex;justify-content:center;align-items:center;gap:12px;padding:12px 16px calc(12px + env(safe-area-inset-bottom));background:#151515;color:#f3eee8;border-top:1px solid #444}.ballot-save button{background:var(--pink);color:#151515;border:0;border-radius:8px;padding:12px 24px;font:inherit;font-weight:700}.ballot-save button:disabled{opacity:.5}.ballot-save span{font-size:12px}#song-list{padding-bottom:100px}
 .sticky-status{display:block}.vote-counters{display:flex;gap:8px;flex-wrap:wrap}.sticky-status .vote-counters button{border:0;font-size:14px;font-weight:700;min-height:44px;padding:10px 15px}.sticky-status #like-count{background:var(--pink);color:#151515;border-radius:30px}.sticky-status #love-count{font-size:14px}#sticky-search{margin-top:10px}#sticky-search .toolbar{display:grid;grid-template-columns:minmax(0,1fr) 48px;gap:8px;margin:0}#sticky-search #search{grid-column:auto;font-size:16px;padding:12px 18px}#filter-toggle{display:grid;place-items:center;padding:10px;border-radius:24px}#filter-toggle[aria-expanded=true]{border-color:var(--pink);color:var(--pink)}#song-filters{grid-column:1/-1;display:grid;grid-template-columns:1fr 1fr;gap:8px}#song-filters[hidden]{display:none}#song-filters select{width:100%;font-size:14px}#song-list .month{justify-content:center;text-align:center;scroll-margin-top:180px}#song-list .month:before,#song-list .month:after{content:'';height:1px;background:#353535;flex:1}.choice{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}.choice small{font-size:10px;font-weight:400;line-height:1.25}.choice span{font-size:13px}.selection-row{display:flex;gap:8px;align-items:center;padding:12px 0;border-bottom:1px solid #444}.selection-row>div{flex:1;min-width:0}.selection-row strong,.selection-row small{display:block;overflow-wrap:anywhere}.selection-row small{color:var(--muted);font-size:13px}.selection-row button{border:1px solid #777;border-radius:18px;background:#333;color:#fff;font-size:13px;padding:9px;min-height:44px}@media(max-width:650px){.sticky-status .vote-counters button,.sticky-status #love-count{font-size:12px;padding:10px 12px}.choice{min-height:56px}.selection-row{flex-wrap:wrap}.selection-row>div{flex-basis:100%}}
-.song-meta{display:flex;align-items:center;gap:8px;margin-top:7px}.song-meta .sender{margin-top:0}.selections-dialog{width:700px}.selections-dialog .modal-list{max-height:65vh}.selections-dialog .song{grid-template-columns:minmax(0,1fr);gap:12px}.selections-dialog .song-link{grid-column:auto}.selections-dialog .actions{padding-right:0}.selections-dialog .choice{flex:1}.stats-page .ranking-tabs button[data-sort=contributors]{grid-column:1/-1;font-size:16px}.stats-page .ranking-card .sender{font-size:18px;font-weight:700;color:#f3eee8;margin-top:10px}.stats-page .contributor-name{font-size:24px;font-weight:700;overflow-wrap:anywhere}.stats-page .ranking-person{cursor:default}.stats-page .modal-row>span:first-child{font-size:18px;font-weight:700}@media(max-width:650px){.stats-page .ranking-card .sender{font-size:16px}.stats-page .contributor-name{font-size:21px}.stats-page .ranking-tabs button[data-sort=contributors]{font-size:14px}.selections-dialog{padding:20px}.selections-dialog .modal-list{max-height:62vh}}
+.song-meta{display:flex;align-items:center;gap:8px;margin-top:7px}.song-meta .sender{margin-top:0}.selections-dialog{width:700px}.selections-dialog .modal-list{max-height:65vh}.selections-dialog .song{grid-template-columns:minmax(0,1fr);gap:12px}.selections-dialog .song-link{grid-column:auto}.selections-dialog .actions{padding-right:0}.selections-dialog .choice{flex:1}.stats-page .ranking-tabs button[data-sort=contributors]{grid-column:1/-1;font-size:16px}.stats-page .ranking-card .sender{font-size:18px;font-weight:700;color:#f3eee8;margin-top:10px}.stats-page .contributor-name{font-size:24px;font-weight:700;overflow-wrap:anywhere}.stats-page .modal-row>span:first-child{font-size:18px;font-weight:700}@media(max-width:650px){.stats-page .ranking-card .sender{font-size:16px}.stats-page .contributor-name{font-size:21px}.stats-page .ranking-tabs button[data-sort=contributors]{font-size:14px}.selections-dialog{padding:20px}.selections-dialog .modal-list{max-height:62vh}}
 
 /* Voting controls stay above the list, with the date and viewed tracks on its left. */
 .sticky-status {
@@ -165,3 +165,23 @@
 .login .confetti:before{top:0;right:20%;box-shadow:-130px 46px 0 #acd6f5, -48px -4px 0 #eb6024}
 .login .confetti:after{bottom:0;left:20%;background:var(--lime);box-shadow:100px -42px 0 #eb6024, 46px 4px 0 #acd6f5}
 @media(max-width:650px){.voting-intro h1{font-size:clamp(11px,3.6vw,17px);letter-spacing:-.35px}}
+
+.stats-page .ranking-description {
+  margin: 0;
+  line-height: 1.5;
+}
+.stats-page .ranking-description + .score-key {
+  margin-top: 6px;
+}
+.stats-page .contributor-song h3 {
+  margin: 18px 0 0;
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+.stats-page .contributor-song .modal-row {
+  align-items: center;
+}
+.stats-page .contributor-song .modal-row > span:first-child {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
