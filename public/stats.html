@@ -5,20 +5,26 @@
     <button type="button" class="identity" id="stats-identity"></button>
   </div>
   <div class="stats-controls">
+    <div class="stats-views" role="tablist" aria-label="תצוגת תוצאות">
+      <button type="button" role="tab" id="stats-songs-tab" aria-controls="stats-songs-panel" aria-selected="true">שירים</button>
+      <button type="button" role="tab" id="stats-personal-tab" aria-controls="stats-personal-panel" aria-selected="false" tabindex="-1">אני ביחס לקבוצה</button>
+    </div>
     <div class="ranking-tabs" role="group" aria-label="דירוג לפי">
       <button type="button" data-sort="score" aria-pressed="true">הכי הרבה כוכבים</button>
       <button type="button" data-sort="votes" aria-pressed="false">הכי הרבה הצבעות</button>
       <button type="button" data-sort="loves" aria-pressed="false">הכי הרבה &quot;ממש אהבתי&quot;</button>
     </div>
-    <div class="stats-filters">
-      <label class="sender-filter">מי שיתף?<select id="stats-sender"><option value="">כל המשתפים</option></select></label>
-      <button type="button" class="identity" id="stats-personal" aria-pressed="false">מידע אישי</button>
-    </div>
   </div>
   <p class="ranking-description" aria-live="polite">דירוג השירים שקיבלו הכי הרבה כוכבים</p>
   <p class="score-key">ממש אהבתי = 2 כוכבים · אהבתי = כוכב אחד</p>
-  <section id="stats-summary" aria-label="דירוג אישי" aria-live="polite" hidden></section>
-  <div id="stats-ranking"></div>
+  <p class="empty" id="stats-status" role="status" hidden></p>
+  <div role="tabpanel" id="stats-songs-panel" aria-labelledby="stats-songs-tab" tabindex="0">
+    <div id="stats-ranking"></div>
+  </div>
+  <div role="tabpanel" id="stats-personal-panel" aria-labelledby="stats-personal-tab" tabindex="0" hidden>
+    <section id="stats-summary" aria-label="דירוג אישי" aria-live="polite"></section>
+    <div id="stats-personal-songs"></div>
+  </div>
 </main>
 <dialog id="voter-dialog" aria-labelledby="voter-dialog-title"></dialog>
 <script type="module" src="stats.js"></script></body></html>

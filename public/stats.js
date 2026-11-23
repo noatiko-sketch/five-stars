@@ -12,12 +12,15 @@ const escape = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;', '<':
 
 const entry = document.querySelector('#stats-entry');
 const content = document.querySelector('#stats-content');
-const ranking = document.querySelector('#stats-ranking');
+const songRanking = document.querySelector('#stats-ranking');
+const personalSongs = document.querySelector('#stats-personal-songs');
+const status = document.querySelector('#stats-status');
 const summary = document.querySelector('#stats-summary');
 const description = document.querySelector('.ranking-description');
 const dialog = document.querySelector('#voter-dialog');
-const filter = document.querySelector('#stats-sender');
-const personalButton = document.querySelector('#stats-personal');
+const songTab = document.querySelector('#stats-songs-tab');
+const personalTab = document.querySelector('#stats-personal-tab');
+const tabs = [songTab, personalTab];
 const identityButton = document.querySelector('#stats-identity');
 const sortButtons = document.querySelectorAll('[data-sort]');
 
@@ -49,19 +52,18 @@ function render() {
   description.textContent = personal
     ? `השירים ששיתפת, לפי מספר ה${labels[sort].description}`
     : `דירוג השירים שקיבלו הכי הרבה ${labels[sort].description}`;
-  summary.hidden = !personal || !latestStats;
   if (!latestStats) return;
 
-  const sender = personal ? person : filter.value;
+  const ranking = personal ? personalSongs : songRanking;
   const byId = new Map(latestStats.songs.map(result => [result.id, result]));
   const rows = catalog.songs
-    .filter(song => !sender || song.shares.some(share => share.person === sender))
+    .filter(song => !personal || song.shares.some(share => share.person === person))
     .map(song => {
       const result = byId.get(song.id);
       const voters = result?.voters ?? [];
       return {song, voters, score: result?.score ?? 0, votes: voters.length, loves: result?.loves ?? 0};
     })
-    .filter(row => sender || row.votes)
+    .filter(row => personal || row.votes)
     .sort((a, b) => b[sort] - a[sort] || b.score - a.score || a.song.title.localeCompare(b.song.title, 'he'));
 
   if (personal) {
@@ -103,13 +105,17 @@ function openSong({song, score, voters}) {
 
 async function refresh() {
   if (!person || refreshing) return;
-  if (!latestStats) ranking.innerHTML = '<p class="empty" role="status">טוענים את התוצאות…</p>';
+  if (!latestStats) {
+    status.textContent = 'טוענים את התוצאות…';
+    status.hidden = false;
+  }
   refreshing = true;
   try {
     latestStats = shared ? await shared('stats', {}) : store.stats(null, true);
+    status.hidden = true;
     render();
   } catch {
-    if (!latestStats) ranking.innerHTML = '<p class="empty" role="status">לא הצלחנו לטעון את התוצאות. נסו לרענן.</p>';
+    if (!latestStats) status.textContent = 'לא הצלחנו לטעון את התוצאות. נסו לרענן.';
   } finally {
     refreshing = false;
   }
@@ -129,14 +135,11 @@ function showResults(id) {
 
 function showLogin() {
   person = '';
-  personal = false;
-  personalButton.setAttribute('aria-pressed', 'false');
-  filter.value = '';
-  filter.closest('label').hidden = false;
-  limit = 50;
   if (dialog.open) dialog.close();
   content.hidden = true;
-  ranking.replaceChildren();
+  selectTab(songTab);
+  songRanking.replaceChildren();
+  personalSongs.replaceChildren();
   summary.replaceChildren();
   entry.hidden = false;
   mountLogin(entry, 'שלב התוצאות', activePeople(catalog), id => {
@@ -154,7 +157,6 @@ async function start() {
     if (!shared) store = createLocalStore(catalog, localStorage, sandbox ? 'sandbox' : 'live-local');
 
     if (sandbox) document.querySelector('.stats-account').insertAdjacentHTML('afterend', '<p class="local-notice">סביבת ניסוי · נתונים נפרדים</p>');
-    for (const p of activePeople(catalog)) filter.add(new Option(p.name, p.id));
     const saved = identity.get();
     if (personName(catalog, saved)) showResults(saved);
     else showLogin();
@@ -163,14 +165,35 @@ async function start() {
   }
 }
 
-filter.onchange = () => { limit = 50; render(); };
-personalButton.onclick = () => {
-  personal = !personal;
-  personalButton.setAttribute('aria-pressed', String(personal));
-  filter.closest('label').hidden = personal;
+function selectTab(selected) {
+  personal = selected === personalTab;
+  for (const tab of tabs) {
+    const active = tab === selected;
+    tab.setAttribute('aria-selected', String(active));
+    tab.tabIndex = active ? 0 : -1;
+    document.getElementById(tab.getAttribute('aria-controls')).hidden = !active;
+  }
   limit = 50;
   render();
-};
+}
+
+for (const tab of tabs) {
+  tab.onclick = () => {
+    if (tab.getAttribute('aria-selected') !== 'true') selectTab(tab);
+  };
+  tab.onkeydown = event => {
+    const target = {
+      ArrowRight: tab === songTab ? personalTab : songTab,
+      ArrowLeft: tab === songTab ? personalTab : songTab,
+      Home: songTab,
+      End: personalTab,
+    }[event.key];
+    if (!target) return;
+    event.preventDefault();
+    selectTab(target);
+    target.focus();
+  };
+}
 identityButton.onclick = () => {
   identity.clear();
   showLogin();
@@ -180,7 +203,6 @@ for (const button of sortButtons) {
   button.onclick = () => {
     if (sort === button.dataset.sort) return;
     sort = button.dataset.sort;
-    if (!personal) filter.value = '';
     limit = 50;
     for (const option of sortButtons) option.setAttribute('aria-pressed', String(option === button));
     render();
