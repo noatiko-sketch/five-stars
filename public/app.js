@@ -1,3 +1,4 @@
+import { mountLogin } from './login.js';
 import {rankContributors} from './rankings.js';
 import { connectGoogleStore } from './google-store.js';
 import { createLocalStore } from './local-store.js';
@@ -122,23 +123,24 @@ function monthName(key){return new Intl.DateTimeFormat('he-IL',{month:'long',yea
 function renderLogin(){
   observer?.disconnect();
   listObserver?.disconnect();
-  app.innerHTML=`<section class="login"><h1>3 כוכבים <span>בחוץ</span></h1><div class="kicker celebration" aria-label="חוגגים אלפיים"><span aria-hidden="true"><span style="--letter-color:#f1b9f3">ח</span><span style="--letter-color:#dce58a">ו</span><span style="--letter-color:#acd6f5">ג</span><span style="--letter-color:#eb6024">ג</span><span style="--letter-color:#f1b9f3">י</span><span style="--letter-color:#dce58a">ם</span> <span style="--letter-color:#eb6024">א</span><span style="--letter-color:#f1b9f3">ל</span><span style="--letter-color:#dce58a">פ</span><span style="--letter-color:#acd6f5">י</span><span style="--letter-color:#eb6024">י</span><span style="--letter-color:#f1b9f3">ם</span></span></div><h2>מי אתה?</h2><input id="name-search" aria-label="חיפוש השם שלי" placeholder="השם שלי"><div class="names"></div><p class="note">השם שבחרת יופיע לצד הבחירות שלך בסטטיסטיקות.</p></section>`;
-  if(!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    const shower=document.createElement('div');
-    shower.className='confetti-shower';
-    shower.setAttribute('aria-hidden','true');
-    const colors=['#f1b9f3','#dce58a','#acd6f5','#eb6024','#29584c'];
-    for(let i=0;i<55;i++){
-      const piece=document.createElement('i');
-      piece.style.cssText=`--x:${(i*37)%100}%;--y:${-15+(i*17)%75}vh;--drift:${(i%2?1:-1)*(15+(i*13)%45)}px;--rotation:${(i*47)%360}deg;--color:${colors[i%colors.length]};--size:${6+(i%4)*2}px`;
-      shower.appendChild(piece);
+  mountLogin(app, 'חוגגים אלפיים', selectablePeople(), async person => {
+    if (busy) return;
+    busy = true;
+    try {
+      setState(await api('session', {person}));
+      viewed.clear();
+      state.seen.forEach(id => viewed.add(id));
+      query = '';
+      sender = '';
+      month = '';
+      tab = 'songs';
+      render();
+    } catch (error) {
+      notice(error.message);
+    } finally {
+      busy = false;
     }
-    app.appendChild(shower);
-    setTimeout(()=>shower.remove(),3000);
-  }
-  const namesNode=app.querySelector('.names');
-  function list(q=''){namesNode.innerHTML=selectablePeople().filter(p=>p.name.includes(q)).map(p=>`<button class="person" data-person="${p.id}">${escape(p.name)}</button>`).join('') || '<p>לא נמצא שם</p>';namesNode.querySelectorAll('button').forEach(b=>b.onclick=async()=>{if(busy)return;busy=true;b.disabled=true;try{setState(await api('session',{person:b.dataset.person}));viewed.clear();state.seen.forEach(id=>viewed.add(id));query='';sender='';month='';tab='songs';render();}catch(e){notice(e.message);b.disabled=false;}finally{busy=false;}});}
-  app.querySelector('input').oninput=e=>list(e.target.value.trim());list();
+  });
 }
 function render(){
  observer?.disconnect();
