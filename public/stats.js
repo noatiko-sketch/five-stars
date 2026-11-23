@@ -70,7 +70,7 @@ function render() {
     const people = rankContributors(catalog, latestStats.songs, sort);
     const mine = people.find(row => row.person === person);
     const position = 1 + people.filter(row => row[sort] > mine[sort]).length;
-    summary.innerHTML = `<strong>מקום ${position} מתוך ${people.length}</strong><span>בקבוצה לפי מספר ה${labels[sort].description} שקיבלו השירים ששיתפת</span>`;
+    summary.innerHTML = `<strong>מקום ${position} מתוך ${people.length}</strong><strong>${mine[sort]} ${labels[sort].description}</strong><span>קיבלו השירים ששיתפת</span>`;
 
     ranking.innerHTML = rows.slice(0, limit).map(row => `<article class="personal-song">
       <div class="ranking-card">${songHeading(row.song)}${score(row)}</div>
