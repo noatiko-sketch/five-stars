@@ -69,7 +69,7 @@ function render() {
       const voters = result?.voters ?? [];
       return {song, voters, score: result?.score ?? 0, votes: voters.length, loves: result?.loves ?? 0};
     })
-    .filter(row => personal || row.votes)
+    .filter(row => row.votes > 0)
     .sort((a, b) => b[sort] - a[sort] || b.score - a.score || a.song.title.localeCompare(b.song.title, 'he'));
 
   if (personal) {
@@ -80,8 +80,8 @@ function render() {
 
     ranking.innerHTML = rows.slice(0, limit).map(row => `<article class="personal-song">
       <div class="ranking-card">${songHeading(row.song)}${score(row)}</div>
-      ${row.votes ? row.voters.map(voteRow).join('') : '<p class="personal-no-votes">עדיין אין הצבעות לשיר הזה</p>'}
-    </article>`).join('') || '<p class="empty">אין שירים ששיתפת ברשימה</p>';
+      ${row.voters.map(voteRow).join('')}
+    </article>`).join('') || '<p class="empty">עדיין אין הצבעות לשירים ששיתפת</p>';
   } else {
     ranking.innerHTML = rows.slice(0, limit).map((row, index) => `<button type="button" class="ranking-card" data-song="${escape(row.song.id)}" aria-label="${escape(row.song.title)} — פירוט הצבעות"><span class="rank">${index + 1}</span>${songHeading(row.song)}${score(row)}</button>`).join('')
       || '<p class="empty">אין שירים להצגה</p>';
