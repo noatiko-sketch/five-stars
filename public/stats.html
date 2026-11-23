@@ -8,6 +8,7 @@
     <div class="stats-views" role="tablist" aria-label="תצוגת תוצאות">
       <button type="button" role="tab" id="stats-songs-tab" aria-controls="stats-songs-panel" aria-selected="true">שירים</button>
       <button type="button" role="tab" id="stats-personal-tab" aria-controls="stats-personal-panel" aria-selected="false" tabindex="-1">רק אני</button>
+      <button type="button" role="tab" id="stats-insights-tab" aria-controls="stats-insights-panel" aria-selected="false" tabindex="-1">תובנות</button>
     </div>
     <div class="ranking-tabs" role="group" aria-label="דירוג לפי">
       <button type="button" data-sort="score" aria-pressed="true">הכי הרבה כוכבים</button>
@@ -25,6 +26,9 @@
     <section id="stats-summary" aria-label="דירוג אישי" aria-live="polite"></section>
     <div id="stats-personal-songs"></div>
   </div>
+  <section role="tabpanel" id="stats-insights-panel" aria-labelledby="stats-insights-tab" tabindex="0" hidden>
+    <p class="empty">התובנות מהקבוצה ומההצבעות יתווספו בהמשך.</p>
+  </section>
 </main>
 <dialog id="voter-dialog" aria-labelledby="voter-dialog-title"></dialog>
 <script type="module" src="stats.js"></script></body></html>

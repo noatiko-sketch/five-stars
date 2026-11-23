@@ -20,7 +20,9 @@ const description = document.querySelector('.ranking-description');
 const dialog = document.querySelector('#voter-dialog');
 const songTab = document.querySelector('#stats-songs-tab');
 const personalTab = document.querySelector('#stats-personal-tab');
-const tabs = [songTab, personalTab];
+const insightsTab = document.querySelector('#stats-insights-tab');
+const tabs = [songTab, personalTab, insightsTab];
+const rankingControls = document.querySelectorAll('.ranking-tabs, .ranking-description, .score-key');
 const identityButton = document.querySelector('#stats-identity');
 const sortButtons = document.querySelectorAll('[data-sort]');
 
@@ -49,6 +51,10 @@ function score(row) {
 
 function render() {
   if (!person) return;
+  const insights = insightsTab.getAttribute('aria-selected') === 'true';
+  for (const control of rankingControls) control.hidden = insights;
+  status.hidden = insights || Boolean(latestStats);
+  if (insights) return;
   description.textContent = personal
     ? `השירים ששיתפת, לפי מספר ה${labels[sort].description}`
     : `דירוג השירים שקיבלו הכי הרבה ${labels[sort].description}`;
@@ -107,7 +113,7 @@ async function refresh() {
   if (!person || refreshing) return;
   if (!latestStats) {
     status.textContent = 'טוענים את התוצאות…';
-    status.hidden = false;
+    status.hidden = insightsTab.getAttribute('aria-selected') === 'true';
   }
   refreshing = true;
   try {
@@ -182,11 +188,12 @@ for (const tab of tabs) {
     if (tab.getAttribute('aria-selected') !== 'true') selectTab(tab);
   };
   tab.onkeydown = event => {
+    const index = tabs.indexOf(tab);
     const target = {
-      ArrowRight: tab === songTab ? personalTab : songTab,
-      ArrowLeft: tab === songTab ? personalTab : songTab,
+      ArrowRight: tabs[(index + tabs.length - 1) % tabs.length],
+      ArrowLeft: tabs[(index + 1) % tabs.length],
       Home: songTab,
-      End: personalTab,
+      End: insightsTab,
     }[event.key];
     if (!target) return;
     event.preventDefault();
