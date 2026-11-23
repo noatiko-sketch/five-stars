@@ -149,22 +149,28 @@
   border-radius: 8px;
 }
 
-.stats-page .ranking-types{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-bottom:1px solid #555;gap:8px}.ranking-types button{background:transparent;border:0;border-bottom:3px solid transparent;color:#aaa;cursor:pointer;padding:12px 6px;font-size:15px}.ranking-types button[aria-pressed=true]{color:#fff;border-bottom-color:var(--pink);font-weight:700}.embedded-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:20px 0 12px}.embedded-metrics button{padding:10px 4px;line-height:1.3}
+.embedded-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));margin:20px 0 12px}.embedded-metrics button{padding:10px 4px;line-height:1.3}
 
 .stats-page .sender-filter[hidden]{display:none}
 
 
 .dialog-notice{display:none;pointer-events:none;position:absolute;z-index:2;bottom:80px;left:16px;right:16px;border-radius:16px;background:var(--lime);color:#151515;padding:14px 20px;box-shadow:0 5px 30px #0007;font-size:14px;text-align:center}.dialog-notice.visible{display:block}.selections-dialog .choice{min-width:0;min-height:56px;touch-action:manipulation}.selections-dialog .actions{position:relative;z-index:1}
 
-.login .celebration{position:relative;display:inline-block;font-size:clamp(21px,5vw,28px);font-weight:700;margin-bottom:22px;isolation:isolate}.login .confetti{position:absolute;inset:-18px -20px;z-index:-1;pointer-events:none;background:radial-gradient(circle at 3% 20%,var(--pink) 0 3px,transparent 3.5px),radial-gradient(circle at 96% 18%,#acd6f5 0 3px,transparent 3.5px),radial-gradient(circle at 92% 88%,#eb6024 0 3px,transparent 3.5px),radial-gradient(circle at 9% 90%,var(--lime) 0 2.5px,transparent 3px)}
+.login .celebration{display:inline-block;font-size:clamp(36px,8vw,56px);font-weight:800;line-height:1.1;margin-bottom:22px}
 @media(max-width:650px){.voting-intro{flex-wrap:wrap;gap:3px}.voting-intro h1{flex:0 0 100%;white-space:nowrap;font-size:clamp(13px,4vw,18px);letter-spacing:-.3px}.voting-intro #progress-label{flex:0 0 100%;text-align:right}.voting-wrap #song-list .actions{padding-left:8px;min-width:0}.voting-wrap #song-list .choice{min-width:0;padding-inline:10px}}
 
-/* Visible celebratory confetti in the existing palette. */
-.login .confetti{z-index:1;inset:-22px -20px; background:radial-gradient(circle at 3% 20%,var(--pink) 0 4px,transparent 4.5px),radial-gradient(circle at 98% 18%,#acd6f5 0 4px,transparent 4.5px),radial-gradient(circle at 92% 88%,#eb6024 0 4px,transparent 4.5px),radial-gradient(circle at 9% 90%,var(--lime) 0 4px,transparent 4.5px),radial-gradient(circle at 25% 6%,#acd6f5 0 3px,transparent 3.5px),radial-gradient(circle at 75% 96%,var(--pink) 0 3px,transparent 3.5px)}
-.login .confetti:before,.login .confetti:after{content:'';position:absolute;width:8px;height:13px;border-radius:2px;transform:rotate(35deg);background:var(--pink)}
-.login .confetti:before{top:0;right:20%;box-shadow:-130px 46px 0 #acd6f5, -48px -4px 0 #eb6024}
-.login .confetti:after{bottom:0;left:20%;background:var(--lime);box-shadow:100px -42px 0 #eb6024, 46px 4px 0 #acd6f5}
 @media(max-width:650px){.voting-intro h1{font-size:clamp(11px,3.6vw,17px);letter-spacing:-.35px}}
+
+/* A single three-second shower on entry; the page remains fully usable. */
+.confetti-shower{position:fixed;inset:0;z-index:30;overflow:hidden;pointer-events:none}
+.confetti-shower i{position:absolute;top:var(--y);left:var(--x);width:var(--size);height:calc(var(--size)*1.35);border-radius:2px;background:var(--color);transform:rotate(var(--rotation));animation:confetti-fall 3s linear both;will-change:transform}
+.confetti-shower i:nth-child(3n){border-radius:50%;height:var(--size)}
+@keyframes confetti-fall{to{transform:translate(var(--drift),130vh) rotate(760deg)}}
+
+/* Let the milestone lead the login screen. */
+.login h1{font-size:clamp(24px,5vw,34px);line-height:1.15;letter-spacing:-1px;white-space:nowrap;margin-bottom:22px}
+.login .celebration{font-size:clamp(38px,9vw,64px);font-weight:800;line-height:1.2;letter-spacing:-1px}
+.login .celebration span span{color:var(--letter-color)}
 
 .stats-page .ranking-description {
   margin: 0;
@@ -173,15 +179,73 @@
 .stats-page .ranking-description + .score-key {
   margin-top: 6px;
 }
-.stats-page .contributor-song h3 {
-  margin: 18px 0 0;
-  font-size: 16px;
-  overflow-wrap: anywhere;
+.stats-account {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
 }
-.stats-page .contributor-song .modal-row {
+.stats-account h1 {
+  margin: 0;
+  font-size: clamp(25px, 5vw, 36px);
+}
+.stats-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 12px;
+}
+.stats-filters .sender-filter {
+  flex: 1 1 200px;
+  width: auto;
+  min-width: 0;
+}
+.stats-filters .sender-filter select {
+  min-width: 0;
+}
+#stats-personal {
+  min-height: 54px;
+  white-space: nowrap;
+  font-size: 14px;
+}
+#stats-personal[aria-pressed=true] {
+  background: var(--pink);
+  border-color: var(--pink);
+  color: #151515;
+}
+#stats-summary:not([hidden]) {
+  display: grid;
+  gap: 6px;
+  background: #242424;
+  border-radius: 20px;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+}
+#stats-summary strong {
+  color: var(--lime);
+  font-size: clamp(22px, 5vw, 30px);
+}
+#stats-summary span, .personal-no-votes {
+  color: var(--muted);
+  font-size: 14px;
+}
+.personal-song {
+  padding: 0 0 12px;
+  border-bottom: 1px solid #3a3a3a;
+}
+.stats-page .personal-song .ranking-card {
+  border: 0;
+  background: transparent;
+  padding-bottom: 10px;
+}
+.stats-page .modal-row {
   align-items: center;
 }
-.stats-page .contributor-song .modal-row > span:first-child {
+.stats-page .modal-row > span:first-child {
   min-width: 0;
   overflow-wrap: anywhere;
+}
+.personal-song .modal-row:last-child {
+  border-bottom: 0;
 }

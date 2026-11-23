@@ -1,3 +1,4 @@
+import { mountLogin } from './login.js';
 import {rankContributors} from './rankings.js';
 import { connectGoogleStore } from './google-store.js';
 import { createLocalStore } from './local-store.js';
@@ -122,10 +123,24 @@ function monthName(key){return new Intl.DateTimeFormat('he-IL',{month:'long',yea
 function renderLogin(){
   observer?.disconnect();
   listObserver?.disconnect();
-  app.innerHTML=`<section class="login"><h1>3 כוכבים<br><span>בחוץ</span></h1><div class="kicker celebration">חוגגים אלפיים<span class="confetti" aria-hidden="true"></span></div><h2>מי אתה?</h2><input id="name-search" aria-label="חיפוש השם שלי" placeholder="השם שלי"><div class="names"></div><p class="note">השם שבחרת יופיע לצד הבחירות שלך בסטטיסטיקות.</p></section>`;
-  const namesNode=app.querySelector('.names');
-  function list(q=''){namesNode.innerHTML=selectablePeople().filter(p=>p.name.includes(q)).map(p=>`<button class="person" data-person="${p.id}">${escape(p.name)}</button>`).join('') || '<p>לא נמצא שם</p>';namesNode.querySelectorAll('button').forEach(b=>b.onclick=async()=>{if(busy)return;busy=true;b.disabled=true;try{setState(await api('session',{person:b.dataset.person}));viewed.clear();state.seen.forEach(id=>viewed.add(id));query='';sender='';month='';tab='songs';render();}catch(e){notice(e.message);b.disabled=false;}finally{busy=false;}});}
-  app.querySelector('input').oninput=e=>list(e.target.value.trim());list();
+  mountLogin(app, 'חוגגים אלפיים', selectablePeople(), async person => {
+    if (busy) return;
+    busy = true;
+    try {
+      setState(await api('session', {person}));
+      viewed.clear();
+      state.seen.forEach(id => viewed.add(id));
+      query = '';
+      sender = '';
+      month = '';
+      tab = 'songs';
+      render();
+    } catch (error) {
+      notice(error.message);
+    } finally {
+      busy = false;
+    }
+  });
 }
 function render(){
  observer?.disconnect();
