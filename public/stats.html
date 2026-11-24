@@ -8,8 +8,8 @@
 .insight-list > li + li { border-block-start: 1px solid #353535; }
 .insight-list > li > strong { color: var(--pink); }
 .insight-list > li > p { margin: 4px 0 0; }
-.insight-tracks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); column-gap: 14px; margin-block-start: 6px; }
-.insight-track-link { height: 100%; display: flex; align-items: flex-start; gap: 9px; padding-block: 8px; border-block-start: 1px solid #353535; line-height: 1.4; }
+.insight-tracks { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)); gap: 10px; margin-block-start: 12px; }
+.insight-track-link { height: 100%; display: flex; align-items: flex-start; gap: 9px; padding: 9px; border-radius: 12px; background: #2c2c2c; line-height: 1.4; }
 .insight-track-link:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
 .insight-track-link:active { background: #383838; }
 @media (hover: hover) {
@@ -23,11 +23,10 @@
 .repeat-share-list { grid-template-columns: repeat(auto-fit, minmax(min(100%, 265px), 1fr)); }
 .repeat-share-history { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 5px; font-size: .78rem; color: var(--muted); }
 .repeat-share-order { display: block; color: inherit; }
-.insight-section { margin-block: 10px; }
-.insight-section:not([open]) { background: #1e1e1e; border: 1px solid #383838; border-radius: 16px; }
-.insight-section > summary { color: var(--pink); font-size: 1.05rem; font-weight: 700; cursor: pointer; padding: 14px 16px; border-radius: 16px; }
+.insight-section { border-block-end: 1px solid #383838; }
+.insight-section > summary { color: var(--pink); font-size: 1.05rem; font-weight: 700; cursor: pointer; padding-block: 14px; }
 .insight-section > summary:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
-.insight-section[open] > summary { padding-inline: 0; border-block-end: 1px solid #383838; border-radius: 0; }
+.insight-section[open] > summary { border-block-end: 1px solid #383838; }
 .insight-section-content { overflow-wrap: anywhere; }
 .insight-section-content > .month { margin-block: 12px 0; }
 </style></head><body class="stats-page"><div id="stats-entry"><p class="loading" role="status">טוענים את שמות המשתתפים…</p></div>
