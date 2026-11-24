@@ -16,6 +16,10 @@
 .insight-list > .insight-repeat-feature { background: #29232a; border-color: #654d65; padding: 18px 20px; }
 .insight-repeat-feature > strong { font-size: clamp(1.16rem, 4vw, 1.5rem); line-height: 1.45; display: block; }
 .insight-list .insight-name { color: var(--lime); font-weight: 700; }
+.insight-repeated-songs summary { color: var(--pink); font-weight: 700; font-size: 1.05rem; cursor: pointer; }
+.insight-repeated-songs summary:focus-visible { outline: 2px solid var(--pink); outline-offset: 4px; }
+.insight-repeated-songs p { margin: 8px 0 0; font-size: .9rem; }
+.insight-repeat-link { color: var(--pink); text-decoration: underline; }
 </style></head><body class="stats-page"><div id="stats-entry"><p class="loading" role="status">טוענים את שמות המשתתפים…</p></div>
 <main class="wrap" id="stats-content" hidden>
   <div class="stats-account">
@@ -461,26 +465,6 @@
             </li>
           </ul>
         </li>
-        <li>
-          <strong><span class="insight-name">נעה טיקוצ׳ינסקי</span> ו־<bdi><span class="insight-name" dir="auto">Itai Sheffer</span></bdi> הצביעו לשני שירים ש<span class="insight-name">דנה מרחוביץ׳ 🦋</span> שיתפה.</strong>
-          <p>כל אחד משני השירים קיבל שלוש הצבעות בסך הכול.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02450a730dd72f3bf49882ae9d" alt="" width="52" height="52" loading="lazy" decoding="async">
-              <div class="insight-track-copy">
-                <div class="insight-track-title"><bdi>Jamaican (Bam Bam)</bdi></div>
-                <div class="insight-track-artist"><bdi>HUGEL, SOLTO (FR)</bdi></div>
-              </div>
-            </li>
-            <li class="insight-track">
-              <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020b98308c18aa672e4d21f23e" alt="" width="52" height="52" loading="lazy" decoding="async">
-              <div class="insight-track-copy">
-                <div class="insight-track-title"><bdi>פשוט אידיוט</bdi></div>
-                <div class="insight-track-artist"><bdi>IDIOT!</bdi></div>
-              </div>
-            </li>
-          </ul>
-        </li>
       </ul>
     </section>
     <section aria-labelledby="insights-voters">
@@ -559,25 +543,6 @@
                 <div class="insight-track-title"><bdi>האיש ההוא</bdi></div>
                 <div class="insight-track-artist"><bdi>Yehudit Ravitz, Ahuva Ozeri</bdi></div>
                 <div class="insight-track-caption"><span class="insight-name">אביגיל</span> ו־<span class="insight-name" dir="auto">Naveh Lax</span> שיתפו, <span class="insight-name">נעה</span> הצביעה</div>
-              </div>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><span class="insight-name">עמר</span> הצביע לשני שירים ש־<bdi><span class="insight-name" dir="auto">Ohad</span></bdi> שיתף.</strong>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/36/a8/4f/36a84fe9-739f-0577-6117-6d40791b21c8/12CMGIM33823.rgb.jpg/100x100bb.jpg" alt="" width="52" height="52" loading="lazy" decoding="async">
-              <div class="insight-track-copy">
-                <div class="insight-track-title"><bdi>Dear Boy</bdi></div>
-                <div class="insight-track-artist"><bdi>Paul &amp; Linda McCartney</bdi></div>
-              </div>
-            </li>
-            <li class="insight-track">
-              <img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/25/d1/8a/25d18a4f-01bd-1988-b4a6-90c193e77720/067003146555.png/100x100bb.jpg" alt="" width="52" height="52" loading="lazy" decoding="async">
-              <div class="insight-track-copy">
-                <div class="insight-track-title"><bdi>Chelsea Smiles</bdi></div>
-                <div class="insight-track-artist"><bdi>Flyte</bdi></div>
               </div>
             </li>
           </ul>
@@ -812,8 +777,580 @@
       <h2 class="month" id="insights-repeat">שירים שנשלחו שוב</h2>
       <ul class="insight-list">
         <li class="insight-repeat-feature">
-          <strong>117 מתוך 1,997 השירים בקטלוג נשלחו יותר מפעם אחת.</strong>
-          <p>104 שירים נשלחו פעמיים בדיוק, 12 נשלחו שלוש פעמים, ושיר אחד נשלח ארבע פעמים. ב־101 מהמקרים היו לפחות שני משתפים שונים. ב־16 המקרים הנותרים אותו אדם שיתף את השיר יותר מפעם אחת.</p>
+          <details class="insight-repeated-songs">
+            <summary>שירים שנשלחו שוב בתוך פחות משנה או בידי אותו אדם (71)</summary>
+            <p><a class="insight-repeat-link" href="#insights-returns">לרשימת השירים שחזרו אחרי שנה לפחות</a></p>
+            <ul class="insight-tracks">
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f2d3fb8fd6c0252750b8aa89" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>והלכתי בדרך</bdi></div>
+                  <div class="insight-track-artist"><bdi>Alon Eder</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">יואב אלמוג</bdi> · <time datetime="2023-07">יולי 2023</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music113/v4/9b/1a/94/9b1a9416-f72a-ec30-6136-f89032d1084d/cover.jpg/300x300bb.jpg" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Klum Ze Lo Stam</bdi></div>
+                  <div class="insight-track-artist"><bdi>Berry Sakharof</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Aviv Salant</bdi> · <time datetime="2023-07">יולי 2023</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02b9da7fc286b3cb3c43457141" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>תשאירי לי מקום לחבק אותך</bdi></div>
+                  <div class="insight-track-artist"><bdi>Avtipus</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">טליה שינדלר</bdi> · <time datetime="2023-07">יולי 2023</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02c18c4e6c2978fb6cbdef85e2" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Mr. Blue Sky</bdi></div>
+                  <div class="insight-track-artist"><bdi>Electric Light Orchestra</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">נדב ריבקין</bdi> · <time datetime="2023-08">אוגוסט 2023</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02d20953f4e214f167604954db" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>רק אל תלכי</bdi></div>
+                  <div class="insight-track-artist"><bdi>Zikney Tzfat</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אודליה וורטמן</bdi> · <time datetime="2023-08">אוגוסט 2023</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028af0f4a492b52f8fd0f65359" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>סע לאט</bdi></div>
+                  <div class="insight-track-artist"><bdi>Arik Einstein</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">יואב אלמוג</bdi> · <time datetime="2023-11">נובמבר 2023</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e021b241ad401cce4e62aadfcf3" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>מי נהר</bdi></div>
+                  <div class="insight-track-artist"><bdi>Idan Raichel</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אביגיל טיקוצ׳ינסקי</bdi> · <time datetime="2023-12">דצמבר 2023</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028a528d2678369fd57ce2f6db" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>לא יפריד דבר</bdi></div>
+                  <div class="insight-track-artist"><bdi>Danny Sanderson</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אודליה וורטמן</bdi> · <time datetime="2023-12">דצמבר 2023</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02646eeb5465fefa2fb9da081e" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>הינה</bdi></div>
+                  <div class="insight-track-artist"><bdi>Leyli, Gal Toren, Guy Levy</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">טליה שינדלר</bdi> · <time datetime="2024-01">ינואר 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023af6296743a54bcff34326e7" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>לבה</bdi></div>
+                  <div class="insight-track-artist"><bdi>Coral Bismuth</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">קשת שרה זקס</bdi> · <time datetime="2024-02">פברואר 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://i.ytimg.com/vi/bc57qXzaJ7s/hqdefault.jpg" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Safe Space Sessions: עלמה גוב - מנגינה (מוניקה סקס)</bdi></div>
+                  <div class="insight-track-artist"><bdi>מרחב מוגן • Safe Space</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Roee Cohen Magen</bdi> · <time datetime="2024-03">מרץ 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020a045371ab51b138d35afa2d" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>אנא, אנא, אנא</bdi></div>
+                  <div class="insight-track-artist"><bdi>Shai Tsabari</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אודליה וורטמן</bdi> · <time datetime="2024-03">מרץ 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02fda5356a5f767f5d1cd79f83" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>פסיכופט</bdi></div>
+                  <div class="insight-track-artist"><bdi>עידו מלכה</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">דנה מרחוביץ׳ 🦋</bdi> · <time datetime="2024-03">מרץ 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0291a8bb0b42dfea69ebd19ed2" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>שובי לביתך</bdi></div>
+                  <div class="insight-track-artist"><bdi>Shem-Tov Levy</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">עדו דולב</bdi> · <time datetime="2024-03">מרץ 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02786c339140d430653e990d55" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>היום אני לא</bdi></div>
+                  <div class="insight-track-artist"><bdi>Shazamat</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אודליה וורטמן</bdi> · <time datetime="2024-03">מרץ 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0244df82585f2bbca070b2e86c" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>חשבתי עלייך</bdi></div>
+                  <div class="insight-track-artist"><bdi>Vibe Ish</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Tamar kaveh</bdi> · <time datetime="2024-04">אפריל 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02be392334d99f82bc410cb239" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Too Sweet</bdi></div>
+                  <div class="insight-track-artist"><bdi>Hozier</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אורית</bdi> · <time datetime="2024-04">אפריל 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://i.ytimg.com/vi/XrrImxZYhLY/hqdefault.jpg" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>היו לילות</bdi></div>
+                  <div class="insight-track-artist"><bdi>Kaveret - Topic</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Ayelet</bdi> · <time datetime="2024-05">מאי 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e024ce8b4e42588bf18182a1ad2" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Blackbird - Remastered 2009</bdi></div>
+                  <div class="insight-track-artist"><bdi>The Beatles</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">טליה שינדלר</bdi> · <time datetime="2024-06">יוני 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0250499773f05f367cc95796ab" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>פרחים</bdi></div>
+                  <div class="insight-track-artist"><bdi>Shekel</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">ליה</bdi> · <time datetime="2024-06">יוני 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02c3e3d952830b49b646a65a12" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>אילה</bdi></div>
+                  <div class="insight-track-artist"><bdi>Yehudit Ravitz</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אורי מרגלית</bdi> · <time datetime="2024-06">יוני 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e029d9aaf9d31f191131f4f89f3" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>זה הסוף</bdi></div>
+                  <div class="insight-track-artist"><bdi>Alma Gov</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אביגיל טיקוצ׳ינסקי</bdi> · <time datetime="2024-07">יולי 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e026ce61113662ecf693b605ee5" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Only the Good Die Young</bdi></div>
+                  <div class="insight-track-artist"><bdi>Billy Joel</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Yael Vogel</bdi> · <time datetime="2024-07">יולי 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e027c251407d813379ae462cbbe" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>לא תתפוס אותי</bdi></div>
+                  <div class="insight-track-artist"><bdi>Meir Ariel</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אורי מרגלית</bdi> · <time datetime="2024-10">אוקטובר 2024</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02a9c073530191accfe5d53b99" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>משירי ארץ אהבתי</bdi></div>
+                  <div class="insight-track-artist"><bdi>לאה גולדברג</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">יואב אלמוג</bdi> · <time datetime="2025-01">ינואר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0259f7b9c392573705699e8457" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>אמא</bdi></div>
+                  <div class="insight-track-artist"><bdi>Gilad Hildesheim, יונתן גורפינקל</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">תמר</bdi> · <time datetime="2025-02">פברואר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02e7d1e98cf598dab3cbcf7c0e" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>שוב הגשם</bdi></div>
+                  <div class="insight-track-artist"><bdi>Sharona Pick, Daniella Pick</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">נעה טיקוצ׳ינסקי</bdi> · <time datetime="2025-03">מרץ 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/21/b8/37/21b8370d-8273-73a4-7d8f-cda681187a7e/cover.jpg/100x100bb.jpg" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>המלאך שלי</bdi></div>
+                  <div class="insight-track-artist"><bdi>Shuli Rand</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">רוני</bdi> · <time datetime="2025-03">מרץ 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e026aa9314b7ddfbd8f036ba3ac" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Respect</bdi></div>
+                  <div class="insight-track-artist"><bdi>Aretha Franklin</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Amit Eilat</bdi> · <time datetime="2025-03">מרץ 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02d0c7c131a979c9e5436f89ce" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Englishman In New York</bdi></div>
+                  <div class="insight-track-artist"><bdi>Sting</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">טליה שינדלר</bdi> · <time datetime="2025-03">מרץ 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02ad471a9382f4b507eab8daf2" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>שיר הנושא</bdi></div>
+                  <div class="insight-track-artist"><bdi>Rotem Bar Or</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">יואב אלמוג</bdi> · <time datetime="2025-04">אפריל 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e021aa1acac819e77863bcd4c49" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>כל אהבה לטובה</bdi></div>
+                  <div class="insight-track-artist"><bdi>Rotem Bar Or, theAngelcy</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">יואב אלמוג</bdi> · <time datetime="2025-04">אפריל 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02acbe71fa69ae876c2b85a793" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>פצצה מתקתקת</bdi></div>
+                  <div class="insight-track-artist"><bdi>The Backyard, Tomer Yosef, Itamar Ziegler, Gedy Ronen, יענקל&#39;ה רוטבליט</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אודליה וורטמן</bdi> · <time datetime="2025-05">מאי 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020336e7b1258c207ad206c3c7" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>חתולים</bdi></div>
+                  <div class="insight-track-artist"><bdi>Jimbo J, Ravid Plotnik</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Roei Dahuki</bdi> · <time datetime="2025-05">מאי 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020b4dabacb1bf91d6fe153048" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>בבון של יפו</bdi></div>
+                  <div class="insight-track-artist"><bdi>Avihu Pinhasov Rhythm Club</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">נעה טיקוצ׳ינסקי</bdi> · <time datetime="2025-05">מאי 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0267bc29c251c777361b17a190" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Good Old-Fashioned Lover Boy - Remastered 2011</bdi></div>
+                  <div class="insight-track-artist"><bdi>Queen</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">טליה שינדלר</bdi> · <time datetime="2025-05">מאי 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028e28fc9895b4bc8801ecf951" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>תפוז</bdi></div>
+                  <div class="insight-track-artist"><bdi>ילד., Eric Berman</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">דנה מרחוביץ׳ 🦋</bdi> · <time datetime="2025-05">מאי 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02321bad65a3be5bbd317eb11b" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Not Fair</bdi></div>
+                  <div class="insight-track-artist"><bdi>Lily Allen</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">נעה טיקוצ׳ינסקי</bdi> · <time datetime="2025-05">מאי 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0249a3f56cdc4d1f0da6b3be79" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>BDE Bonus</bdi></div>
+                  <div class="insight-track-artist"><bdi>Mac Miller</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Itamar</bdi> · <time datetime="2025-06">יוני 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02695ac649e236098b4ddb88dc" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>אבל את</bdi></div>
+                  <div class="insight-track-artist"><bdi>Meir Banai, Eviatar Banai</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אורי מרגלית</bdi> · <time datetime="2025-07">יולי 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02ddc54feece71dda4290d0579" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Does Your Mother Know - From &#39;Mamma Mia!&#39; Original Motion Picture Soundtrack</bdi></div>
+                  <div class="insight-track-artist"><bdi>Christine Baranski, Philip Michael</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Yael Vogel</bdi> · <time datetime="2025-08">אוגוסט 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02186f8cc0f6ccd01752b723ac" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>I Love You</bdi></div>
+                  <div class="insight-track-artist"><bdi>Alon Aboutboul, The White Screen, Elya</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">תמר</bdi> · <time datetime="2025-08">אוגוסט 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e021b6e17af4abd30546c53920c" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>כלום לא טעים</bdi></div>
+                  <div class="insight-track-artist"><bdi>Eldad Cohen, Keren Peles</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Yael Vogel</bdi> · <time datetime="2025-08">אוגוסט 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0276ffb5b5ab045d22c81235c1" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Me &amp; Mr Jones</bdi></div>
+                  <div class="insight-track-artist"><bdi>Amy Winehouse</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Shaked Dotan</bdi> · <time datetime="2025-08">אוגוסט 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/8a/ab/9e/8aab9e90-2fca-9463-249e-ce472798d2da/7290121546386.png/100x100bb.jpg" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>הסיבה שאין בי פחד</bdi></div>
+                  <div class="insight-track-artist"><bdi>Netta</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אורי לבנור</bdi> · <time datetime="2025-08">אוגוסט 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028e30585cb63e4f0f4ff104e1" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>מאה מדרגות</bdi></div>
+                  <div class="insight-track-artist"><bdi>יוגב גלוסמן</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">תמר</bdi> · <time datetime="2025-09">ספטמבר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f9742033ffb15f5413898ef9" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Yes Sir, I Can Boogie</bdi></div>
+                  <div class="insight-track-artist"><bdi>Baccara</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">טליה שינדלר</bdi> · <time datetime="2025-09">ספטמבר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e026067bc5b36f0070f96650ed7" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>למה לא</bdi></div>
+                  <div class="insight-track-artist"><bdi>Cohen, Peled, ג&#39;קסון</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Itamar</bdi> · <time datetime="2025-09">ספטמבר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023395f3e809dfbc2b1101d464" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Space Oddity - 2015 Remaster</bdi></div>
+                  <div class="insight-track-artist"><bdi>David Bowie</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Shaked Dotan</bdi> · <time datetime="2025-09">ספטמבר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02943fe2781dd19bf510f71340" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>One More Cup of Coffee</bdi></div>
+                  <div class="insight-track-artist"><bdi>Bob Dylan</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">תמר</bdi> · <time datetime="2025-11">נובמבר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02e8689f0b0a395a1a88b3d8a8" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>מבול</bdi></div>
+                  <div class="insight-track-artist"><bdi>Eviatar Banai</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">קשת שרה זקס</bdi> · <time datetime="2025-11">נובמבר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02183730e8038fa632b2c227da" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Suddenly I See</bdi></div>
+                  <div class="insight-track-artist"><bdi>KT Tunstall</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">דנה מרחוביץ׳ 🦋</bdi> · <time datetime="2025-11">נובמבר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0223fe22cf6b7b04c42148e186" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>שבעה ימי עסקים</bdi></div>
+                  <div class="insight-track-artist"><bdi>Leyli, Gal Toren, Guy Levy</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אודליה וורטמן</bdi> · <time datetime="2025-11">נובמבר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02392938cea59ade2968f35629" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>הלילות הקסומים</bdi></div>
+                  <div class="insight-track-artist"><bdi>The Witches</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Roee Ohali</bdi> · <time datetime="2025-12">דצמבר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e026bbf35e4c188ae408b45b9f5" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>ענן - (לייב מגלגלייב)</bdi></div>
+                  <div class="insight-track-artist"><bdi>Karolina, גלגלצ</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Yael Vogel</bdi> · <time datetime="2026-01">ינואר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023e326294af14fcd1b6db2992" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>לב לבן</bdi></div>
+                  <div class="insight-track-artist"><bdi>Shuli Rand</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אורי מרגלית</bdi> · <time datetime="2026-02">פברואר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02d3555f0982509d91937f104d" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>הכי אוהב אותי</bdi></div>
+                  <div class="insight-track-artist"><bdi>Kiki Malinki</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Tamar kaveh</bdi> · <time datetime="2026-02">פברואר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02787674b6a114f98cad6f834b" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Wind Of Change</bdi></div>
+                  <div class="insight-track-artist"><bdi>Scorpions</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Itamar</bdi> · <time datetime="2026-02">פברואר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0263facc42e4a35eb3aa182b59" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Who Do You Think You Are</bdi></div>
+                  <div class="insight-track-artist"><bdi>Spice Girls</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Amit Eilat</bdi> · <time datetime="2026-03">מרץ 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0280b0b61e82ed5e5803779528" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>בית ביפו</bdi></div>
+                  <div class="insight-track-artist"><bdi>Dudu Tassa</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אורי מרגלית</bdi> · <time datetime="2026-04">אפריל 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02d03ab2da904d8251a87bbc31" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Tiny Dancer</bdi></div>
+                  <div class="insight-track-artist"><bdi>Elton John</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אופיר</bdi> · <time datetime="2026-04">אפריל 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e028453b853c2cc9c077828eefb" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>The Boxer</bdi></div>
+                  <div class="insight-track-artist"><bdi>Simon &amp; Garfunkel</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Amit Eilat</bdi> · <time datetime="2026-05">מאי 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02acc5e23ac0089a5649961ca0" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Alone Again (Naturally)</bdi></div>
+                  <div class="insight-track-artist"><bdi>Gilbert O&#39;Sullivan</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">טליה שינדלר</bdi> · <time datetime="2026-05">מאי 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020bcd129883b49113c0ba013e" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>טחינה על טלה</bdi></div>
+                  <div class="insight-track-artist"><bdi>מוני</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Aviv Salant</bdi> · <time datetime="2026-08">אוגוסט 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e024412ca57018c991d086ce3f7" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>כלהלילה (אל תעזבי אותי)</bdi></div>
+                  <div class="insight-track-artist"><bdi>אורי כלטוב</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">נעה טיקוצ׳ינסקי</bdi> · <time datetime="2026-08">אוגוסט 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0283c39b0d32eb4a2064e1e228" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Here Without You</bdi></div>
+                  <div class="insight-track-artist"><bdi>3 Doors Down</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">🌸</bdi> · <time datetime="2026-08">אוגוסט 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e029a22b4a8798dc2f8727f109c" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Get Around</bdi></div>
+                  <div class="insight-track-artist"><bdi>Mallow Hill</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Itai Sheffer</bdi> · <time datetime="2026-08">אוגוסט 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02d6c26d2ae723f7ab553d64cc" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Self Aware</bdi></div>
+                  <div class="insight-track-artist"><bdi>Temper City</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">נעה טיקוצ׳ינסקי</bdi> · <time datetime="2026-08">אוגוסט 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e022151dc011d7c9a227ed3528b" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>פאפית</bdi></div>
+                  <div class="insight-track-artist"><bdi>Odeya</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">נעה טיקוצ׳ינסקי</bdi> · <time datetime="2026-09">ספטמבר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02427b3d34a61e64ada1d6a7ae" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>נתתי לך בית</bdi></div>
+                  <div class="insight-track-artist"><bdi>Ofek Adanek</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">דנה מרחוביץ׳ 🦋</bdi> · <time datetime="2026-09">ספטמבר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02fd9fb2ec1a021f64e94b9109" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>בוא תגיד שלום</bdi></div>
+                  <div class="insight-track-artist"><bdi>Yishay Swissa</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Roee Ohali</bdi> · <time datetime="2026-10">אוקטובר 2026</time></div>
+                </div>
+              </li>
+            </ul>
+          </details>
         </li>
         <li>
           <strong>השיר שנשלח הכי הרבה הגיע משלושה אנשים, בארבעה שיתופים.</strong>
@@ -876,9 +1413,427 @@
     <section aria-labelledby="insights-returns">
       <h2 class="month" id="insights-returns">שירים שחזרו אחרי שנים</h2>
       <ul class="insight-list">
-        <li>
-          <strong>ב־46 שירים עברה לפחות שנה בין השיתוף הראשון לשיתוף של אדם אחר.</strong>
-          <p>ב־21 מתוכם עברו לפחות שנתיים, ובשלושה עברו מעל שלוש שנים.</p>
+        <li class="insight-repeat-feature">
+          <details class="insight-repeated-songs" id="repeat-late">
+            <summary>שירים שאדם אחר שיתף אחרי שנה לפחות (46)</summary>
+            <p>מסודרים מהפער הארוך לקצר.</p>
+            <ul class="insight-tracks">
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e026e1f97c78d4da316f9821aff" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>סטלות - לייב סשן</bdi></div>
+                  <div class="insight-track-artist"><bdi>Shreki, גפן גרינברג</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אביגיל טיקוצ׳ינסקי</bdi> · <time datetime="2023-08">אוגוסט 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">אופיר</bdi> · <time datetime="2026-10">אוקטובר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e029824c6e084b02d24b2e22e94" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Break My Stride</bdi></div>
+                  <div class="insight-track-artist"><bdi>Matthew Wilder</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">kfir wizegun</bdi> · <time datetime="2023-07">יולי 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Noam Mazover</bdi> · <time datetime="2026-08">אוגוסט 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020a54ea21e80460f9f1e4c720" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>השיר על הארץ</bdi></div>
+                  <div class="insight-track-artist"><bdi>Nurit Galron</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">נעה טיקוצ׳ינסקי</bdi> · <time datetime="2023-11">נובמבר 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Roee Ohali</bdi> · <time datetime="2026-11">נובמבר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e029e1cfc756886ac782e363d79" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>The Less I Know The Better</bdi></div>
+                  <div class="insight-track-artist"><bdi>Tame Impala</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אורי מרגלית</bdi> · <time datetime="2023-07">יולי 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">בתיה פרוידנברגר</bdi> · <time datetime="2026-06">יוני 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02cbd56c3a8faf8cf8c8bea0df" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>California Dreamin&#39;</bdi></div>
+                  <div class="insight-track-artist"><bdi>The Mamas &amp; The Papas</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">יואב אלמוג</bdi> · <time datetime="2023-07">יולי 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">אודליה וורטמן</bdi> · <time datetime="2026-06">יוני 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e027690220aaff69bad0333b321" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>באהבתנו</bdi></div>
+                  <div class="insight-track-artist"><bdi>Yehudit Ravitz</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">נעה טיקוצ׳ינסקי</bdi> · <time datetime="2023-12">דצמבר 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Roee Ohali</bdi> · <time datetime="2026-09">ספטמבר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02caa81438780c022baffb0ffa" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Lifamim</bdi></div>
+                  <div class="insight-track-artist"><bdi>Arik Einstein</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">עדו דולב</bdi> · <time datetime="2023-12">דצמבר 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">חנה מיכל ❤️ Hana Michal</bdi> · <time datetime="2026-07">יולי 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02c28f3fed80ec4f70fe402044" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>האיש ההוא</bdi></div>
+                  <div class="insight-track-artist"><bdi>Yehudit Ravitz, Ahuva Ozeri</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Naveh Lax</bdi> · <time datetime="2023-07">יולי 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">אביגיל טיקוצ׳ינסקי</bdi> · <time datetime="2026-02">פברואר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02a440a15fb7513e58e2be3f0c" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>יאללה בואי - אהבה נצחית</bdi></div>
+                  <div class="insight-track-artist"><bdi>Michael Greilsammer</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אודליה וורטמן</bdi> · <time datetime="2024-01">ינואר 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">🌸</bdi> · <time datetime="2026-08">אוגוסט 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0297da5caf2a19ef9c56d008ab" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>זה מה שנשאר</bdi></div>
+                  <div class="insight-track-artist"><bdi>Shlomo Artzi</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אורי מרגלית</bdi> · <time datetime="2023-09">ספטמבר 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Shaked Dotan</bdi> · <time datetime="2026-03">מרץ 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0297da5caf2a19ef9c56d008ab" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>אבסורד</bdi></div>
+                  <div class="insight-track-artist"><bdi>Shlomo Artzi</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">טליה שינדלר</bdi> · <time datetime="2023-11">נובמבר 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Shaked Dotan</bdi> · <time datetime="2026-05">מאי 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0289d0ff2366a208016b6e9c6e" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Chasing Pavements</bdi></div>
+                  <div class="insight-track-artist"><bdi>Adele</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אורי מרגלית</bdi> · <time datetime="2024-02">פברואר 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">רוני</bdi> · <time datetime="2026-08">אוגוסט 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023d69a1082b9d676263912178" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>La Foule</bdi></div>
+                  <div class="insight-track-artist"><bdi>Édith Piaf</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Amit Eilat</bdi> · <time datetime="2024-03">מרץ 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">אופיר</bdi> · <time datetime="2026-07">יולי 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02bb4f91fbbb2fc1c132ce39bb" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>באה מאהבה</bdi></div>
+                  <div class="insight-track-artist"><bdi>Yehudit Ravitz, Gidi Gov</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">כרמל</bdi> · <time datetime="2024-01">ינואר 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">דנה מרחוביץ׳ 🦋</bdi> · <time datetime="2026-05">מאי 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02d346b5371dc6f221c7d5283f" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>צועק את שחסר לו</bdi></div>
+                  <div class="insight-track-artist"><bdi>Meir Ariel</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">יהלי חן</bdi> · <time datetime="2023-12">דצמבר 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Itamar</bdi> · <time datetime="2026-04">אפריל 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02865a956fe40cf54597e97fd2" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Sister Golden Hair</bdi></div>
+                  <div class="insight-track-artist"><bdi>America</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">פריאל</bdi> · <time datetime="2024-01">ינואר 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">טליה שינדלר</bdi> · <time datetime="2026-05">מאי 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02b337e1ca6629a53c66a3b0d4" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Unwritten</bdi></div>
+                  <div class="insight-track-artist"><bdi>Natasha Bedingfield</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">דנה מרחוביץ׳ 🦋</bdi> · <time datetime="2024-02">פברואר 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">אביגיל טיקוצ׳ינסקי</bdi> · <time datetime="2026-06">יוני 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028f7424f514004eacaaf35fb0" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>אין דרך חזרה</bdi></div>
+                  <div class="insight-track-artist"><bdi>ילד.</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">דנה מרחוביץ׳ 🦋</bdi> · <time datetime="2023-08">אוגוסט 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">אביגיל טיקוצ׳ינסקי</bdi> · <time datetime="2025-11">נובמבר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02508b835b5dd68662ec44646a" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>אולי הפעם</bdi></div>
+                  <div class="insight-track-artist"><bdi>Idan Raichel</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">תמר טיקוצ׳ינסקי</bdi> · <time datetime="2023-11">נובמבר 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">אביגיל טיקוצ׳ינסקי</bdi> · <time datetime="2026-01">ינואר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02b54ab624e63ea2a29aee9446" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>לווי אותי</bdi></div>
+                  <div class="insight-track-artist"><bdi>Shai Tsabari</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Tamar kaveh</bdi> · <time datetime="2023-11">נובמבר 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Itamar</bdi> · <time datetime="2026-01">ינואר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0299d9570eb96387cdd7535310" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>עונות</bdi></div>
+                  <div class="insight-track-artist"><bdi>Aviv Geffen</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אביגיל טיקוצ׳ינסקי</bdi> · <time datetime="2023-11">נובמבר 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Itamar</bdi> · <time datetime="2026-01">ינואר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f66c4fb4b235f2997e8793b3" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>ילדי הירח</bdi></div>
+                  <div class="insight-track-artist"><bdi>Tuned Tone, Itzhak Klepter, Shem-Tov Levy, Shlomo Ydov</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">שביט</bdi> · <time datetime="2023-12">דצמבר 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Yael Vogel</bdi> · <time datetime="2025-12">דצמבר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e027624d538b596bfdf565184a6" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Another Day in Paradise - 2016 Remaster</bdi></div>
+                  <div class="insight-track-artist"><bdi>Phil Collins</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Itay Erez</bdi> · <time datetime="2024-12">דצמבר 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">אורי מרגלית</bdi> · <time datetime="2026-10">אוקטובר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02d726d3baf13bd2b824b971c9" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Ann Wants to Dance</bdi></div>
+                  <div class="insight-track-artist"><bdi>Papooz</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">kfir wizegun</bdi> · <time datetime="2023-07">יולי 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">נעה טיקוצ׳ינסקי</bdi> · <time datetime="2025-05">מאי 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0266944cd44c0b4cfcab17fd6a" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>ניו יורק - רפיח</bdi></div>
+                  <div class="insight-track-artist"><bdi>Sheygets</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">טליה שינדלר</bdi> · <time datetime="2024-02">פברואר 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Itamar</bdi> · <time datetime="2025-11">נובמבר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02c15337a09c61725797643b09" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>בלעדייך</bdi></div>
+                  <div class="insight-track-artist"><bdi>Gidi Gov</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Roee Cohen Magen</bdi> · <time datetime="2023-08">אוגוסט 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">דנה מרחוביץ׳ 🦋</bdi> · <time datetime="2025-05">מאי 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e021e55d5aa82556c3f5bc950d9" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>במקום בו אני גר</bdi></div>
+                  <div class="insight-track-artist"><bdi>Jimbo J, אורית טשומה, אברהם לגסה</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Roei Dahuki</bdi> · <time datetime="2024-09">ספטמבר 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Itamar</bdi> · <time datetime="2026-05">מאי 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e025b946f45fe986ad4b09de35a" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>געגוע</bdi></div>
+                  <div class="insight-track-artist"><bdi>Yehudit Ravitz</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Noa Liberman</bdi> · <time datetime="2025-03">מרץ 2025</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">אביגיל טיקוצ׳ינסקי</bdi> · <time datetime="2026-10">אוקטובר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e021f9b77bf7bb368035db3ea24" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>למה הייתי רוצה</bdi></div>
+                  <div class="insight-track-artist"><bdi>Cookie Levanna, ילד.</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Roei Dahuki</bdi> · <time datetime="2025-02">פברואר 2025</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Itamar</bdi> · <time datetime="2026-09">ספטמבר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f081c7a1a21fb8f983a9d3cb" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>50 Ways to Leave Your Lover</bdi></div>
+                  <div class="insight-track-artist"><bdi>Paul Simon</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">נעה טיקוצ׳ינסקי</bdi> · <time datetime="2024-05">מאי 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">טליה שינדלר</bdi> · <time datetime="2025-11">נובמבר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0244060910076125380a2be152" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>בכל פעם שאני מתאהב (בך מחדש)</bdi></div>
+                  <div class="insight-track-artist"><bdi>Izhar Ashdot</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אודליה וורטמן</bdi> · <time datetime="2024-07">יולי 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">יואב אלמוג</bdi> · <time datetime="2026-01">ינואר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0252038992fc6d7868f31d23b7" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>How Deep Is Your Love</bdi></div>
+                  <div class="insight-track-artist"><bdi>Bee Gees</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Amit Eilat</bdi> · <time datetime="2024-07">יולי 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Hila</bdi> · <time datetime="2026-01">ינואר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0283e94b81cfff59b248e87a89" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>יכול להיות סוף טוב</bdi></div>
+                  <div class="insight-track-artist"><bdi>Girafot</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">נעה טיקוצ׳ינסקי</bdi> · <time datetime="2025-05">מאי 2025</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Itamar</bdi> · <time datetime="2026-10">אוקטובר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0290095f9878b94681ee9d80c3" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>אנטארקטיקה</bdi></div>
+                  <div class="insight-track-artist"><bdi>Korin Allal</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">ariel</bdi> · <time datetime="2025-04">אפריל 2025</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Yuval Basin</bdi> · <time datetime="2026-09">ספטמבר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02d3bec993629df177c2cb80e6" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>יש כאן יותר מזה</bdi></div>
+                  <div class="insight-track-artist"><bdi>Hanan Ben Ari</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Ori Dolev</bdi> · <time datetime="2024-08">אוגוסט 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">מיכל</bdi> · <time datetime="2026-01">ינואר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028f8f66bd901715dc4c87a6f2" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>קר בידיים</bdi></div>
+                  <div class="insight-track-artist"><bdi>Boaz Krauzer</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אודליה וורטמן</bdi> · <time datetime="2024-11">נובמבר 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Noam Mazover</bdi> · <time datetime="2026-03">מרץ 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e026236778a208a15eb71079601" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>There Is a Light That Never Goes Out - 2011 Remaster</bdi></div>
+                  <div class="insight-track-artist"><bdi>The Smiths</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Josh Rotstein</bdi> · <time datetime="2025-06">יוני 2025</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">טליה שינדלר</bdi> · <time datetime="2026-10">אוקטובר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02b98f37642280c7edad050c5e" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>She&#39;s A Rainbow</bdi></div>
+                  <div class="insight-track-artist"><bdi>The Rolling Stones</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Yael Vogel</bdi> · <time datetime="2025-02">פברואר 2025</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">יואב אלמוג</bdi> · <time datetime="2026-07">יולי 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02c512792fe681b2c71277b703" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>עד שבאת</bdi></div>
+                  <div class="insight-track-artist"><bdi>Beit Habubot, אמיר אטיאס</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">טליה שינדלר</bdi> · <time datetime="2024-08">אוגוסט 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">דנה מרחוביץ׳ 🦋</bdi> · <time datetime="2026-01">ינואר 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02e218148f3e1f2c401b870601" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>טיול</bdi></div>
+                  <div class="insight-track-artist"><bdi>Blue Pill</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">מיכל</bdi> · <time datetime="2023-11">נובמבר 2023</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Yael Vogel</bdi> · <time datetime="2025-02">פברואר 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0250961e4d323f017e68766309" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>ריקוד קטן</bdi></div>
+                  <div class="insight-track-artist"><bdi>Izhar Ashdot</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אופיר</bdi> · <time datetime="2024-03">מרץ 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">טליה שינדלר</bdi> · <time datetime="2025-06">יוני 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e022a038d3bf875d23e4aeaa84e" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Billie Bossa Nova</bdi></div>
+                  <div class="insight-track-artist"><bdi>Billie Eilish</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">Tamar kaveh</bdi> · <time datetime="2024-04">אפריל 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Shaked Dotan</bdi> · <time datetime="2025-07">יולי 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02382c450fe0c3d324968e8237" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>אל תשאלי אם אני אוהב</bdi></div>
+                  <div class="insight-track-artist"><bdi>David Broza, Nimrod Lev</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אודליה וורטמן</bdi> · <time datetime="2025-03">מרץ 2025</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">זהר</bdi> · <time datetime="2026-05">מאי 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0295699f6dd5afedec9605315c" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>פרגולה</bdi></div>
+                  <div class="insight-track-artist"><bdi>Eviatar Banai</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אודליה וורטמן</bdi> · <time datetime="2025-07">יולי 2025</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">אביגיל טיקוצ׳ינסקי</bdi> · <time datetime="2026-07">יולי 2026</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023214b0a1762545abda50adfd" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>אין לזה לאן</bdi></div>
+                  <div class="insight-track-artist"><bdi>Full Trunk</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">אביעד הייבין</bdi> · <time datetime="2024-06">יוני 2024</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">Josh Rotstein</bdi> · <time datetime="2025-07">יולי 2025</time></div>
+                </div>
+              </li>
+              <li class="insight-track">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e026533c426fc884ede08e1cdd9" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Stumblin&#39; In</bdi></div>
+                  <div class="insight-track-artist"><bdi>Chris Norman, Suzi Quatro</bdi></div>
+                  <div class="insight-track-caption">שיתוף ראשון <bdi class="insight-name">נעה טיקוצ׳ינסקי</bdi> · <time datetime="2025-08">אוגוסט 2025</time></div>
+                  <div class="insight-track-caption">שיתוף מאוחר <bdi class="insight-name">🌸</bdi> · <time datetime="2026-09">ספטמבר 2026</time></div>
+                </div>
+              </li>
+            </ul>
+          </details>
         </li>
         <li>
           <strong>שני השירים עם הפערים הארוכים ביותר חזרו דרך אנשים שונים.</strong>
@@ -978,19 +1933,6 @@
               <div class="insight-track-copy">
                 <div class="insight-track-title"><bdi>מישהו פעם</bdi></div>
                 <div class="insight-track-artist"><bdi>Ivri Lider</bdi></div>
-              </div>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><span class="insight-name">אביעד הייבין</span> ו<span class="insight-name">דנה מרחוביץ׳ 🦋</span> סימנו שניהם ״ממש אהבתי״ לאותו שיר, וזה השיר היחיד ששניהם הצביעו לו.</strong>
-          <p>כל אחד מהם הצביע ל־13 שירים. <span class="insight-name">יואב אלמוג</span> שיתף את השיר היחיד שבו ההצבעות שלהם נפגשו.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e025fd8276ecb4a8916bd6bae7a" alt="" width="52" height="52" loading="lazy" decoding="async">
-              <div class="insight-track-copy">
-                <div class="insight-track-title"><bdi>בימים</bdi></div>
-                <div class="insight-track-artist"><bdi>Leyli, Gal Toren, Guy Levy</bdi></div>
               </div>
             </li>
           </ul>
