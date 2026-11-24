@@ -22,6 +22,12 @@
 .repeat-share-list { grid-template-columns: repeat(auto-fit, minmax(min(100%, 265px), 1fr)); }
 .repeat-share-history { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 5px; font-size: .78rem; color: var(--muted); }
 .repeat-share-order { display: block; color: inherit; }
+.insight-section { margin: 10px 0; background: #1e1e1e; border: 1px solid #383838; border-radius: 16px; }
+.insight-section > summary { color: var(--pink); font-size: 1.05rem; font-weight: 700; cursor: pointer; padding: 14px 16px; border-radius: 16px; }
+.insight-section > summary:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+.insight-section[open] > summary { border-bottom: 1px solid #383838; border-end-start-radius: 0; border-end-end-radius: 0; }
+.insight-section-content { padding: 12px 14px 16px; }
+.insight-section-content > .month:first-child { margin-top: 4px; }
 </style></head><body class="stats-page"><div id="stats-entry"><p class="loading" role="status">טוענים את שמות המשתתפים…</p></div>
 <main class="wrap" id="stats-content" hidden>
   <div class="stats-account">
@@ -53,814 +59,10 @@
   <section role="tabpanel" id="stats-insights-panel" aria-labelledby="stats-insights-tab" tabindex="0" hidden>
 
     <p class="insights-note">לפי ההצבעות שנשמרו עד 23 בנובמבר.</p>
-    <section aria-labelledby="insights-shares">
-      <h2 class="month" id="insights-shares">מי קלע לטעם של מי</h2>
-      <ul class="insight-list">
-        <li>
-          <strong><span class="insight-name">עמר</span> ו<span class="insight-name">טליה שינדלר</span> חולקים 34 שירים, החפיפה הגדולה ביותר בין שני אנשים בקבוצה.</strong>
-          <p><span class="insight-name">עמר</span> סימן 34 מתוך 132 השירים ש<span class="insight-name">טליה</span> שיתפה. זה בערך רבע מהשיתופים שלה וכ־16% מכל ההצבעות שלו.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/6TvxPS4fj4LUdjw2es4g21?si=WoswmWsIQgK429-22tQTZw&amp;context=spotify%3Aplaylist%3A37i9dQZF1E8DIFrhCfmG2T" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0242678f54dfd1d5afb3eea19a" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Slipping Through My Fingers</bdi></div>
-                  <div class="insight-track-artist"><bdi>ABBA</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/4VOMH5HnlUTMGi3Kq4509E?si=3eiHn4miR3i_bV4Aq_XMDA&amp;context=spotify%3Aplaylist%3A37i9dQZF1E8O55TZ3ffwx7" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e021e6cc8efe63a90d4436933f0" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>את ואני</bdi></div>
-                  <div class="insight-track-artist"><bdi>Shlomo Artzi</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/44a0iyAfqhRnL5IV0oMPEx?si=ysA-kzxLTCuzo19HoV2VQg" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e022df20f92197efb90f0dafaf8" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>מישהו פעם</bdi></div>
-                  <div class="insight-track-artist"><bdi>Ivri Lider</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><span class="insight-name">אורי מרגלית</span> סימן שלושה שירים ש<span class="insight-name">מיכל</span> שיתפה.</strong>
-          <p>שני השירים האלה קיבלו ממנו ״ממש אהבתי״.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/6p5z6qZSmwVAQKcNmkAwT5?si=aLaLuDVoSC-Xx0EhMTgfqA" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0229cffccc485d4658f9d91b78" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>חוף מבטחים</bdi></div>
-                  <div class="insight-track-artist"><bdi>יוגב גלוסמן, Ninet Tayeb</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/779d9J67lU0cqZCBQ1MF1j" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02786a2ccbdd971e5903a09d45" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Sail Away</bdi></div>
-                  <div class="insight-track-artist"><bdi>David Gray</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><span class="insight-name">נעה טיקוצ׳ינסקי</span> סימנה 8 מתוך 23 השירים ששיתפה <bdi><span class="insight-name" dir="auto">Tamar kaveh</span></bdi>.</strong>
-          <p>זה בערך שליש מהשיתופים שלה.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/3p5NEImV6ChytYLOD3FMkQ?si=WFTCnDVDQEqT9GJ9S7_1YA&amp;utm_source=copy-link&amp;context=spotify%3Aplaylist%3A37i9dQZF1F5p3rmiWPIYgZ&amp;rowId=357b7c9ab351ceb1cf99" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02427b3d34a61e64ada1d6a7ae" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>נתתי לך בית</bdi></div>
-                  <div class="insight-track-artist"><bdi>Ofek Adanek</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/6I6WKQJVTnfYam5yuK1xpF?si=hrq3SXDkTEaEr4NA5a7TTg&amp;utm_source=copy-link" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02fd9fb2ec1a021f64e94b9109" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>בוא תגיד שלום</bdi></div>
-                  <div class="insight-track-artist"><bdi>Yishay Swissa</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/31MNHKE86sEXzIglbGQ6mu" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0267103283a4eb57578a428252" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Got Me Started</bdi></div>
-                  <div class="insight-track-artist"><bdi>Troye Sivan</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><bdi><span class="insight-name" dir="auto">Noam Mazover</span></bdi> סימן שלושה שירים ש<span class="insight-name">טליה שינדלר</span> שיתפה.</strong>
-          <p>שני השירים האלה קיבלו ממנו ״ממש אהבתי״.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/6xE6ZWzK1YDDSYzqOCoQlz?si=gZaON0xORTaZxHV5C319WQ&amp;context=spotify%3Aplaylist%3A37i9dQZF1E8AIVPxEiZe7X" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0237e78b6638f7737adee73d6f" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Last Train to London</bdi></div>
-                  <div class="insight-track-artist"><bdi>Electric Light Orchestra</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/2sIbHjfJ3nbMXNz4w03fWv" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028c5a6302666a7f69a8ded468" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Eye In The Sky</bdi></div>
-                  <div class="insight-track-artist"><bdi>The Alan Parsons Project</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><span class="insight-name">עמר</span> ו־<bdi><span class="insight-name" dir="auto">Amit Eilat</span></bdi> חולקים 19 שירים.</strong>
-          <p><span class="insight-name">עמר</span> הצביע ל־18 מהשירים ש־<bdi><span class="insight-name" dir="auto">Amit Eilat</span></bdi> שיתף. השניים שמופיעים כאן קיבלו ממנו ״ממש אהבתי״.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/5RgFlk1fcClZd0Y4SGYhqH?si=ca-T1HDVRXmyHplJPq45XA" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e026ce61113662ecf693b605ee5" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>She&#39;s Always a Woman</bdi></div>
-                  <div class="insight-track-artist"><bdi>Billy Joel</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/76TZCvJ8GitQ2FA1q5dKu0?si=adS1wvxhS2G6ju5-nq2M5w" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e028453b853c2cc9c077828eefb" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>The Boxer</bdi></div>
-                  <div class="insight-track-artist"><bdi>Simon &amp; Garfunkel</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><span class="insight-name">דנה מרחוביץ׳ 🦋</span> היא מי ש<span class="insight-name">נעה טיקוצ׳ינסקי</span> סימנה הכי הרבה מהשירים שלה.</strong>
-          <p><span class="insight-name">נעה</span> סימנה 15 מהשיתופים של <span class="insight-name">דנה</span>. בסך הכול יש להן 19 שירים משותפים.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/6xjgjdunz6KkVOGgW81FEd?si=1yephWsxSd-4_T3Vs4ECDA" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0280b0b61e82ed5e5803779528" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>בית ביפו</bdi></div>
-                  <div class="insight-track-artist"><bdi>Dudu Tassa</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/4dubGqNrxwlcHq1hUdWiK8?si=XKPc1yejRq2H1OuXIDYojA" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0244df82585f2bbca070b2e86c" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>חשבתי עלייך</bdi></div>
-                  <div class="insight-track-artist"><bdi>Vibe Ish</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/0evZ3J8iWcFH7kRYmg5Mzw?si=e0TnKo3YTxi_hC8gbSbH3g" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02d84446a2af2c06e7d3b08ca2" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>או לה פופה</bdi></div>
-                  <div class="insight-track-artist"><bdi>Noa Kirel</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-    <section aria-labelledby="insights-pairs">
-      <h2 class="month" id="insights-pairs">זוגות עם טעם משותף</h2>
-      <ul class="insight-list">
-        <li>
-          <strong><span class="insight-name">אודליה וורטמן</span> ו<span class="insight-name">יואב אלמוג</span> חולקים שמונה שירים.</strong>
-          <p>את חמישה מתוכם שניהם שיתפו, ובהם שלושת השירים האלה.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/4EzbthTNzKoMYpegV5Rxky" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028af0f4a492b52f8fd0f65359" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>סע לאט</bdi></div>
-                  <div class="insight-track-artist"><bdi>Arik Einstein</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/3THQdVAJzwcqBoVChJzbQ6?si=j_LIr8RPSR-uvnRrFMSvQw" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e021aa1acac819e77863bcd4c49" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>כל אהבה לטובה</bdi></div>
-                  <div class="insight-track-artist"><bdi>Rotem Bar Or, theAngelcy</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/1ZEOIhSn6BKErV59bIgn76?si=jnvAk2uLRiSP4XoyPlyYyw" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02cbd56c3a8faf8cf8c8bea0df" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>California Dreamin</bdi></div>
-                  <div class="insight-track-artist"><bdi>The Mamas &amp; The Papas</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><span class="insight-name">טליה שינדלר</span> ו־<bdi><span class="insight-name" dir="auto">Roee Cohen Magen</span></bdi> הם הזוג היחיד ששניהם סימנו ״ממש אהבתי״ על שני שירים.</strong>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/6KQuPib6H9dPq94RsZuQ25" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e022ff29188e482cc299ba6f2a4" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>קילפתי תפוז</bdi></div>
-                  <div class="insight-track-artist"><bdi>Rona Kenan, Yoni Rechter, Ester Rada</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/4BNpJrbRTv51XWlPCLh7pC" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023a2601b3b5e1f06b22aa9465" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>על הרצפה</bdi></div>
-                  <div class="insight-track-artist"><bdi>Monica Sex</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><span class="insight-name">נעה טיקוצ׳ינסקי</span> ו־<bdi><span class="insight-name" dir="auto">Itai Sheffer</span></bdi> סימנו שירים זה של זו.</strong>
-          <p>יש להם 11 שירים משותפים. <span class="insight-name">נעה</span> הצביעה לשלושה ש־<bdi><span class="insight-name" dir="auto">Itai Sheffer</span></bdi> שיתף, הוא הצביע לארבעה ש<span class="insight-name">נעה</span> שיתפה, ועל ארבעה נוספים שניהם הצביעו.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/5o5WaO9pzPhXSGIrTIYVce?si=HKZOqY1CQGKLEmAK4i9eLQ" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02136ef277a0791089f46628bb" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Cherry Wine</bdi></div>
-                  <div class="insight-track-artist"><bdi>grentperez</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name" dir="auto">Itai Sheffer</span> שיתף, <span class="insight-name">נעה</span> סימנה</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/2MnSPY2QYMbtkDWGzY02In?si=zEj_G6XHTpOKVaiWbLWbEQ" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02b1c8f61fde9224638c220640" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Asc. Scorpio</bdi></div>
-                  <div class="insight-track-artist"><bdi>Oracle Sisters</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">נעה</span> שיתפה, <span class="insight-name" dir="auto">Itai Sheffer</span> סימן</div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><span class="insight-name">דנה מרחוביץ׳ 🦋</span> ו<span class="insight-name">אודליה וורטמן</span> חולקות שבעה שירים.</strong>
-          <p>כל אחת סימנה שני שירים שהשנייה שיתפה.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/5vsF8mJgkt9pHIsxJl7IRD?si=NMMfMr_GQOm_al5Z_VJmrg" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02bb4f91fbbb2fc1c132ce39bb" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>באה מאהבה</bdi></div>
-                  <div class="insight-track-artist"><bdi>Yehudit Ravitz, Gidi Gov</bdi></div>
-                  <div class="insight-track-caption">שתיהן שיתפו</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/4uEVSicqWTP9BV03nT7QdB?si=lI3va_mLSMOkZi13klxFzg&amp;utm_source=whatsapp&amp;rowId=056f5b8635149767" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02ad5e9c96d930d8efa7872bc7" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Ain&#39;t No Sunshine</bdi></div>
-                  <div class="insight-track-artist"><bdi>Sivuca</bdi></div>
-                  <div class="insight-track-caption">שתיהן הצביעו</div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><span class="insight-name">נעה טיקוצ׳ינסקי</span> ו<span class="insight-name">רוני</span> בחרו אותה דרגת הצבעה יותר מכל זוג אחר.</strong>
-          <p>על שבעה מתוך 12 השירים המשותפים להן שתיהן הצביעו, ובשישה בחרו בדיוק אותה דרגה.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/1ixbwbeBi5ufN4noUKmW5a?si=FTRPAPyLRwq-SbL8gpS5kA" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02b969252f70cba3291b5fa077" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Paper Planes</bdi></div>
-                  <div class="insight-track-artist"><bdi>M.I.A.</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/5wD6de7Fz1QfxVNkv1SEy7?si=o6tlF3BpQYKK8UmtpwCGUQ" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f44ea7ef8d5c793399bae7af" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>LDN</bdi></div>
-                  <div class="insight-track-artist"><bdi>Lily Allen</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/4rzw3BoES0s22oqqoGwtNI?si=28UGcieMRJaIbWlvW1yo6g&amp;utm_source=copy-link&amp;context=spotify%3Aplaylist%3A37i9dQZF1F5p3rmiWPIYgZ&amp;rowId=1582b8ff22ff9ea0c614" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02103ac97ec21e17434f68f9c1" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>ארוץ אליך</bdi></div>
-                  <div class="insight-track-artist"><bdi>Sharon Roter</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><span class="insight-name">טליה שינדלר</span> ו<span class="insight-name">אופיר</span> חולקים שישה שירים.</strong>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/5yZccCdumZlWqAbSu4GZV9?si=8ty5CRFfQEijaPtJ8xWigQ&amp;context=spotify%3Aplaylist%3A37i9dQZF1E8PqQZICcfJg1" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0250961e4d323f017e68766309" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>ריקוד קטן</bdi></div>
-                  <div class="insight-track-artist"><bdi>Izhar Ashdot</bdi></div>
-                  <div class="insight-track-caption">שניהם שיתפו</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/2TVxnKdb3tqe1nhQWwwZCO?si=VMhMLHEFTnK6guoQQ1kpAQ" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02d03ab2da904d8251a87bbc31" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Tiny Dancer</bdi></div>
-                  <div class="insight-track-artist"><bdi>Elton John</bdi></div>
-                  <div class="insight-track-caption">שניהם שיתפו</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/2A9yj46qweEVrsvnvntEa5" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02d20953f4e214f167604954db" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>רק אל תלכי</bdi></div>
-                  <div class="insight-track-artist"><bdi>Zikney Tzfat</bdi></div>
-                  <div class="insight-track-caption">שניהם הצביעו</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/22jXWfwJBMhBXgA9rVDffX" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02174ce19c29d1592cbec48bc6" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>מעונה לעונה</bdi></div>
-                  <div class="insight-track-artist"><bdi>Eviatar Banai</bdi></div>
-                  <div class="insight-track-caption">שניהם הצביעו</div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><span class="insight-name">אורי מרגלית</span> ו<span class="insight-name">קשת שרה זקס</span> חולקים חמישה שירים.</strong>
-          <p><span class="insight-name">אורי</span> סימן שלושה ש<span class="insight-name">קשת</span> שיתפה. על שני שירים נוספים שניהם הצביעו.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/78scpCTKxQ2DweGWWBgfcj?si=96QKRTJYR_yJ91OGZNLWhA" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02fbbac725500468b856687921" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>gypsies</bdi></div>
-                  <div class="insight-track-artist"><bdi>Niv Klil Hahoresh</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">קשת</span> שיתפה, <span class="insight-name">אורי</span> סימן ״ממש אהבתי״</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/5xKshebW86YdwLgTFdNaOG?si=FVK1JW2ATvOZZV22av6nrA" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0229cffccc485d4658f9d91b78" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>משאלת לב</bdi></div>
-                  <div class="insight-track-artist"><bdi>יוגב גלוסמן, Eviatar Banai</bdi></div>
-                  <div class="insight-track-caption">שניהם הצביעו</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/2JRU7fPnZSAeAw15PZiauH?si=Vpz2z00-TViY2KXDM5_X5g" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0230a597c73a78d95ac6aed13d" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>היי אני רוצה להגיד לך</bdi></div>
-                  <div class="insight-track-artist"><bdi>Alma Gov</bdi></div>
-                  <div class="insight-track-caption">שניהם הצביעו</div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-    <section aria-labelledby="insights-trios">
-      <h2 class="month" id="insights-trios">שלישיות על אותם שירים</h2>
-      <ul class="insight-list">
-        <li>
-          <strong><span class="insight-name">נעה טיקוצ׳ינסקי</span>, <span class="insight-name">דנה מרחוביץ׳ 🦋</span> ו־<bdi><span class="insight-name" dir="auto">Tamar kaveh</span></bdi> חולקות ארבעה שירים.</strong>
-          <p>זו החפיפה הגדולה ביותר בין שלושה אנשים בקבוצה.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/4dubGqNrxwlcHq1hUdWiK8?si=XKPc1yejRq2H1OuXIDYojA" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0244df82585f2bbca070b2e86c" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>חשבתי עלייך</bdi></div>
-                  <div class="insight-track-artist"><bdi>Vibe Ish</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">דנה</span> ו<span class="insight-name">תמר</span> שיתפו, <span class="insight-name">נעה</span> סימנה</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/3p5NEImV6ChytYLOD3FMkQ?si=WFTCnDVDQEqT9GJ9S7_1YA&amp;utm_source=copy-link&amp;context=spotify%3Aplaylist%3A37i9dQZF1F5p3rmiWPIYgZ&amp;rowId=357b7c9ab351ceb1cf99" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02427b3d34a61e64ada1d6a7ae" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>נתתי לך בית</bdi></div>
-                  <div class="insight-track-artist"><bdi>Ofek Adanek</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">דנה</span> ו<span class="insight-name">תמר</span> שיתפו, <span class="insight-name">נעה</span> סימנה</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/3TveM4gKI4GS6PkeDSn7wn?si=IQJYoq9pQuWNgWdMoOnV_Q" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020b4dabacb1bf91d6fe153048" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>בבון של יפו</bdi></div>
-                  <div class="insight-track-artist"><bdi>Avihu Pinhasov Rhythm Club</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">נעה</span> ו<span class="insight-name">דנה</span> שיתפו, <span class="insight-name">תמר</span> סימנה ״ממש אהבתי״</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/6I6WKQJVTnfYam5yuK1xpF?si=hrq3SXDkTEaEr4NA5a7TTg&amp;utm_source=copy-link" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02fd9fb2ec1a021f64e94b9109" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>בוא תגיד שלום</bdi></div>
-                  <div class="insight-track-artist"><bdi>Yishay Swissa</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><span class="insight-name">טליה שינדלר</span>, <span class="insight-name">אורי מרגלית</span> ו<span class="insight-name">עמר</span> חולקים שלושה שירים.</strong>
-          <p>זו החפיפה השנייה בגודלה בין שלושה אנשים. <span class="insight-name">טליה</span> שיתפה את שלושת השירים, ו<span class="insight-name">אורי</span> ו<span class="insight-name">עמר</span> הצביעו לכולם.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/754kgU5rWscRTfvlsuEwFp" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02cfc5eea6cfd77e89ed3ac5a4" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Kiss Me</bdi></div>
-                  <div class="insight-track-artist"><bdi>Sixpence None The Richer</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/7Gpr3kKk4BMgItz6UbI73q" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02a9249ebb15ca7a5b75f16a90" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Road Trippin</bdi></div>
-                  <div class="insight-track-artist"><bdi>Red Hot Chili Peppers</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/6Qb7gtV6Q4MnUjSbkFcopl?si=M6a5cnq7RQGHX3tImj3iDw" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f081c7a1a21fb8f983a9d3cb" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>50 Ways to Leave Your Lover</bdi></div>
-                  <div class="insight-track-artist"><bdi>Paul Simon</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-    <section aria-labelledby="insights-voters">
-      <h2 class="month" id="insights-voters">מה בלט בבחירות של עוד מצביעים</h2>
-      <ul class="insight-list">
-        <li data-insight-voter="p4">
-          <strong><span class="insight-name">אביעד הייבין</span> ו<span class="insight-name">אורי מרגלית</span> מצאו שירים זה אצל זה.</strong>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/2arDBvWvm3mRmwiBPg7ySb?si=7XfBoPxjTHmfr-djmgArVQ" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0208eee9d71c9d55e231e6a791" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>אלף שמשות</bdi></div>
-                  <div class="insight-track-artist"><bdi>Omer Gonen-Haela</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">אורי</span> שיתף, <span class="insight-name">אביעד</span> סימן ״ממש אהבתי״</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/3HWFWN9LrqU0FGt3AjesG2?si=oTzPegYEQ3qI610wutpxxQ" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02d8801e73f5cf435b6938c302" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>בא אדם</bdi></div>
-                  <div class="insight-track-artist"><bdi>Bar Tzabary</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">אביעד</span> שיתף, <span class="insight-name">אורי</span> הצביע</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/5Lhjlnly9Ynhf52ojQS534?si=0jONAQTxTZmBrOvtd8tD9A" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0279d4b738f89a33471c9e0aa6" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>My Baby Just Cares for Me</bdi></div>
-                  <div class="insight-track-artist"><bdi>Nina Simone</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">אביעד</span> שיתף, <span class="insight-name">אורי</span> הצביע</div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li data-insight-voter="p24">
-          <strong><bdi><span class="insight-name" dir="auto">Itamar</span></bdi> ו<span class="insight-name">עמר</span> חולקים תשעה שירים.</strong>
-          <p><span class="insight-name">עמר</span> סימן תשעה מהשיתופים של <bdi><span class="insight-name" dir="auto">Itamar</span></bdi>, ובהם שלושת השירים האלה.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/72Z17vmmeQKAg8bptWvpVG?si=DgUxMli_TCuHaiTkoX_aBg" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023395f3e809dfbc2b1101d464" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Space Oddity</bdi></div>
-                  <div class="insight-track-artist"><bdi>David Bowie</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/476V2d6iA2tWXgQboKmTtA?si=DoyWknjIQ7WPxsiRFiwSSQ" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02e7248738c2f7ce3b5584b15d" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Father And Son</bdi></div>
-                  <div class="insight-track-artist"><bdi>Yusuf / Cat Stevens</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/4dt6XKr0xKdPzjFhwB8dBm?si=Tp-6wcoeT6OVblrhBKU9xw" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02b81d66d1416afa139d12767b" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>That&#39;s Life</bdi></div>
-                  <div class="insight-track-artist"><bdi>Frank Sinatra</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li data-insight-voter="p3">
-          <strong><span class="insight-name">אביגיל טיקוצ׳ינסקי</span> ו<span class="insight-name">נעה טיקוצ׳ינסקי</span> חולקות שישה שירים.</strong>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/4AcTwQAa1m8WhUr97vfUad" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023ec1ac3ed7b4e90a030152e7" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Echoes</bdi></div>
-                  <div class="insight-track-artist"><bdi>Lola Marsh</bdi></div>
-                  <div class="insight-track-caption">שתיהן הצביעו, <span class="insight-name">אביגיל</span> סימנה ״ממש אהבתי״</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/0u2q050LYI3nCru9J3lii3?si=4PyVw892Q_mOI0lnXqk0pA" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02c28f3fed80ec4f70fe402044" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>האיש ההוא</bdi></div>
-                  <div class="insight-track-artist"><bdi>Yehudit Ravitz, Ahuva Ozeri</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">אביגיל</span> ו־<span class="insight-name" dir="auto">Naveh Lax</span> שיתפו, <span class="insight-name">נעה</span> הצביעה</div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><bdi><span class="insight-name" dir="auto">Itamar</span></bdi> נתן את ה״ממש אהבתי״ היחיד לשיר שקיבל הכי הרבה הצבעות.</strong>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://www.youtube.com/watch?v=Rii_JM4Bbdg" target="_blank" rel="noopener noreferrer">
-                <img src="https://i.ytimg.com/vi/Rii_JM4Bbdg/hqdefault.jpg" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>I Love To Give You Light</bdi></div>
-                  <div class="insight-track-artist"><bdi>Snoop Dogg</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li data-insight-voter="p47">
-          <strong><span class="insight-name">נעה גז</span> חולקת חמישה שירים עם כל אחד משלושה אנשים.</strong>
-          <p><span class="insight-name">נעה טיקוצ׳ינסקי</span> ו<span class="insight-name">אורי מרגלית</span> הצביעו לאחד השיתופים של <span class="insight-name">נעה גז</span>. בולטים גם שני שירים ש<span class="insight-name">נעה גז</span> ו<span class="insight-name">עמר</span> סימנו.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/4MNzYh6fjN6sB94cUyzYUo" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e027fe52ad20baabdfe094f9616" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>אסיף</bdi></div>
-                  <div class="insight-track-artist"><bdi>Green Onion 80</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">נעה גז</span> שיתפה, <span class="insight-name">נעה טיקוצ׳ינסקי</span> ו<span class="insight-name">אורי</span> הצביעו</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/0Z5ok0QLLttAKsujOZYOXf?si=yyxLcPXURlmzLEpYo2bS8g&amp;utm_source=whatsapp" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0289d0ff2366a208016b6e9c6e" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Chasing Pavements</bdi></div>
-                  <div class="insight-track-artist"><bdi>Adele</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">נעה גז</span> ו<span class="insight-name">עמר</span> הצביעו</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/54pvEYFocTlvIAQOfXSjqV?si=aT24BrKtTYyxI7N11p3tRw&amp;context=spotify%3Aplaylist%3A37i9dQZF1F5p3rmiWPIYgZ&amp;rowId=69f630bce0a1c5e3846d" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02acc5e23ac0089a5649961ca0" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Alone Again (Naturally)</bdi></div>
-                  <div class="insight-track-artist"><bdi>Gilbert O&#39;Sullivan</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">נעה גז</span> ו<span class="insight-name">עמר</span> הצביעו</div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li data-insight-voter="p60">
-          <strong><bdi><span class="insight-name" dir="auto">Roee Ohali</span></bdi> ו<span class="insight-name">נעה טיקוצ׳ינסקי</span> חולקים 11 שירים.</strong>
-          <p><span class="insight-name">נעה</span> סימנה שישה מהשירים ש־<bdi><span class="insight-name" dir="auto">Roee Ohali</span></bdi> שיתף, ובהם שני אלה.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/3M6Bss7mcc6q4KjFyuMAwB?si=Q7uYDZHZQPmt2E3X_rv26A" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e027f44fd2efcda78c27b1b1173" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>יש לך שמש</bdi></div>
-                  <div class="insight-track-artist"><bdi>Inbal Perlmutter</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/3iQ0Ht1VYekdf1sj6cgb4D?si=EOExl3O2SKeH4dmutykGGA" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02a794ab94c5feefaa4f6c858e" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>אבוא אליך</bdi></div>
-                  <div class="insight-track-artist"><bdi>Efrat Ben Zur</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li data-insight-voter="p62">
-          <strong><bdi><span class="insight-name" dir="auto">Roei Dahuki</span></bdi> חולק ארבעה שירים עם <span class="insight-name">דנה מרחוביץ׳ 🦋</span>.</strong>
-          <p>הוא סימן שלושה מהשיתופים של <span class="insight-name">דנה</span>, ואחד מהם קיבל ממנו ״ממש אהבתי״.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/6usohdchdzW9oML7VC4Uhk" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e029a7e719f37e9264656b95997" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Lose Control</bdi></div>
-                  <div class="insight-track-artist"><bdi>Teddy Swims</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name" dir="auto">Roei Dahuki</span> סימן ״ממש אהבתי״</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/6aYvWy72gVdkip3Yco9osi?si=0QJaNCpLSNKtXe8Gg0Evvg" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020336e7b1258c207ad206c3c7" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>חתולים</bdi></div>
-                  <div class="insight-track-artist"><bdi>Jimbo J, Ravid Plotnik</bdi></div>
-                  <div class="insight-track-caption">שניהם שיתפו</div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li data-insight-voter="p65">
-          <strong><bdi><span class="insight-name">🌸</span></bdi> סימנו שתי הצבעות, שתיהן ״ממש אהבתי״.</strong>
-          <p><span class="insight-name">עמר</span> הצביע לשני השירים האלה גם כן.</p>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/54pvEYFocTlvIAQOfXSjqV?si=aT24BrKtTYyxI7N11p3tRw&amp;context=spotify%3Aplaylist%3A37i9dQZF1F5p3rmiWPIYgZ&amp;rowId=69f630bce0a1c5e3846d" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02acc5e23ac0089a5649961ca0" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Alone Again (Naturally)</bdi></div>
-                  <div class="insight-track-artist"><bdi>Gilbert O&#39;Sullivan</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/4wswaG5vmNINMZcVBsAyBP?si=9Gvlt0TORq24CvKhlh1GgQ&amp;utm_source=whatsapp&amp;rowId=940a71e64dba69703c81&amp;context=spotify%3Aplaylist%3A37i9dQZF1F5p3rmiWPIYgZ" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0275aeab61b79629d43ca8f42f" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Got My Mind Set on You</bdi></div>
-                  <div class="insight-track-artist"><bdi>George Harrison</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><bdi><span class="insight-name" dir="auto">Roee Ohali</span></bdi> ו<span class="insight-name">נעה טיקוצ׳ינסקי</span> גם הצביעו לאותו שיר ושיתפו שיר נוסף.</strong>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/1ZY43CYjtadBvPSWO0ohbk?si=js-2a04tTcSdFT7K0k-Exw" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02c8df96260d7c35b276ab1016" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>בלדה לנאיבית</bdi></div>
-                  <div class="insight-track-artist"><bdi>Yael Levi</bdi></div>
-                  <div class="insight-track-caption">שניהם הצביעו</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/242j6Qv0ZrLU7fOM8ck8Oc" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020a54ea21e80460f9f1e4c720" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>השיר על הארץ</bdi></div>
-                  <div class="insight-track-artist"><bdi>Nurit Galron</bdi></div>
-                  <div class="insight-track-caption">שניהם שיתפו</div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li>
-          <strong><span class="insight-name">עמר</span> הצביע גם לשני שירים ש־<bdi><span class="insight-name">🌸</span></bdi> שיתפו.</strong>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/6vL2TwSD1HwfK057NDjhhq?si=oYj_Nx8ASsGM9_LFyEgQiQ&amp;utm_source=whatsapp" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023cc7b9b7ffa90fd33ffcf8f6" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>אתה חי בחלום</bdi></div>
-                  <div class="insight-track-artist"><bdi>הגר יפת</bdi></div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/2SiXAy7TuUkycRVbbWDEpo?si=I1da7vPcTWiYGF7FgXk7Bw&amp;utm_source=whatsapp" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02ff191d7fbdb5a13eaf84132b" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>You Shook Me All Night Long</bdi></div>
-                  <div class="insight-track-artist"><bdi>AC/DC</bdi></div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li data-insight-voter="p66">
-          <strong><bdi><span class="insight-name" dir="auto">Shaked Dotan</span></bdi> ו־<bdi><span class="insight-name" dir="auto">Amit Eilat</span></bdi> חולקים ארבעה שירים.</strong>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/7KA4W4McWYRpgf0fWsJZWB" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028940ac99f49e44f59e6f7fb3" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>See You Again</bdi></div>
-                  <div class="insight-track-artist"><bdi>Tyler, The Creator, Kali Uchis</bdi></div>
-                  <div class="insight-track-caption">שניהם הצביעו</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/2QjOHCTQ1Jl3zawyYOpxh6" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028265a736a1eb838ad5a0b921" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Sweater Weather</bdi></div>
-                  <div class="insight-track-artist"><bdi>The Neighbourhood</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name" dir="auto">Amit Eilat</span> שיתף, <span class="insight-name" dir="auto">Shaked Dotan</span> סימן ״ממש אהבתי״</div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-        <li data-insight-voter="p67">
-          <strong><bdi><span class="insight-name" dir="auto">Tomer</span></bdi> סימן שני שירים משני קצוות של הרשימה.</strong>
-          <ul class="insight-tracks" aria-label="שירים בתובנה">
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://www.youtube.com/watch?v=Rii_JM4Bbdg" target="_blank" rel="noopener noreferrer">
-                <img src="https://i.ytimg.com/vi/Rii_JM4Bbdg/hqdefault.jpg" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>I Love To Give You Light</bdi></div>
-                  <div class="insight-track-artist"><bdi>Snoop Dogg</bdi></div>
-                  <div class="insight-track-caption">קיבל תשע הצבעות</div>
-                </div>
-              </a>
-            </li>
-            <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/02aAmS4ZZAKX8GpBcgK4go" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02977f8f2872c5222371c03b76" alt="" width="52" height="52" loading="lazy" decoding="async">
-                <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>המעיל</bdi></div>
-                  <div class="insight-track-artist"><bdi>Yehonatan Geffen, Adi Rennert</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">איילת דרייפוס</span> שיתפה, <span class="insight-name" dir="auto">Tomer</span> נתן את ההצבעה היחידה</div>
-                </div>
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-    <section aria-labelledby="insights-repeat">
-      <h2 class="month" id="insights-repeat">שירים שנשלחו שוב</h2>
+    <details class="insight-section">
+      <summary>כפילויות</summary>
+      <div class="insight-section-content">
+      <h3 class="month">שיתופים חוזרים</h3>
       <ul class="insight-list">
         <li>
           <strong>השיר שנשלח הכי הרבה הגיע משלושה אנשים, בארבעה שיתופים.</strong>
@@ -923,6 +125,268 @@
                   <div class="insight-track-title"><bdi>בוא תגיד שלום</bdi></div>
                   <div class="insight-track-artist"><bdi>Yishay Swissa</bdi></div>
                   <div class="insight-track-caption"><span class="insight-name" dir="auto">Roee Ohali</span> ו־<span class="insight-name" dir="auto">Tamar kaveh</span> · 24.10.2026</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>שירים ששותפו בידי כמה אנשים קיבלו הצבעות בשיעור גבוה יותר.</strong>
+          <p>49 מתוך 101 שירים ששותפו בידי כמה אנשים קיבלו הצבעה, כ־49%. בקרב שירים ששותפו בידי אדם אחד, 498 מתוך 1,896 קיבלו הצבעה, כ־26%.</p>
+        </li>
+      </ul>
+      <h3 class="month">שירים שחזרו אחרי שנים</h3>
+      <ul class="insight-list">
+        <li>
+          <strong>שני השירים עם הפערים הארוכים ביותר חזרו דרך אנשים שונים.</strong>
+          <p></p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/3qvzygQ5NA1bZ3OUxlOiV4?si=4DFc8pJqRxacjTG_ijlAcg&amp;utm_source=whatsapp" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e026e1f97c78d4da316f9821aff" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>סטלות - לייב סשן</bdi></div>
+                  <div class="insight-track-artist"><bdi>Shreki, גפן גרינברג</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">אביגיל טיקוצ׳ינסקי</span> שיתפה ב־13.8.2023, <span class="insight-name">אופיר</span> ב־10.10.2026 · 1,154 ימים</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/1mCsF9Tw4AkIZOjvZbZZdT?si=m55AcGr4RhidcJ26VSi1kA&amp;utm_source=whatsapp&amp;rowId=fa360709e2cf536f" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e029824c6e084b02d24b2e22e94" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Break My Stride</bdi></div>
+                  <div class="insight-track-artist"><bdi>Matthew Wilder</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name" dir="auto">kfir wizegun</span> שיתף ב־8.7.2023, <span class="insight-name" dir="auto">Noam Mazover</span> ב־1.8.2026 · 1,120 ימים</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong><span class="insight-name">נעה טיקוצ׳ינסקי</span> ו־<bdi><span class="insight-name" dir="auto">Roee Ohali</span></bdi> שיתפו את אותם שני שירים בהפרש של כשלוש שנים.</strong>
+          <p><span class="insight-name">נעה</span> שיתפה את שני השירים ב־2023, ו־<bdi><span class="insight-name" dir="auto">Roee Ohali</span></bdi> שיתף את שניהם ב־2026.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/7mQU85XC64ijiodxS4W56R?si=UlV4-03oRkOJd7ZOuddkNA&amp;utm_source=copy-link" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e027690220aaff69bad0333b321" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>באהבתנו</bdi></div>
+                  <div class="insight-track-artist"><bdi>Yehudit Ravitz</bdi></div>
+                  <div class="insight-track-caption">2.12.2023 ו־26.9.2026</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/242j6Qv0ZrLU7fOM8ck8Oc" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020a54ea21e80460f9f1e4c720" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>השיר על הארץ</bdi></div>
+                  <div class="insight-track-artist"><bdi>Nurit Galron</bdi></div>
+                  <div class="insight-track-caption">4.11.2023 ו־7.11.2026</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong>גם טיים אימפלה ו־<bdi>The Mamas &amp; The Papas</bdi> חזרו לקבוצה אחרי כמעט שלוש שנים.</strong>
+          <p>בשני המקרים השיתוף הראשון היה ביולי 2023 והשני ביוני 2026.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/6K4t31amVTZDgR3sKmwUJJ?si=_mvWYD_IQBaZfZGGmE7FHQ" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e029e1cfc756886ac782e363d79" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>The Less I Know The Better</bdi></div>
+                  <div class="insight-track-artist"><bdi>Tame Impala</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">אורי מרגלית</span> שיתף ראשון, <span class="insight-name">בתיה פרוידנברגר</span> שיתפה שוב</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/1ZEOIhSn6BKErV59bIgn76?si=jnvAk2uLRiSP4XoyPlyYyw" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02cbd56c3a8faf8cf8c8bea0df" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>California Dreamin&#39;</bdi></div>
+                  <div class="insight-track-artist"><bdi>The Mamas &amp; The Papas</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">יואב אלמוג</span> שיתף ראשון, <span class="insight-name">אודליה וורטמן</span> שיתפה שוב</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <h3 class="month">אנשים ששיתפו את אותם שירים</h3>
+      <ul class="insight-list">
+        <li>
+          <strong><span class="insight-name">אודליה וורטמן</span> ו<span class="insight-name">יואב אלמוג</span> חולקים שמונה שירים.</strong>
+          <p>את חמישה מתוכם שניהם שיתפו, ובהם שלושת השירים האלה.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/4EzbthTNzKoMYpegV5Rxky" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028af0f4a492b52f8fd0f65359" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>סע לאט</bdi></div>
+                  <div class="insight-track-artist"><bdi>Arik Einstein</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/3THQdVAJzwcqBoVChJzbQ6?si=j_LIr8RPSR-uvnRrFMSvQw" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e021aa1acac819e77863bcd4c49" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>כל אהבה לטובה</bdi></div>
+                  <div class="insight-track-artist"><bdi>Rotem Bar Or, theAngelcy</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/1ZEOIhSn6BKErV59bIgn76?si=jnvAk2uLRiSP4XoyPlyYyw" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02cbd56c3a8faf8cf8c8bea0df" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>California Dreamin</bdi></div>
+                  <div class="insight-track-artist"><bdi>The Mamas &amp; The Papas</bdi></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong><span class="insight-name">דנה מרחוביץ׳ 🦋</span> ו<span class="insight-name">אודליה וורטמן</span> חולקות שבעה שירים.</strong>
+          <p>כל אחת סימנה שני שירים שהשנייה שיתפה.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/5vsF8mJgkt9pHIsxJl7IRD?si=NMMfMr_GQOm_al5Z_VJmrg" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02bb4f91fbbb2fc1c132ce39bb" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>באה מאהבה</bdi></div>
+                  <div class="insight-track-artist"><bdi>Yehudit Ravitz, Gidi Gov</bdi></div>
+                  <div class="insight-track-caption">שתיהן שיתפו</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/4uEVSicqWTP9BV03nT7QdB?si=lI3va_mLSMOkZi13klxFzg&amp;utm_source=whatsapp&amp;rowId=056f5b8635149767" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02ad5e9c96d930d8efa7872bc7" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Ain&#39;t No Sunshine</bdi></div>
+                  <div class="insight-track-artist"><bdi>Sivuca</bdi></div>
+                  <div class="insight-track-caption">שתיהן הצביעו</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong><span class="insight-name">טליה שינדלר</span> ו<span class="insight-name">אופיר</span> חולקים שישה שירים.</strong>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/5yZccCdumZlWqAbSu4GZV9?si=8ty5CRFfQEijaPtJ8xWigQ&amp;context=spotify%3Aplaylist%3A37i9dQZF1E8PqQZICcfJg1" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0250961e4d323f017e68766309" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>ריקוד קטן</bdi></div>
+                  <div class="insight-track-artist"><bdi>Izhar Ashdot</bdi></div>
+                  <div class="insight-track-caption">שניהם שיתפו</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/2TVxnKdb3tqe1nhQWwwZCO?si=VMhMLHEFTnK6guoQQ1kpAQ" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02d03ab2da904d8251a87bbc31" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Tiny Dancer</bdi></div>
+                  <div class="insight-track-artist"><bdi>Elton John</bdi></div>
+                  <div class="insight-track-caption">שניהם שיתפו</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/2A9yj46qweEVrsvnvntEa5" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02d20953f4e214f167604954db" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>רק אל תלכי</bdi></div>
+                  <div class="insight-track-artist"><bdi>Zikney Tzfat</bdi></div>
+                  <div class="insight-track-caption">שניהם הצביעו</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/22jXWfwJBMhBXgA9rVDffX" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02174ce19c29d1592cbec48bc6" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>מעונה לעונה</bdi></div>
+                  <div class="insight-track-artist"><bdi>Eviatar Banai</bdi></div>
+                  <div class="insight-track-caption">שניהם הצביעו</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong><bdi><span class="insight-name" dir="auto">Roee Ohali</span></bdi> ו<span class="insight-name">נעה טיקוצ׳ינסקי</span> גם הצביעו לאותו שיר ושיתפו שיר נוסף.</strong>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/1ZY43CYjtadBvPSWO0ohbk?si=js-2a04tTcSdFT7K0k-Exw" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02c8df96260d7c35b276ab1016" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>בלדה לנאיבית</bdi></div>
+                  <div class="insight-track-artist"><bdi>Yael Levi</bdi></div>
+                  <div class="insight-track-caption">שניהם הצביעו</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/242j6Qv0ZrLU7fOM8ck8Oc" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020a54ea21e80460f9f1e4c720" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>השיר על הארץ</bdi></div>
+                  <div class="insight-track-artist"><bdi>Nurit Galron</bdi></div>
+                  <div class="insight-track-caption">שניהם שיתפו</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong><span class="insight-name">נעה טיקוצ׳ינסקי</span>, <span class="insight-name">דנה מרחוביץ׳ 🦋</span> ו־<bdi><span class="insight-name" dir="auto">Tamar kaveh</span></bdi> חולקות ארבעה שירים.</strong>
+          <p>זו החפיפה הגדולה ביותר בין שלושה אנשים בקבוצה.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/4dubGqNrxwlcHq1hUdWiK8?si=XKPc1yejRq2H1OuXIDYojA" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0244df82585f2bbca070b2e86c" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>חשבתי עלייך</bdi></div>
+                  <div class="insight-track-artist"><bdi>Vibe Ish</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">דנה</span> ו<span class="insight-name">תמר</span> שיתפו, <span class="insight-name">נעה</span> סימנה</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/3p5NEImV6ChytYLOD3FMkQ?si=WFTCnDVDQEqT9GJ9S7_1YA&amp;utm_source=copy-link&amp;context=spotify%3Aplaylist%3A37i9dQZF1F5p3rmiWPIYgZ&amp;rowId=357b7c9ab351ceb1cf99" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02427b3d34a61e64ada1d6a7ae" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>נתתי לך בית</bdi></div>
+                  <div class="insight-track-artist"><bdi>Ofek Adanek</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">דנה</span> ו<span class="insight-name">תמר</span> שיתפו, <span class="insight-name">נעה</span> סימנה</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/3TveM4gKI4GS6PkeDSn7wn?si=IQJYoq9pQuWNgWdMoOnV_Q" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020b4dabacb1bf91d6fe153048" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>בבון של יפו</bdi></div>
+                  <div class="insight-track-artist"><bdi>Avihu Pinhasov Rhythm Club</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">נעה</span> ו<span class="insight-name">דנה</span> שיתפו, <span class="insight-name">תמר</span> סימנה ״ממש אהבתי״</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/6I6WKQJVTnfYam5yuK1xpF?si=hrq3SXDkTEaEr4NA5a7TTg&amp;utm_source=copy-link" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02fd9fb2ec1a021f64e94b9109" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>בוא תגיד שלום</bdi></div>
+                  <div class="insight-track-artist"><bdi>Yishay Swissa</bdi></div>
                 </div>
               </a>
             </li>
@@ -2467,103 +1931,649 @@
           </a>
         </li>
       </ul>
-    </section>
-    <section aria-labelledby="insights-returns">
-      <h2 class="month" id="insights-returns">שירים שחזרו אחרי שנים</h2>
+      </div>
+    </details>
+    <details class="insight-section">
+      <summary>מי קלע לטעם של מי</summary>
+      <div class="insight-section-content">
       <ul class="insight-list">
         <li>
-          <strong>שני השירים עם הפערים הארוכים ביותר חזרו דרך אנשים שונים.</strong>
-          <p></p>
+          <strong><span class="insight-name">עמר</span> ו<span class="insight-name">טליה שינדלר</span> חולקים 34 שירים, החפיפה הגדולה ביותר בין שני אנשים בקבוצה.</strong>
+          <p><span class="insight-name">עמר</span> סימן 34 מתוך 132 השירים ש<span class="insight-name">טליה</span> שיתפה. זה בערך רבע מהשיתופים שלה וכ־16% מכל ההצבעות שלו.</p>
           <ul class="insight-tracks" aria-label="שירים בתובנה">
             <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/3qvzygQ5NA1bZ3OUxlOiV4?si=4DFc8pJqRxacjTG_ijlAcg&amp;utm_source=whatsapp" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e026e1f97c78d4da316f9821aff" alt="" width="52" height="52" loading="lazy" decoding="async">
+              <a class="insight-track-link" href="https://open.spotify.com/track/6TvxPS4fj4LUdjw2es4g21?si=WoswmWsIQgK429-22tQTZw&amp;context=spotify%3Aplaylist%3A37i9dQZF1E8DIFrhCfmG2T" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0242678f54dfd1d5afb3eea19a" alt="" width="52" height="52" loading="lazy" decoding="async">
                 <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>סטלות - לייב סשן</bdi></div>
-                  <div class="insight-track-artist"><bdi>Shreki, גפן גרינברג</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">אביגיל טיקוצ׳ינסקי</span> שיתפה ב־13.8.2023, <span class="insight-name">אופיר</span> ב־10.10.2026 · 1,154 ימים</div>
+                  <div class="insight-track-title"><bdi>Slipping Through My Fingers</bdi></div>
+                  <div class="insight-track-artist"><bdi>ABBA</bdi></div>
                 </div>
               </a>
             </li>
             <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/1mCsF9Tw4AkIZOjvZbZZdT?si=m55AcGr4RhidcJ26VSi1kA&amp;utm_source=whatsapp&amp;rowId=fa360709e2cf536f" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e029824c6e084b02d24b2e22e94" alt="" width="52" height="52" loading="lazy" decoding="async">
+              <a class="insight-track-link" href="https://open.spotify.com/track/4VOMH5HnlUTMGi3Kq4509E?si=3eiHn4miR3i_bV4Aq_XMDA&amp;context=spotify%3Aplaylist%3A37i9dQZF1E8O55TZ3ffwx7" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e021e6cc8efe63a90d4436933f0" alt="" width="52" height="52" loading="lazy" decoding="async">
                 <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>Break My Stride</bdi></div>
-                  <div class="insight-track-artist"><bdi>Matthew Wilder</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name" dir="auto">kfir wizegun</span> שיתף ב־8.7.2023, <span class="insight-name" dir="auto">Noam Mazover</span> ב־1.8.2026 · 1,120 ימים</div>
+                  <div class="insight-track-title"><bdi>את ואני</bdi></div>
+                  <div class="insight-track-artist"><bdi>Shlomo Artzi</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/44a0iyAfqhRnL5IV0oMPEx?si=ysA-kzxLTCuzo19HoV2VQg" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e022df20f92197efb90f0dafaf8" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>מישהו פעם</bdi></div>
+                  <div class="insight-track-artist"><bdi>Ivri Lider</bdi></div>
                 </div>
               </a>
             </li>
           </ul>
         </li>
         <li>
-          <strong><span class="insight-name">נעה טיקוצ׳ינסקי</span> ו־<bdi><span class="insight-name" dir="auto">Roee Ohali</span></bdi> שיתפו את אותם שני שירים בהפרש של כשלוש שנים.</strong>
-          <p><span class="insight-name">נעה</span> שיתפה את שני השירים ב־2023, ו־<bdi><span class="insight-name" dir="auto">Roee Ohali</span></bdi> שיתף את שניהם ב־2026.</p>
+          <strong><span class="insight-name">אורי מרגלית</span> סימן שלושה שירים ש<span class="insight-name">מיכל</span> שיתפה.</strong>
+          <p>שני השירים האלה קיבלו ממנו ״ממש אהבתי״.</p>
           <ul class="insight-tracks" aria-label="שירים בתובנה">
             <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/7mQU85XC64ijiodxS4W56R?si=UlV4-03oRkOJd7ZOuddkNA&amp;utm_source=copy-link" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e027690220aaff69bad0333b321" alt="" width="52" height="52" loading="lazy" decoding="async">
+              <a class="insight-track-link" href="https://open.spotify.com/track/6p5z6qZSmwVAQKcNmkAwT5?si=aLaLuDVoSC-Xx0EhMTgfqA" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0229cffccc485d4658f9d91b78" alt="" width="52" height="52" loading="lazy" decoding="async">
                 <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>באהבתנו</bdi></div>
-                  <div class="insight-track-artist"><bdi>Yehudit Ravitz</bdi></div>
-                  <div class="insight-track-caption">2.12.2023 ו־26.9.2026</div>
+                  <div class="insight-track-title"><bdi>חוף מבטחים</bdi></div>
+                  <div class="insight-track-artist"><bdi>יוגב גלוסמן, Ninet Tayeb</bdi></div>
                 </div>
               </a>
             </li>
             <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/242j6Qv0ZrLU7fOM8ck8Oc" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020a54ea21e80460f9f1e4c720" alt="" width="52" height="52" loading="lazy" decoding="async">
+              <a class="insight-track-link" href="https://open.spotify.com/track/779d9J67lU0cqZCBQ1MF1j" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02786a2ccbdd971e5903a09d45" alt="" width="52" height="52" loading="lazy" decoding="async">
                 <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>השיר על הארץ</bdi></div>
-                  <div class="insight-track-artist"><bdi>Nurit Galron</bdi></div>
-                  <div class="insight-track-caption">4.11.2023 ו־7.11.2026</div>
+                  <div class="insight-track-title"><bdi>Sail Away</bdi></div>
+                  <div class="insight-track-artist"><bdi>David Gray</bdi></div>
                 </div>
               </a>
             </li>
           </ul>
         </li>
         <li>
-          <strong>גם טיים אימפלה ו־<bdi>The Mamas &amp; The Papas</bdi> חזרו לקבוצה אחרי כמעט שלוש שנים.</strong>
-          <p>בשני המקרים השיתוף הראשון היה ביולי 2023 והשני ביוני 2026.</p>
+          <strong><span class="insight-name">נעה טיקוצ׳ינסקי</span> סימנה 8 מתוך 23 השירים ששיתפה <bdi><span class="insight-name" dir="auto">Tamar kaveh</span></bdi>.</strong>
+          <p>זה בערך שליש מהשיתופים שלה.</p>
           <ul class="insight-tracks" aria-label="שירים בתובנה">
             <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/6K4t31amVTZDgR3sKmwUJJ?si=_mvWYD_IQBaZfZGGmE7FHQ" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e029e1cfc756886ac782e363d79" alt="" width="52" height="52" loading="lazy" decoding="async">
+              <a class="insight-track-link" href="https://open.spotify.com/track/3p5NEImV6ChytYLOD3FMkQ?si=WFTCnDVDQEqT9GJ9S7_1YA&amp;utm_source=copy-link&amp;context=spotify%3Aplaylist%3A37i9dQZF1F5p3rmiWPIYgZ&amp;rowId=357b7c9ab351ceb1cf99" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02427b3d34a61e64ada1d6a7ae" alt="" width="52" height="52" loading="lazy" decoding="async">
                 <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>The Less I Know The Better</bdi></div>
-                  <div class="insight-track-artist"><bdi>Tame Impala</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">אורי מרגלית</span> שיתף ראשון, <span class="insight-name">בתיה פרוידנברגר</span> שיתפה שוב</div>
+                  <div class="insight-track-title"><bdi>נתתי לך בית</bdi></div>
+                  <div class="insight-track-artist"><bdi>Ofek Adanek</bdi></div>
                 </div>
               </a>
             </li>
             <li class="insight-track">
-              <a class="insight-track-link" href="https://open.spotify.com/track/1ZEOIhSn6BKErV59bIgn76?si=jnvAk2uLRiSP4XoyPlyYyw" target="_blank" rel="noopener noreferrer">
-                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02cbd56c3a8faf8cf8c8bea0df" alt="" width="52" height="52" loading="lazy" decoding="async">
+              <a class="insight-track-link" href="https://open.spotify.com/track/6I6WKQJVTnfYam5yuK1xpF?si=hrq3SXDkTEaEr4NA5a7TTg&amp;utm_source=copy-link" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02fd9fb2ec1a021f64e94b9109" alt="" width="52" height="52" loading="lazy" decoding="async">
                 <div class="insight-track-copy">
-                  <div class="insight-track-title"><bdi>California Dreamin&#39;</bdi></div>
-                  <div class="insight-track-artist"><bdi>The Mamas &amp; The Papas</bdi></div>
-                  <div class="insight-track-caption"><span class="insight-name">יואב אלמוג</span> שיתף ראשון, <span class="insight-name">אודליה וורטמן</span> שיתפה שוב</div>
+                  <div class="insight-track-title"><bdi>בוא תגיד שלום</bdi></div>
+                  <div class="insight-track-artist"><bdi>Yishay Swissa</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/31MNHKE86sEXzIglbGQ6mu" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0267103283a4eb57578a428252" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Got Me Started</bdi></div>
+                  <div class="insight-track-artist"><bdi>Troye Sivan</bdi></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong><bdi><span class="insight-name" dir="auto">Noam Mazover</span></bdi> סימן שלושה שירים ש<span class="insight-name">טליה שינדלר</span> שיתפה.</strong>
+          <p>שני השירים האלה קיבלו ממנו ״ממש אהבתי״.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/6xE6ZWzK1YDDSYzqOCoQlz?si=gZaON0xORTaZxHV5C319WQ&amp;context=spotify%3Aplaylist%3A37i9dQZF1E8AIVPxEiZe7X" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0237e78b6638f7737adee73d6f" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Last Train to London</bdi></div>
+                  <div class="insight-track-artist"><bdi>Electric Light Orchestra</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/2sIbHjfJ3nbMXNz4w03fWv" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028c5a6302666a7f69a8ded468" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Eye In The Sky</bdi></div>
+                  <div class="insight-track-artist"><bdi>The Alan Parsons Project</bdi></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong><span class="insight-name">עמר</span> ו־<bdi><span class="insight-name" dir="auto">Amit Eilat</span></bdi> חולקים 19 שירים.</strong>
+          <p><span class="insight-name">עמר</span> הצביע ל־18 מהשירים ש־<bdi><span class="insight-name" dir="auto">Amit Eilat</span></bdi> שיתף. השניים שמופיעים כאן קיבלו ממנו ״ממש אהבתי״.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/5RgFlk1fcClZd0Y4SGYhqH?si=ca-T1HDVRXmyHplJPq45XA" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e026ce61113662ecf693b605ee5" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>She&#39;s Always a Woman</bdi></div>
+                  <div class="insight-track-artist"><bdi>Billy Joel</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/76TZCvJ8GitQ2FA1q5dKu0?si=adS1wvxhS2G6ju5-nq2M5w" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e028453b853c2cc9c077828eefb" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>The Boxer</bdi></div>
+                  <div class="insight-track-artist"><bdi>Simon &amp; Garfunkel</bdi></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong><span class="insight-name">דנה מרחוביץ׳ 🦋</span> היא מי ש<span class="insight-name">נעה טיקוצ׳ינסקי</span> סימנה הכי הרבה מהשירים שלה.</strong>
+          <p><span class="insight-name">נעה</span> סימנה 15 מהשיתופים של <span class="insight-name">דנה</span>. בסך הכול יש להן 19 שירים משותפים.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/6xjgjdunz6KkVOGgW81FEd?si=1yephWsxSd-4_T3Vs4ECDA" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0280b0b61e82ed5e5803779528" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>בית ביפו</bdi></div>
+                  <div class="insight-track-artist"><bdi>Dudu Tassa</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/4dubGqNrxwlcHq1hUdWiK8?si=XKPc1yejRq2H1OuXIDYojA" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0244df82585f2bbca070b2e86c" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>חשבתי עלייך</bdi></div>
+                  <div class="insight-track-artist"><bdi>Vibe Ish</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/0evZ3J8iWcFH7kRYmg5Mzw?si=e0TnKo3YTxi_hC8gbSbH3g" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02d84446a2af2c06e7d3b08ca2" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>או לה פופה</bdi></div>
+                  <div class="insight-track-artist"><bdi>Noa Kirel</bdi></div>
                 </div>
               </a>
             </li>
           </ul>
         </li>
       </ul>
-    </section>
-    <section aria-labelledby="insights-curious">
-      <h2 class="month" id="insights-curious">עוד כמה דברים לסקרנים</h2>
+      </div>
+    </details>
+    <details class="insight-section">
+      <summary>זוגות ושלישיות עם טעם משותף</summary>
+      <div class="insight-section-content">
+      <h3 class="month">זוגות</h3>
       <ul class="insight-list">
         <li>
-          <strong>שירים ששותפו בידי כמה אנשים קיבלו הצבעות בשיעור גבוה יותר.</strong>
-          <p>49 מתוך 101 שירים ששותפו בידי כמה אנשים קיבלו הצבעה, כ־49%. בקרב שירים ששותפו בידי אדם אחד, 498 מתוך 1,896 קיבלו הצבעה, כ־26%.</p>
+          <strong><span class="insight-name">טליה שינדלר</span> ו־<bdi><span class="insight-name" dir="auto">Roee Cohen Magen</span></bdi> הם הזוג היחיד ששניהם סימנו ״ממש אהבתי״ על שני שירים.</strong>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/6KQuPib6H9dPq94RsZuQ25" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e022ff29188e482cc299ba6f2a4" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>קילפתי תפוז</bdi></div>
+                  <div class="insight-track-artist"><bdi>Rona Kenan, Yoni Rechter, Ester Rada</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/4BNpJrbRTv51XWlPCLh7pC" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023a2601b3b5e1f06b22aa9465" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>על הרצפה</bdi></div>
+                  <div class="insight-track-artist"><bdi>Monica Sex</bdi></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong><span class="insight-name">נעה טיקוצ׳ינסקי</span> ו־<bdi><span class="insight-name" dir="auto">Itai Sheffer</span></bdi> סימנו שירים זה של זו.</strong>
+          <p>יש להם 11 שירים משותפים. <span class="insight-name">נעה</span> הצביעה לשלושה ש־<bdi><span class="insight-name" dir="auto">Itai Sheffer</span></bdi> שיתף, הוא הצביע לארבעה ש<span class="insight-name">נעה</span> שיתפה, ועל ארבעה נוספים שניהם הצביעו.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/5o5WaO9pzPhXSGIrTIYVce?si=HKZOqY1CQGKLEmAK4i9eLQ" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02136ef277a0791089f46628bb" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Cherry Wine</bdi></div>
+                  <div class="insight-track-artist"><bdi>grentperez</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name" dir="auto">Itai Sheffer</span> שיתף, <span class="insight-name">נעה</span> סימנה</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/2MnSPY2QYMbtkDWGzY02In?si=zEj_G6XHTpOKVaiWbLWbEQ" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02b1c8f61fde9224638c220640" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Asc. Scorpio</bdi></div>
+                  <div class="insight-track-artist"><bdi>Oracle Sisters</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">נעה</span> שיתפה, <span class="insight-name" dir="auto">Itai Sheffer</span> סימן</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong><span class="insight-name">נעה טיקוצ׳ינסקי</span> ו<span class="insight-name">רוני</span> בחרו אותה דרגת הצבעה יותר מכל זוג אחר.</strong>
+          <p>על שבעה מתוך 12 השירים המשותפים להן שתיהן הצביעו, ובשישה בחרו בדיוק אותה דרגה.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/1ixbwbeBi5ufN4noUKmW5a?si=FTRPAPyLRwq-SbL8gpS5kA" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02b969252f70cba3291b5fa077" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Paper Planes</bdi></div>
+                  <div class="insight-track-artist"><bdi>M.I.A.</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/5wD6de7Fz1QfxVNkv1SEy7?si=o6tlF3BpQYKK8UmtpwCGUQ" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f44ea7ef8d5c793399bae7af" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>LDN</bdi></div>
+                  <div class="insight-track-artist"><bdi>Lily Allen</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/4rzw3BoES0s22oqqoGwtNI?si=28UGcieMRJaIbWlvW1yo6g&amp;utm_source=copy-link&amp;context=spotify%3Aplaylist%3A37i9dQZF1F5p3rmiWPIYgZ&amp;rowId=1582b8ff22ff9ea0c614" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02103ac97ec21e17434f68f9c1" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>ארוץ אליך</bdi></div>
+                  <div class="insight-track-artist"><bdi>Sharon Roter</bdi></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong><span class="insight-name">אורי מרגלית</span> ו<span class="insight-name">קשת שרה זקס</span> חולקים חמישה שירים.</strong>
+          <p><span class="insight-name">אורי</span> סימן שלושה ש<span class="insight-name">קשת</span> שיתפה. על שני שירים נוספים שניהם הצביעו.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/78scpCTKxQ2DweGWWBgfcj?si=96QKRTJYR_yJ91OGZNLWhA" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02fbbac725500468b856687921" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>gypsies</bdi></div>
+                  <div class="insight-track-artist"><bdi>Niv Klil Hahoresh</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">קשת</span> שיתפה, <span class="insight-name">אורי</span> סימן ״ממש אהבתי״</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/5xKshebW86YdwLgTFdNaOG?si=FVK1JW2ATvOZZV22av6nrA" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0229cffccc485d4658f9d91b78" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>משאלת לב</bdi></div>
+                  <div class="insight-track-artist"><bdi>יוגב גלוסמן, Eviatar Banai</bdi></div>
+                  <div class="insight-track-caption">שניהם הצביעו</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/2JRU7fPnZSAeAw15PZiauH?si=Vpz2z00-TViY2KXDM5_X5g" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0230a597c73a78d95ac6aed13d" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>היי אני רוצה להגיד לך</bdi></div>
+                  <div class="insight-track-artist"><bdi>Alma Gov</bdi></div>
+                  <div class="insight-track-caption">שניהם הצביעו</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <h3 class="month">שלישיות</h3>
+      <ul class="insight-list">
+        <li>
+          <strong><span class="insight-name">טליה שינדלר</span>, <span class="insight-name">אורי מרגלית</span> ו<span class="insight-name">עמר</span> חולקים שלושה שירים.</strong>
+          <p>זו החפיפה השנייה בגודלה בין שלושה אנשים. <span class="insight-name">טליה</span> שיתפה את שלושת השירים, ו<span class="insight-name">אורי</span> ו<span class="insight-name">עמר</span> הצביעו לכולם.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/754kgU5rWscRTfvlsuEwFp" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02cfc5eea6cfd77e89ed3ac5a4" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Kiss Me</bdi></div>
+                  <div class="insight-track-artist"><bdi>Sixpence None The Richer</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/7Gpr3kKk4BMgItz6UbI73q" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02a9249ebb15ca7a5b75f16a90" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Road Trippin</bdi></div>
+                  <div class="insight-track-artist"><bdi>Red Hot Chili Peppers</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/6Qb7gtV6Q4MnUjSbkFcopl?si=M6a5cnq7RQGHX3tImj3iDw" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02f081c7a1a21fb8f983a9d3cb" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>50 Ways to Leave Your Lover</bdi></div>
+                  <div class="insight-track-artist"><bdi>Paul Simon</bdi></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      </div>
+    </details>
+    <details class="insight-section">
+      <summary>בחירות בולטות של מצביעים</summary>
+      <div class="insight-section-content">
+      <ul class="insight-list">
+        <li data-insight-voter="p4">
+          <strong><span class="insight-name">אביעד הייבין</span> ו<span class="insight-name">אורי מרגלית</span> מצאו שירים זה אצל זה.</strong>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/2arDBvWvm3mRmwiBPg7ySb?si=7XfBoPxjTHmfr-djmgArVQ" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0208eee9d71c9d55e231e6a791" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>אלף שמשות</bdi></div>
+                  <div class="insight-track-artist"><bdi>Omer Gonen-Haela</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">אורי</span> שיתף, <span class="insight-name">אביעד</span> סימן ״ממש אהבתי״</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/3HWFWN9LrqU0FGt3AjesG2?si=oTzPegYEQ3qI610wutpxxQ" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02d8801e73f5cf435b6938c302" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>בא אדם</bdi></div>
+                  <div class="insight-track-artist"><bdi>Bar Tzabary</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">אביעד</span> שיתף, <span class="insight-name">אורי</span> הצביע</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/5Lhjlnly9Ynhf52ojQS534?si=0jONAQTxTZmBrOvtd8tD9A" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0279d4b738f89a33471c9e0aa6" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>My Baby Just Cares for Me</bdi></div>
+                  <div class="insight-track-artist"><bdi>Nina Simone</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">אביעד</span> שיתף, <span class="insight-name">אורי</span> הצביע</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li data-insight-voter="p24">
+          <strong><bdi><span class="insight-name" dir="auto">Itamar</span></bdi> ו<span class="insight-name">עמר</span> חולקים תשעה שירים.</strong>
+          <p><span class="insight-name">עמר</span> סימן תשעה מהשיתופים של <bdi><span class="insight-name" dir="auto">Itamar</span></bdi>, ובהם שלושת השירים האלה.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/72Z17vmmeQKAg8bptWvpVG?si=DgUxMli_TCuHaiTkoX_aBg" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023395f3e809dfbc2b1101d464" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Space Oddity</bdi></div>
+                  <div class="insight-track-artist"><bdi>David Bowie</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/476V2d6iA2tWXgQboKmTtA?si=DoyWknjIQ7WPxsiRFiwSSQ" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02e7248738c2f7ce3b5584b15d" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Father And Son</bdi></div>
+                  <div class="insight-track-artist"><bdi>Yusuf / Cat Stevens</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/4dt6XKr0xKdPzjFhwB8dBm?si=Tp-6wcoeT6OVblrhBKU9xw" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02b81d66d1416afa139d12767b" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>That&#39;s Life</bdi></div>
+                  <div class="insight-track-artist"><bdi>Frank Sinatra</bdi></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li data-insight-voter="p3">
+          <strong><span class="insight-name">אביגיל טיקוצ׳ינסקי</span> ו<span class="insight-name">נעה טיקוצ׳ינסקי</span> חולקות שישה שירים.</strong>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/4AcTwQAa1m8WhUr97vfUad" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023ec1ac3ed7b4e90a030152e7" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Echoes</bdi></div>
+                  <div class="insight-track-artist"><bdi>Lola Marsh</bdi></div>
+                  <div class="insight-track-caption">שתיהן הצביעו, <span class="insight-name">אביגיל</span> סימנה ״ממש אהבתי״</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/0u2q050LYI3nCru9J3lii3?si=4PyVw892Q_mOI0lnXqk0pA" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02c28f3fed80ec4f70fe402044" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>האיש ההוא</bdi></div>
+                  <div class="insight-track-artist"><bdi>Yehudit Ravitz, Ahuva Ozeri</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">אביגיל</span> ו־<span class="insight-name" dir="auto">Naveh Lax</span> שיתפו, <span class="insight-name">נעה</span> הצביעה</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong><bdi><span class="insight-name" dir="auto">Itamar</span></bdi> נתן את ה״ממש אהבתי״ היחיד לשיר שקיבל הכי הרבה הצבעות.</strong>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://www.youtube.com/watch?v=Rii_JM4Bbdg" target="_blank" rel="noopener noreferrer">
+                <img src="https://i.ytimg.com/vi/Rii_JM4Bbdg/hqdefault.jpg" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>I Love To Give You Light</bdi></div>
+                  <div class="insight-track-artist"><bdi>Snoop Dogg</bdi></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li data-insight-voter="p47">
+          <strong><span class="insight-name">נעה גז</span> חולקת חמישה שירים עם כל אחד משלושה אנשים.</strong>
+          <p><span class="insight-name">נעה טיקוצ׳ינסקי</span> ו<span class="insight-name">אורי מרגלית</span> הצביעו לאחד השיתופים של <span class="insight-name">נעה גז</span>. בולטים גם שני שירים ש<span class="insight-name">נעה גז</span> ו<span class="insight-name">עמר</span> סימנו.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/4MNzYh6fjN6sB94cUyzYUo" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e027fe52ad20baabdfe094f9616" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>אסיף</bdi></div>
+                  <div class="insight-track-artist"><bdi>Green Onion 80</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">נעה גז</span> שיתפה, <span class="insight-name">נעה טיקוצ׳ינסקי</span> ו<span class="insight-name">אורי</span> הצביעו</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/0Z5ok0QLLttAKsujOZYOXf?si=yyxLcPXURlmzLEpYo2bS8g&amp;utm_source=whatsapp" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e0289d0ff2366a208016b6e9c6e" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Chasing Pavements</bdi></div>
+                  <div class="insight-track-artist"><bdi>Adele</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">נעה גז</span> ו<span class="insight-name">עמר</span> הצביעו</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/54pvEYFocTlvIAQOfXSjqV?si=aT24BrKtTYyxI7N11p3tRw&amp;context=spotify%3Aplaylist%3A37i9dQZF1F5p3rmiWPIYgZ&amp;rowId=69f630bce0a1c5e3846d" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02acc5e23ac0089a5649961ca0" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Alone Again (Naturally)</bdi></div>
+                  <div class="insight-track-artist"><bdi>Gilbert O&#39;Sullivan</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">נעה גז</span> ו<span class="insight-name">עמר</span> הצביעו</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li data-insight-voter="p60">
+          <strong><bdi><span class="insight-name" dir="auto">Roee Ohali</span></bdi> ו<span class="insight-name">נעה טיקוצ׳ינסקי</span> חולקים 11 שירים.</strong>
+          <p><span class="insight-name">נעה</span> סימנה שישה מהשירים ש־<bdi><span class="insight-name" dir="auto">Roee Ohali</span></bdi> שיתף, ובהם שני אלה.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/3M6Bss7mcc6q4KjFyuMAwB?si=Q7uYDZHZQPmt2E3X_rv26A" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e027f44fd2efcda78c27b1b1173" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>יש לך שמש</bdi></div>
+                  <div class="insight-track-artist"><bdi>Inbal Perlmutter</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/3iQ0Ht1VYekdf1sj6cgb4D?si=EOExl3O2SKeH4dmutykGGA" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02a794ab94c5feefaa4f6c858e" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>אבוא אליך</bdi></div>
+                  <div class="insight-track-artist"><bdi>Efrat Ben Zur</bdi></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li data-insight-voter="p62">
+          <strong><bdi><span class="insight-name" dir="auto">Roei Dahuki</span></bdi> חולק ארבעה שירים עם <span class="insight-name">דנה מרחוביץ׳ 🦋</span>.</strong>
+          <p>הוא סימן שלושה מהשיתופים של <span class="insight-name">דנה</span>, ואחד מהם קיבל ממנו ״ממש אהבתי״.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/6usohdchdzW9oML7VC4Uhk" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e029a7e719f37e9264656b95997" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Lose Control</bdi></div>
+                  <div class="insight-track-artist"><bdi>Teddy Swims</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name" dir="auto">Roei Dahuki</span> סימן ״ממש אהבתי״</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/6aYvWy72gVdkip3Yco9osi?si=0QJaNCpLSNKtXe8Gg0Evvg" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e020336e7b1258c207ad206c3c7" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>חתולים</bdi></div>
+                  <div class="insight-track-artist"><bdi>Jimbo J, Ravid Plotnik</bdi></div>
+                  <div class="insight-track-caption">שניהם שיתפו</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li data-insight-voter="p65">
+          <strong><bdi><span class="insight-name">🌸</span></bdi> סימנו שתי הצבעות, שתיהן ״ממש אהבתי״.</strong>
+          <p><span class="insight-name">עמר</span> הצביע לשני השירים האלה גם כן.</p>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/54pvEYFocTlvIAQOfXSjqV?si=aT24BrKtTYyxI7N11p3tRw&amp;context=spotify%3Aplaylist%3A37i9dQZF1F5p3rmiWPIYgZ&amp;rowId=69f630bce0a1c5e3846d" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02acc5e23ac0089a5649961ca0" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Alone Again (Naturally)</bdi></div>
+                  <div class="insight-track-artist"><bdi>Gilbert O&#39;Sullivan</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/4wswaG5vmNINMZcVBsAyBP?si=9Gvlt0TORq24CvKhlh1GgQ&amp;utm_source=whatsapp&amp;rowId=940a71e64dba69703c81&amp;context=spotify%3Aplaylist%3A37i9dQZF1F5p3rmiWPIYgZ" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e0275aeab61b79629d43ca8f42f" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Got My Mind Set on You</bdi></div>
+                  <div class="insight-track-artist"><bdi>George Harrison</bdi></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li>
+          <strong><span class="insight-name">עמר</span> הצביע גם לשני שירים ש־<bdi><span class="insight-name">🌸</span></bdi> שיתפו.</strong>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/6vL2TwSD1HwfK057NDjhhq?si=oYj_Nx8ASsGM9_LFyEgQiQ&amp;utm_source=whatsapp" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e023cc7b9b7ffa90fd33ffcf8f6" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>אתה חי בחלום</bdi></div>
+                  <div class="insight-track-artist"><bdi>הגר יפת</bdi></div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/2SiXAy7TuUkycRVbbWDEpo?si=I1da7vPcTWiYGF7FgXk7Bw&amp;utm_source=whatsapp" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e02ff191d7fbdb5a13eaf84132b" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>You Shook Me All Night Long</bdi></div>
+                  <div class="insight-track-artist"><bdi>AC/DC</bdi></div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li data-insight-voter="p66">
+          <strong><bdi><span class="insight-name" dir="auto">Shaked Dotan</span></bdi> ו־<bdi><span class="insight-name" dir="auto">Amit Eilat</span></bdi> חולקים ארבעה שירים.</strong>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/7KA4W4McWYRpgf0fWsJZWB" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028940ac99f49e44f59e6f7fb3" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>See You Again</bdi></div>
+                  <div class="insight-track-artist"><bdi>Tyler, The Creator, Kali Uchis</bdi></div>
+                  <div class="insight-track-caption">שניהם הצביעו</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/2QjOHCTQ1Jl3zawyYOpxh6" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-fa.spotifycdn.com/image/ab67616d00001e028265a736a1eb838ad5a0b921" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>Sweater Weather</bdi></div>
+                  <div class="insight-track-artist"><bdi>The Neighbourhood</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name" dir="auto">Amit Eilat</span> שיתף, <span class="insight-name" dir="auto">Shaked Dotan</span> סימן ״ממש אהבתי״</div>
+                </div>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li data-insight-voter="p67">
+          <strong><bdi><span class="insight-name" dir="auto">Tomer</span></bdi> סימן שני שירים משני קצוות של הרשימה.</strong>
+          <ul class="insight-tracks" aria-label="שירים בתובנה">
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://www.youtube.com/watch?v=Rii_JM4Bbdg" target="_blank" rel="noopener noreferrer">
+                <img src="https://i.ytimg.com/vi/Rii_JM4Bbdg/hqdefault.jpg" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>I Love To Give You Light</bdi></div>
+                  <div class="insight-track-artist"><bdi>Snoop Dogg</bdi></div>
+                  <div class="insight-track-caption">קיבל תשע הצבעות</div>
+                </div>
+              </a>
+            </li>
+            <li class="insight-track">
+              <a class="insight-track-link" href="https://open.spotify.com/track/02aAmS4ZZAKX8GpBcgK4go" target="_blank" rel="noopener noreferrer">
+                <img src="https://image-cdn-ak.spotifycdn.com/image/ab67616d00001e02977f8f2872c5222371c03b76" alt="" width="52" height="52" loading="lazy" decoding="async">
+                <div class="insight-track-copy">
+                  <div class="insight-track-title"><bdi>המעיל</bdi></div>
+                  <div class="insight-track-artist"><bdi>Yehonatan Geffen, Adi Rennert</bdi></div>
+                  <div class="insight-track-caption"><span class="insight-name">איילת דרייפוס</span> שיתפה, <span class="insight-name" dir="auto">Tomer</span> נתן את ההצבעה היחידה</div>
+                </div>
+              </a>
+            </li>
+          </ul>
         </li>
         <li>
           <strong>יותר ממחצית מהשירים של <span class="insight-name">ליה</span> ושל <bdi><span class="insight-name" dir="auto">Tamar kaveh</span></bdi> קיבלו הצבעה.</strong>
           <p>אצל <span class="insight-name">ליה</span>, שישה מתוך 11 שירים קיבלו הצבעה משלושה אנשים שונים. אצל <bdi><span class="insight-name" dir="auto">Tamar kaveh</span></bdi>, 13 מתוך 23 קיבלו הצבעה מתשעה אנשים שונים.</p>
         </li>
       </ul>
-    </section>
+      </div>
+    </details>
   </section>
 </main>
 <dialog id="voter-dialog" aria-labelledby="voter-dialog-title"></dialog>
